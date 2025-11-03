@@ -75,11 +75,11 @@ export default function FavoriteGatherings() {
 	};
 
 	return (
-		<div className="flex h-auto flex-col items-center py-20">
+		<div className="flex h-auto flex-col items-center pt-10">
 			<div className="w-full max-w-[996px]">
 				{/* 타이틀 */}
 				<section className="flex w-full items-start justify-start gap-[13px]">
-					<div className="flex h-18 w-18 items-center justify-center rounded-full border-2 border-gray-800 bg-orange-50">
+					<div className="flex h-18 w-18 items-center justify-center rounded-full border-2 border-gray-800 bg-primary-50">
 						<Image src="/icons/heart_to_heart.svg" alt="찜한 모임" width={32} height={30} />
 					</div>
 					<div className="flex flex-col items-start justify-center gap-2">

@@ -1,4 +1,5 @@
-import { differenceInDays, format, isPast } from 'date-fns';
+import { differenceInDays, format, isPast, startOfDay } from 'date-fns';
+import { formatInTimeZone, toZonedTime } from 'date-fns-tz';
 import { ko } from 'date-fns/locale';
 
 type DateFormat = 'M월 D일 · HH:mm' | 'yyyy.MM.dd';
@@ -46,11 +47,11 @@ export function formatKoreanDate(dateString: string, format: DateFormat = 'M월 
 export const formatDateAndTime = (dateString: string) => {
 	const date = new Date(dateString);
 	const formattedDate = format(date, 'M월 d일', { locale: ko });
-	const formattedtime = format(date, 'HH:mm', { locale: ko });
+	const formattedTime = format(date, 'HH:mm', { locale: ko });
 
 	return {
 		date: formattedDate,
-		time: formattedtime
+		time: formattedTime
 	};
 };
 
@@ -64,13 +65,43 @@ export const formatDateAndTime = (dateString: string) => {
 export const getDeadlineLabel = (dateString?: string) => {
 	if (!dateString) return null;
 
-	const deadline = new Date(dateString);
-	if (isPast(deadline)) return '';
+	const KST_TIMEZONE = 'Asia/Seoul';
+	const deadline = toZonedTime(new Date(dateString), KST_TIMEZONE);
+	const now = toZonedTime(new Date(), KST_TIMEZONE);
 
-	const differenceDays = differenceInDays(deadline, new Date());
+	if (isPast(deadline)) return '';
+	const differenceDays = differenceInDays(startOfDay(deadline), startOfDay(now));
+
 	if (differenceDays > 0) {
 		return `${differenceDays}일 후 마감`;
 	}
 
 	return `오늘 ${format(deadline, 'HH시', { locale: ko })} 마감`;
+};
+
+/**
+ * UTC → KST 변환 및 포맷팅
+ * @param dateString UTC ISO 문자열 (예: "2025-10-23T01:13:29.482Z")
+ *
+ * @param formatStr 출력 포맷 (기본값: "yyyy-MM-dd HH:mm"  )
+ * @param formatStr 출력 포맷 (예 :"2025-10-23T01:13:29.482Z" -> "2025-10-23 10:13")
+ */
+
+export const formatUTCToKST = (dateString: string, formatStr = 'yyyy-MM-dd HH:mm') => {
+	if (!dateString) return '';
+	return formatInTimeZone(dateString, 'Asia/Seoul', formatStr);
+};
+
+/**
+ * 남은 시간을 "MM:SS" 형식의 문자열로 변환합니다.
+ * @param {number | null} sec - 초 단위 시간 (또는 `null`)
+ * @returns {string | null} `"MM:SS"` 형식의 문자열 또는 `null`
+ */
+export const formatTime = (sec: number | null) => {
+	if (sec === null) return null;
+
+	const pad = (n: number) => String(n).padStart(2, '0');
+	const min = Math.floor(sec / 60);
+	const s = sec % 60;
+	return `${pad(min)}:${pad(s)}`;
 };

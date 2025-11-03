@@ -5,7 +5,7 @@ import ProfileImageUploader from '../ProfileImageUploader';
  * ProfileImageUploader 컴포넌트 테스트
  *
  * - 기본 이미지 렌더링 확인
- * - 파일 업로드 시 onChange 콜백 호출 확인
+ * - 파일 업로드 시, onChange 콜백 호출 확인
  */
 describe('ProfileImageUploader', () => {
 	test('기본 이미지를 렌더링하는지 확인', () => {

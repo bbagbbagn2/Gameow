@@ -95,7 +95,19 @@ export const CreateGatheringSchema = z.object({
 });
 
 export const profileEditSchema = z.object({
-	companyName: z.string().min(2, { error: '닉네임은 2글자 이상 적어주세요.' })
+	companyName: z
+		.string()
+		.trim()
+		.min(2, { error: '닉네임은 2글자 이상 적어주세요.' })
+		.max(50, '닉네임은 50글자 이하로 입력해주세요.'),
+	image: z
+		.instanceof(File)
+		.optional()
+		.refine(file => !file || file.size <= MAX_FILE_SIZE, '이미지 파일 크기는 5MB 이내여야 합니다.')
+		.refine(
+			file => !file || ['image/jpeg', 'image/png', 'image/webp'].includes(file.type),
+			'이미지는 JPG, PNG, WEBP 형식만 가능합니다.'
+		)
 });
 
 export type Step1SchemaType = z.infer<typeof Step1Schema>;

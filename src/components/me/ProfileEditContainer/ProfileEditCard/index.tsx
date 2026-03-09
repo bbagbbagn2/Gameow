@@ -84,7 +84,7 @@ export default function ProfileEditCard() {
 						onClick={() =>
 							openModal(
 								<ProfileEditModal
-									currentCompanyName={user?.companyName}
+									currentNickname={user?.companyName}
 									currentImage={user?.image}
 									onSubmit={handleUpdateUserInfo}
 								/>

@@ -8,8 +8,8 @@ interface GatheringProps {
 	/** 리뷰 작성이 가능한 모임 객체 */
 	gathering: JoinedGathering;
 
-	/** 리뷰 작성 성공 시 호출되는 콜백 함수 */
-	onSuccess: (score: number, comment: string) => void;
+	/** 리뷰 작성 시 호출되는 콜백 함수 (낙관적 업데이트 및 API 호출 수행) */
+	onSubmit: (score: number, comment: string) => Promise<void>;
 }
 
 /**
@@ -17,15 +17,15 @@ interface GatheringProps {
  * - 참여한 모임 정보를 표시
  * - "리뷰 작성하기" 버튼 클릭 시 모달 오픈
  */
-export default function WritableReviewCard({ gathering, onSuccess }: GatheringProps) {
+export default function WritableReviewCard({ gathering, onSubmit }: GatheringProps) {
 	const { openModal } = useModal();
 
 	/**
 	 * 리뷰 작성 버튼 클릭 시 모달을 열고
-	 * 작성 완료 시 onSuccess 호출
+	 * 작성 완료 시 onSubmit 호출 (낙관적 업데이트)
 	 */
 	const handleClick = () => {
-		openModal(<ReviewWriteModal gatheringId={gathering.id} onSuccess={onSuccess} />);
+		openModal(<ReviewWriteModal onSubmit={onSubmit} />);
 	};
 
 	return (

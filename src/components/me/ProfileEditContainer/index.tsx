@@ -75,7 +75,7 @@ export default function ProfileEditCard() {
 	const handleOpenEditModal = useCallback(() => {
 		openModal(
 			<ProfileEditModal
-				currentCompanyName={user?.companyName}
+				currentNickname={user?.companyName}
 				currentImage={user?.image}
 				onSubmit={handleUpdateUserInfo}
 			/>

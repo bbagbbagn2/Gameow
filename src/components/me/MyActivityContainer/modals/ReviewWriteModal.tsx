@@ -1,18 +1,14 @@
 import Image from 'next/image';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { postReviews } from '@/apis/reviews/reviews';
 import { useModalClose } from '@/hooks/useModal';
-import { useErrorHandler } from '@/hooks/useErrorHandler';
 import BasicButton from '@/components/commons/basic/BasicButton';
 import BasicModal from '@/components/commons/basic/BasicModal';
 import BasicTextArea from '@/components/commons/basic/BasicTextArea';
 
 interface ReviewWriteModalProps {
-	/** 리뷰를 작성할 모임 ID */
-	gatheringId: number;
-	/** 리뷰 등록 성공 시 호출되는 콜백 */
-	onSuccess: (score: number, comment: string) => void;
+	/** 리뷰 제출 시 호출되는 콜백 (낙관적 업데이트 및 API 호출 수행) */
+	onSubmit: (score: number, comment: string) => Promise<void>;
 }
 
 interface FormValues {
@@ -22,11 +18,11 @@ interface FormValues {
 	comment: string;
 }
 
-export default function ReviewWriteModal({ gatheringId, onSuccess }: ReviewWriteModalProps) {
+export default function ReviewWriteModal({ onSubmit }: ReviewWriteModalProps) {
 	const closeModal = useModalClose();
-	const { handleError } = useErrorHandler();
 	const [rating, setRating] = useState(0);
 	const [animatingIndex, setAnimatingIndex] = useState<number | null>(null);
+	const [isSubmitting, setIsSubmitting] = useState(false);
 
 	const { register, handleSubmit, watch } = useForm<FormValues>({
 		defaultValues: {
@@ -44,19 +40,19 @@ export default function ReviewWriteModal({ gatheringId, onSuccess }: ReviewWrite
 		setTimeout(() => setAnimatingIndex(null), 100); // 애니메이션 끝나면 초기화
 	};
 
-	const onSubmit = async (data: FormValues) => {
+	const handleFormSubmit = async (data: FormValues) => {
+		setIsSubmitting(true);
 		try {
-			await postReviews({ gatheringId, score: rating, comment: data.comment });
-			onSuccess(rating, data.comment);
+			await onSubmit(rating, data.comment);
 			closeModal();
-		} catch (err) {
-			handleError(err);
+		} finally {
+			setIsSubmitting(false);
 		}
 	};
 
 	return (
 		<BasicModal onClose={closeModal} className="tb:min-w-[472px] min-w-[290px]">
-			<form onSubmit={handleSubmit(onSubmit)}>
+			<form onSubmit={handleSubmit(handleFormSubmit)}>
 				<div className="text-white">
 					<h3 className="text-shadow-primary text-start text-lg font-semibold">리뷰 쓰기</h3>
 					<div className="mt-6 flex w-full flex-col gap-6">
@@ -96,7 +92,12 @@ export default function ReviewWriteModal({ gatheringId, onSuccess }: ReviewWrite
 							<BasicButton outlined onClick={closeModal} className="font-semibold" isLarge type="button">
 								취소
 							</BasicButton>
-							<BasicButton className="font-semibold" isLarge isActive={isFormValid} type="submit">
+							<BasicButton
+								className="font-semibold"
+								isLarge
+								isActive={isFormValid && !isSubmitting}
+								disabled={isSubmitting}
+								type="submit">
 								리뷰 등록
 							</BasicButton>
 						</div>

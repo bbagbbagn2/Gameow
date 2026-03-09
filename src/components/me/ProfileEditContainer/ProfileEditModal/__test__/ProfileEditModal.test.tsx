@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import ProfileEditModal from '../ProfileEditModal';
@@ -58,6 +59,7 @@ jest.mock('../ProfileImageUploader', () => ({
 	__esModule: true,
 	default: ({ currentImage, onChange }: any) => (
 		<div data-testid="profile-image-uploader">
+			{/* eslint-disable-next-line @next/next/no-img-element */}
 			<img src={currentImage} alt="profile" />
 			<input
 				type="file"

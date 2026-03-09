@@ -66,7 +66,11 @@ export default function GatheringCard({ gathering, onReviewSuccess, onCancelSucc
 		if (gathering.isReviewed) return;
 
 		openModal(
-			<ReviewWriteModal gatheringId={gathering.id} onSuccess={(score, comment) => onReviewSuccess(score, comment)} />
+			<ReviewWriteModal
+				onSubmit={async (score: number, comment: string) => {
+					onReviewSuccess(score, comment);
+				}}
+			/>
 		);
 	};
 

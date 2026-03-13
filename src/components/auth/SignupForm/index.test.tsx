@@ -1,5 +1,5 @@
 import { SIGNUP_ERRORS } from '@/constants/error';
-import { DEFAULT_SIGNUP_FORM_VALUES as DEFAULT_VALUES } from '@/constants/test';
+import { DEFAULT_SIGNUP_FORM_VALUES as DEFAULT_VALUES } from '@/constants/testData';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { SignupForm } from '.';
 

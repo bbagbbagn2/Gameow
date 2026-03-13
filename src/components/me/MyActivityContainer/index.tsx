@@ -14,7 +14,7 @@ import { TABS } from '@/constants/options';
  * **탭 설명**
  * - 나의 모임: 사용자가 참여한 모임 리스트
  * - 나의 리뷰: 사용자가 작성한 리뷰 리스트
- * - TODO : 내가 만든 모임: 사용자가 생성한 모임 리스트
+ * - 내가 만든 모임: 사용자가 생성한 모임 리스트
  */
 type TabKey = 'JoinedGathering' | 'MyReview' | 'CreatedGathering';
 

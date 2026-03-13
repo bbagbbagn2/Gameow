@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { leaveGathering } from '@/apis/gatherings/[id]';
 import { getJoinedGathering } from '@/apis/gatherings/joined';
 import { useErrorHandler } from '@/hooks/useErrorHandler';
+import { useUserStore } from '@/stores/user';
 import type { JoinedGathering } from '@/types/response/gatherings';
 import GatheringCard from './GatheringCard';
 import NoDataMessage from '../../../commons/NoDataMessage/NoDataMessage';
@@ -10,9 +12,9 @@ import Chip from '@/components/commons/Chip';
 /**
  * JoinedGatherings 컴포넌트
  *
- * 사용자가 참여한 모임 목록을 카드 리스트로 렌더링합니다. 이 컴포넌트는
+ * 사용자가 참여한 모임 목록을 카드 리스트로 렌더링합니다.
  * - API로부터 사용자가 참여한 모임을 조회하고
- * - 취소된 모임을 뒤로 보내어 우선 표출합니다.
+ *   - 취소된 모임은 뒤로 보내고, 이용 예정인 모임이 먼저 보이도록 정렬합니다.
  * - 자식 카드에서 리뷰 작성/취소 성공 시 상위 쿼리 캐시를 업데이트합니다.
  *
  * @component
@@ -31,6 +33,7 @@ import Chip from '@/components/commons/Chip';
  */
 
 export default function JoinedGatherings() {
+	const { user } = useUserStore();
 	const queryClient = useQueryClient();
 	const { handleError } = useErrorHandler();
 	const [showFilteredOnly, setShowFilteredOnly] = useState(false);
@@ -39,9 +42,17 @@ export default function JoinedGatherings() {
 	 * React Query: joinedGatherings 캐시
 	 * - queryKey: ['joinedGatherings'] 로 캐싱/무효화에 사용됩니다.
 	 * - queryFn: API에서 참여한 모임을 불러오고 취소된 모임을 뒤로 보냅니다.
+	 * - enabled: user 정보가 있을 때만 쿼리를 활성화하여 불필요한 API 호출을 방지합니다.
+	 * - staleTime: 2분, gcTime: 5분으로 설정하여 적절한 캐시 유지 및 메모리 관리를 합니다.
 	 */
-	const { data: gatherings = [], isLoading } = useQuery<JoinedGathering[]>({
-		queryKey: ['joinedGatherings'],
+
+	const {
+		data: gatherings = [],
+		isLoading,
+		isError,
+		error
+	} = useQuery<JoinedGathering[]>({
+		queryKey: ['joinedGatherings', user?.userId],
 		queryFn: async () => {
 			try {
 				return await getJoinedGathering({ sortBy: 'dateTime', sortOrder: 'asc' });
@@ -49,10 +60,18 @@ export default function JoinedGatherings() {
 				handleError(err);
 				throw err;
 			}
-		}
+		},
+		enabled: !!user,
+		staleTime: 2 * 60 * 1000,
+		gcTime: 5 * 60 * 1000
 	});
 
 	if (isLoading) return <GatheringSkeleton />;
+
+	if (isError) {
+		const errorMessage = error instanceof Error ? error.message : '모임 정보를 불러올 수 없어요';
+		return <NoDataMessage text={errorMessage} />;
+	}
 
 	const filteredGatherings = showFilteredOnly
 		? gatherings.filter(g => !g.isCompleted && !g.isReviewed && g.canceledAt === null)
@@ -63,30 +82,62 @@ export default function JoinedGatherings() {
 	/**
 	 * 리뷰 작성 성공 콜백
 	 *
-	 * 해당 모임의 isReviewed 플래그를 true로 설정하여 UI를 갱신합니다.
-	 * 이 함수는 부모 컴포넌트에서 자식 카드(GatheringCard)가 리뷰 성공 시 호출합니다.
+	 * 1. 낙관적으로 로컬 캐시 업데이트
+	 * 2. 서버와 동기화를 위해 캐시 무효화
+	 * 3. 실패 시 이전 상태로 롤백하고 에러 처리
 	 *
-	 * @param {number} id - 리뷰가 작성된 모임의 ID
-	 * @returns {void}
+	 * @param {number} gatheringId - 리뷰가 작성된 모임의 ID
+	 * @returns {Promise<void>}
 	 */
-	const handleReviewSuccess = (gatheringId: number) => {
-		queryClient.setQueryData<JoinedGathering[]>(['joinedGatherings'], prev =>
-			prev ? prev.map(g => (g.id === gatheringId ? { ...g, isReviewed: true } : g)) : []
-		);
+	const handleReviewSuccess = async (gatheringId: number) => {
+		if (!user) return;
+
+		const previousGatherings = queryClient.getQueryData<JoinedGathering[]>(['joinedGatherings', user.userId]);
+
+		try {
+			queryClient.setQueryData<JoinedGathering[]>(['joinedGatherings', user.userId], prev =>
+				prev ? prev.map(g => (g.id === gatheringId ? { ...g, isReviewed: true } : g)) : []
+			);
+
+			await queryClient.invalidateQueries({ queryKey: ['joinedGatherings', user.userId] });
+		} catch (error) {
+			queryClient.setQueryData(['joinedGatherings', user.userId], previousGatherings);
+
+			handleError(error);
+			throw error;
+		}
 	};
 
 	/**
-	 * 취소(모임 탈퇴/삭제) 성공 콜백
+	 * 낙관적 업데이트를 통한 모임 취소 핸들러
 	 *
-	 * 목록에서 해당 모임을 제거합니다. 자식 컴포넌트에서 탈퇴 성공 시 호출됩니다.
+	 * 1. 낙관적으로 UI 캐시 업데이트 (목록에서 제거)
+	 * 2. API 호출로 서버에서 취소 처리
+	 * 3. 실패 시 이전 상태로 롤백하고 에러 처리
+	 * 4. 성공 시 캐시 무효화로 서버 상태와 동기화
 	 *
-	 * @param {number} id - 취소된 모임의 ID
-	 * @returns {void}
+	 * @param {number} gatheringId - 취소할 모임의 ID
+	 * @returns {Promise<void>}
 	 */
-	const handleCancelSuccess = (id: number) => {
-		queryClient.setQueryData<JoinedGathering[]>(['joinedGatherings'], prev =>
-			prev ? prev.filter(g => g.id !== id) : []
-		);
+	const handleCancelSuccess = async (gatheringId: number) => {
+		if (!user) return;
+
+		const previousGatherings = queryClient.getQueryData<JoinedGathering[]>(['joinedGatherings', user.userId]);
+
+		try {
+			queryClient.setQueryData<JoinedGathering[]>(['joinedGatherings', user.userId], prev =>
+				prev ? prev.filter(g => g.id !== gatheringId) : []
+			);
+
+			await leaveGathering(gatheringId);
+
+			await queryClient.invalidateQueries({ queryKey: ['joinedGatherings', user.userId] });
+		} catch (error) {
+			queryClient.setQueryData(['joinedGatherings', user.userId], previousGatherings);
+
+			handleError(error);
+			throw error;
+		}
 	};
 
 	return (
@@ -107,8 +158,8 @@ export default function JoinedGatherings() {
 						<li key={gathering.id}>
 							<GatheringCard
 								gathering={gathering}
-								onReviewSuccess={() => handleReviewSuccess(gathering.id)}
-								onCancelSuccess={() => handleCancelSuccess(gathering.id)}
+								onReviewSuccess={(gatheringId: number) => handleReviewSuccess(gatheringId)}
+								onCancelSuccess={(gatheringId: number) => handleCancelSuccess(gatheringId)}
 							/>
 						</li>
 					))}

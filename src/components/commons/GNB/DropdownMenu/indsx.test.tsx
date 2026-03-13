@@ -37,8 +37,8 @@ describe('DropdownMenu 유닛 테스트', () => {
 		// 3. 트리거를 다시 클릭한다.
 		await user.click(trigger);
 
-		// 4. 메뉴가 존재하지 않는지 확인한다.
-		expect(listbox).not.toBeInTheDocument();
+		// 4. 메뉴가 닫혔는지 확인한다 (visible 상태 확인).
+		expect(listbox).toHaveClass('invisible');
 	});
 
 	test('메뉴가 열려있을 때 아이템을 클릭하면 메뉴가 닫힌다', async () => {
@@ -51,8 +51,8 @@ describe('DropdownMenu 유닛 테스트', () => {
 
 		expect(mockCallback).toHaveBeenCalledWith(options[0].value);
 
-		// 4. 메뉴가 존재하지 않는지 확인한다.
-		expect(listbox).not.toBeInTheDocument();
+		// 4. 메뉴가 닫혔는지 확인한다 (visible 상태 확인).
+		expect(listbox).toHaveClass('invisible');
 	});
 
 	test('메뉴가 열려있을 때 메뉴 외부를 클릭하면 메뉴가 닫힌다', async () => {
@@ -63,8 +63,8 @@ describe('DropdownMenu 유닛 테스트', () => {
 		const outerElement = screen.getByText('외부라고 가정할 요소');
 		await user.click(outerElement);
 
-		// 4. 메뉴가 존재하지 않는지 확인한다.
-		expect(listbox).not.toBeInTheDocument();
+		// 4. 메뉴가 닫혔는지 확인한다 (visible 상태 확인).
+		expect(listbox).toHaveClass('invisible');
 	});
 
 	async function openMenu() {

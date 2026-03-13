@@ -1,5 +1,5 @@
 import { SIGNIN_ERRORS } from '@/constants/error';
-import { DEFAULT_SIGNIN_FORM_VALUES as DEFAULT_VALUES } from '@/constants/test';
+import { DEFAULT_SIGNIN_FORM_VALUES as DEFAULT_VALUES } from '@/constants/testData';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { SigninForm } from '.';
 

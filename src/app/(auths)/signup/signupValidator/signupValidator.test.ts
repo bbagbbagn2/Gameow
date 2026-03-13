@@ -1,4 +1,4 @@
-import { DEFAULT_SIGNUP_FORM_VALUES as DEFAULT_VALUES } from '@/constants/test';
+import { DEFAULT_SIGNUP_FORM_VALUES as DEFAULT_VALUES } from '@/constants/testData';
 import { SignupValidator } from './signupValidator';
 import { signupValidatorYup } from './signupValidator.yup';
 import { signupValidatorZod } from './signupValidator.zod';

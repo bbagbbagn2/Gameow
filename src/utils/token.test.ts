@@ -23,7 +23,7 @@ describe('token 관련 유틸 테스트', () => {
 		});
 	});
 
-	describe('isTokenExpried 테스트', () => {
+	describe('isTokenExpired 테스트', () => {
 		// const base64UrlEncode = (obj: Record<string, unknown>): string => {
 		// 	const json = JSON.stringify(obj);
 		// 	const base64 = btoa(json);
@@ -65,9 +65,8 @@ describe('token 관련 유틸 테스트', () => {
 		});
 
 		test('비정상 토큰을 넣으면 "EXPIRED"을 반환한다', () => {
-			// const token = '비정상 토큰';
-
-			const result = isTokenExpired(1700000000);
+			// 매개변수 없이 호출하면 'EXPIRED' 반환
+			const result = isTokenExpired();
 
 			expect(result).toEqual('EXPIRED');
 		});

@@ -13,6 +13,7 @@ import WritableReviewCard from './WritableReviewCard';
 import WrittenReviewCard from './WrittenReviewCard';
 import NoDataMessage from '../../../commons/NoDataMessage/NoDataMessage';
 import Chip from '@/components/commons/Chip';
+import GatheringSkeleton from '../../skeleton/GatheringSkeleton';
 
 /**
  * MyReviews 컴포넌트
@@ -30,17 +31,46 @@ export default function MyReviews() {
 	const { handleError } = useErrorHandler();
 	const [activeTab, setActiveTab] = useState<'writable' | 'written'>('writable');
 
-	const { data: writableReviewsData = [] } = useQuery<JoinedGathering[]>({
+	const {
+		data: writableReviewsData = [],
+		isLoading: isWritableLoading,
+		isError: isWritableError,
+		error: writableError
+	} = useQuery<JoinedGathering[], Error>({
 		queryKey: ['writableReviews', user?.userId],
-		queryFn: () => getJoinedGathering({ completed: true, reviewed: false }),
+		queryFn: async () => {
+			try {
+				const data = await getJoinedGathering({ completed: true, reviewed: false });
+				return data.filter(gathering => gathering.canceledAt === null);
+			} catch (err) {
+				handleError(err);
+				throw err;
+			}
+		},
 		enabled: !!user,
-		select: g => g.filter(gathering => gathering.canceledAt === null)
+		staleTime: 5 * 60 * 1000,
+		gcTime: 10 * 60 * 1000
 	});
 
-	const { data: writtenReviewsData = [] } = useQuery<ReviewResponse[]>({
+	const {
+		data: writtenReviewsData = [],
+		isLoading: isWrittenLoading,
+		isError: isWrittenError,
+		error: writtenError
+	} = useQuery<ReviewResponse[], Error>({
 		queryKey: ['writtenReviews', user?.userId],
-		queryFn: () => getReviews({ userId: user!.userId }).then((res: GetReviewsResponse) => res.data),
-		enabled: !!user
+		queryFn: async () => {
+			try {
+				const res: GetReviewsResponse = await getReviews({ userId: user!.userId });
+				return res.data;
+			} catch (err) {
+				handleError(err);
+				throw err;
+			}
+		},
+		enabled: !!user,
+		staleTime: 5 * 60 * 1000,
+		gcTime: 10 * 60 * 1000
 	});
 
 	/**
@@ -48,6 +78,7 @@ export default function MyReviews() {
 	 * 1. 낙관적으로 UI 캐시 업데이트
 	 * 2. API 호출로 서버에 저장
 	 * 3. 실패 시 이전 상태로 롤백
+	 * 4. 성공 시 캐시 무효화로 서버 상태와 동기화
 	 *
 	 * @param gatheringId 리뷰 작성할 모임 ID
 	 * @param score 리뷰 점수 (1-5)
@@ -64,8 +95,14 @@ export default function MyReviews() {
 				['writableReviews', user.userId],
 				old => old?.filter(g => g.id !== gatheringId) ?? []
 			);
+
 			await postReviews({ gatheringId, score, comment });
-			queryClient.invalidateQueries({ queryKey: ['writtenReviews', user.userId] });
+
+			await Promise.all([
+				queryClient.invalidateQueries({ queryKey: ['writableReviews', user.userId] }),
+				queryClient.invalidateQueries({ queryKey: ['writtenReviews', user.userId] })
+			]);
+
 			setActiveTab('written');
 		} catch (error) {
 			queryClient.setQueryData(['writableReviews', user.userId], previousWritableData);
@@ -74,6 +111,18 @@ export default function MyReviews() {
 			handleError(error);
 		}
 	};
+
+	if (isWritableLoading || isWrittenLoading) return <GatheringSkeleton />;
+
+	if (isWritableError || isWrittenError) {
+		const errorMessage =
+			isWritableError && writableError instanceof Error
+				? writableError.message
+				: isWrittenError && writtenError instanceof Error
+					? writtenError.message
+					: '리뷰 정보를 불러올 수 없어요';
+		return <NoDataMessage text={errorMessage} />;
+	}
 
 	return (
 		<div className="flex flex-1 flex-col gap-6">

@@ -20,34 +20,34 @@ interface FormValues {
 
 export default function ReviewWriteModal({ onSubmit }: ReviewWriteModalProps) {
 	const closeModal = useModalClose();
-	const [rating, setRating] = useState(0);
 	const [animatingIndex, setAnimatingIndex] = useState<number | null>(null);
-	const [isSubmitting, setIsSubmitting] = useState(false);
 
-	const { register, handleSubmit, watch } = useForm<FormValues>({
+	const {
+		register,
+		handleSubmit,
+		watch,
+		setValue,
+		formState: { isSubmitting }
+	} = useForm<FormValues>({
 		defaultValues: {
 			score: 0,
 			comment: ''
-		}
+		},
+		mode: 'onChange'
 	});
 
-	const comment = watch('comment');
-	const isFormValid = rating > 0 && comment.trim().length > 0;
+	const [score, comment] = watch(['score', 'comment']);
+	const isFormValid = score > 0 && comment.trim().length > 0;
 
 	const handleHeartClick = (index: number) => {
-		setRating(index + 1);
+		setValue('score', index + 1);
 		setAnimatingIndex(index);
 		setTimeout(() => setAnimatingIndex(null), 100); // 애니메이션 끝나면 초기화
 	};
 
 	const handleFormSubmit = async (data: FormValues) => {
-		setIsSubmitting(true);
-		try {
-			await onSubmit(rating, data.comment);
-			closeModal();
-		} finally {
-			setIsSubmitting(false);
-		}
+		await onSubmit(data.score, data.comment);
+		closeModal();
 	};
 
 	return (
@@ -67,12 +67,12 @@ export default function ReviewWriteModal({ onSubmit }: ReviewWriteModalProps) {
 											onClick={() => handleHeartClick(index)}
 											className="cursor-pointer">
 											<Image
-												src={index < rating ? '/icons/heart_active.svg' : '/icons/heart.svg'}
-												alt={index < rating ? '활성화된 하트' : '비활성화된 하트'}
+												src={index < score ? '/icons/heart_active.svg' : '/icons/heart.svg'}
+												alt={index < score ? '활성화된 하트' : '비활성화된 하트'}
 												width={24}
 												height={24}
 												className={`transform transition-transform duration-500 ease-out ${
-													animatingIndex === index ? 'scale-115' : index < rating ? 'scale-110' : 'scale-100'
+													animatingIndex === index ? 'scale-115' : index < score ? 'scale-110' : 'scale-100'
 												}`}
 											/>
 										</button>

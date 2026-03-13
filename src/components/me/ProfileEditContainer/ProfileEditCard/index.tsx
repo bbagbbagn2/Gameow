@@ -1,13 +1,17 @@
 'use client';
 
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useModal } from '@/hooks/useModal';
+import { useErrorHandler } from '@/hooks/useErrorHandler';
 import { useScreenSize } from './hooks/useScreenSize';
 import { profileAssets } from './assets/profileAssets';
 import { getUserInfo, updateUserInfo } from '@/apis/auths/user';
 import { useUserStore } from '@/stores/user';
 import ProfileEditModal from '../ProfileEditModal/ProfileEditModal';
+import NoDataMessage from '@/components/commons/NoDataMessage/NoDataMessage';
+import ProfileEditCardSkeleton from '../../skeleton/ProfileEditCardSkeleton';
 
 /**
  * `ProfileEditCard` 컴포넌트
@@ -22,34 +26,56 @@ import ProfileEditModal from '../ProfileEditModal/ProfileEditModal';
  */
 export default function ProfileEditCard() {
 	const { openModal } = useModal();
+	const { handleError } = useErrorHandler();
+	const { user: storeUser, updateUser } = useUserStore();
 	const screenSize = useScreenSize();
 	const { bg, edit } = useMemo(() => profileAssets[screenSize], [screenSize]);
 
-	const { user, updateUser } = useUserStore();
-
-	//초기 데이터 불러오기
-	useEffect(() => {
-		const fetchUserInfo = async () => {
+	// 초기 데이터 불러오기
+	const {
+		data: userData,
+		isLoading,
+		isError,
+		error
+	} = useQuery({
+		queryKey: ['userInfo'],
+		queryFn: async () => {
 			try {
 				const data = await getUserInfo();
-				updateUser({ email: data.email, name: data.name, image: data.image, companyName: data.companyName });
+				updateUser({
+					email: data.email,
+					name: data.name,
+					image: data.image,
+					companyName: data.companyName
+				});
+				return data;
 			} catch (err) {
-				console.error('인증이 필요합니다', err);
-				// TODO: 인증 실패 시 로그인 안내 모달을 띄우도록 구현
+				handleError(err);
+				throw err;
 			}
-		};
-		if (!user) fetchUserInfo();
-	}, [user, updateUser]);
+		},
+		staleTime: 10 * 60 * 1000,
+		gcTime: 30 * 60 * 1000,
+		enabled: !storeUser
+	});
+
+	const displayUser = userData || storeUser;
 
 	const handleUpdateUserInfo = async (updated: { companyName?: string; image?: File | null }) => {
 		try {
 			const updatedUser = await updateUserInfo(updated);
 			updateUser({ companyName: updatedUser.companyName, image: updatedUser.image });
 		} catch (err) {
-			console.error('회사명 수정 실패', err);
-			// TODO: 실패 시 사용자에게 알림 모달을 띄우도록 구현
+			handleError(err);
 		}
 	};
+
+	if (isLoading) return <ProfileEditCardSkeleton />;
+
+	if (isError) {
+		const errorMessage = error instanceof Error ? error.message : '프로필 정보를 불러올 수 없어요';
+		return <NoDataMessage text={errorMessage} />;
+	}
 
 	return (
 		<>
@@ -67,7 +93,7 @@ export default function ProfileEditCard() {
 					{/* 프로필 사진 수정 버튼 */}
 					<div className="absolute top-12.5 flex h-16 w-16 items-center justify-center rounded-4xl bg-white">
 						<Image
-							src={user?.image || edit.src}
+							src={displayUser?.image || edit.src}
 							alt="프로필 사진 이미지"
 							width={56}
 							height={56}
@@ -84,8 +110,8 @@ export default function ProfileEditCard() {
 						onClick={() =>
 							openModal(
 								<ProfileEditModal
-									currentNickname={user?.companyName}
-									currentImage={user?.image}
+									currentNickname={displayUser?.companyName}
+									currentImage={displayUser?.image}
 									onSubmit={handleUpdateUserInfo}
 								/>
 							)
@@ -99,17 +125,17 @@ export default function ProfileEditCard() {
 				<div>
 					<div className="tb:pt-3 tb:pb-4 pt-3.5 pb-4.5 pl-23">
 						<div className="mb-2.5 text-gray-800">
-							<p className="text-base font-semibold">{user?.name}</p>
+							<p className="text-base font-semibold">{displayUser?.name}</p>
 						</div>
 
 						<div className="flex gap-1.5 text-sm">
 							<p className="font-medium">company.</p>
-							<p className="font-normal text-gray-700">{user?.companyName}</p>
+							<p className="font-normal text-gray-700">{displayUser?.companyName}</p>
 						</div>
 
 						<div className="flex gap-1.5 text-sm">
 							<p className="font-medium">E-mail.</p>
-							<p className="font-normal text-gray-700">{user?.email}</p>
+							<p className="font-normal text-gray-700">{displayUser?.email}</p>
 						</div>
 					</div>
 				</div>

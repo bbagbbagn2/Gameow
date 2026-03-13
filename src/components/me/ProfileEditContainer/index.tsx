@@ -2,7 +2,8 @@
 
 import Image from 'next/image';
 import * as motion from 'motion/react-client';
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { getUserInfo, updateUserInfo } from '@/apis/auths/user';
 import { PROFILE_PATHS } from '@/constants/assetPath';
 import { useUserStore } from '@/stores/user';
@@ -33,22 +34,23 @@ export default function ProfileEditCard() {
 	const { handleError } = useErrorHandler();
 	const { user, updateUser } = useUserStore();
 
-	/**
-	 * 컴포넌트 마운트 시 최초 사용자 정보를 불러오는 비동기 함수.
-	 * `user` 상태가 null일 때만 실행됩니다.
-	 * @async
-	 */
-	useEffect(() => {
-		const fetchUserInfo = async () => {
+	// 초기 사용자 정보 불러오기
+	useQuery({
+		queryKey: ['userInfo'],
+		queryFn: async () => {
 			try {
 				const data = await getUserInfo();
 				updateUser({ email: data.email, name: data.name, image: data.image, companyName: data.companyName });
+				return data;
 			} catch (err) {
 				handleError(err);
+				throw err;
 			}
-		};
-		if (!user) fetchUserInfo();
-	}, [user, updateUser, handleError]);
+		},
+		staleTime: 10 * 60 * 1000,
+		gcTime: 30 * 60 * 1000,
+		enabled: !user
+	});
 
 	/**
 	 * 사용자 프로필 정보를 업데이트하는 비동기 콜백 함수.

@@ -1,5 +1,5 @@
 import ModalContainer from '@/components/commons/ModalContainer';
-import { DEFAULT_SIGNUP_FORM_VALUES as DEFAULT_VALUES } from '@/constants/test';
+import { DEFAULT_SIGNUP_FORM_VALUES as DEFAULT_VALUES } from '@/constants/testData';
 import { ModalStoreProvider } from '@/providers/ModalProvider';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';

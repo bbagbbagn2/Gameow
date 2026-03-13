@@ -110,7 +110,10 @@ describe('API 요청 함수 테스트', () => {
 
 		test('withAuth가 true일 때 토큰이 유효하면 헤더에 포함되어 있다', async () => {
 			const token = 'fake-jwt';
-			Storage.prototype.getItem = jest.fn(() => token);
+			const mockToken = JSON.stringify({
+				state: { token }
+			});
+			Storage.prototype.getItem = jest.fn(() => mockToken);
 
 			const mockFetch = jest.fn().mockResolvedValue({
 				ok: true,
@@ -129,7 +132,7 @@ describe('API 요청 함수 테스트', () => {
 			);
 		});
 
-		test('withAuth가 true일 때 토큰이 없으면 ApiError를 던전다', async () => {
+		test('withAuth가 true일 때 토큰이 없으면 ApiError를 던진다', async () => {
 			Storage.prototype.getItem = jest.fn(() => null);
 
 			try {

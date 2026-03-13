@@ -16,10 +16,10 @@ interface GatheringProps {
 	 */
 	onReviewSuccess: (score: number, comment: string) => void;
 
-	/** 모임 취소(또는 탈퇴) 성공 시 부모 컴포넌트에 알리기 위한 콜백
+	/** 모임 취소(또는 탈퇴) 시 부모 컴포넌트에 알리기 위한 콜백 (낙관적 업데이트 및 API 호출 수행)
 	 *  부모는 이 콜백에서 목록에서 해당 모임을 제거합니다.
 	 */
-	onCancelSuccess: () => void;
+	onCancelSuccess: (gatheringId: number) => Promise<void>;
 }
 
 /**
@@ -50,11 +50,11 @@ export default function GatheringCard({ gathering, onReviewSuccess, onCancelSucc
 
 	/**
 	 * 예약 취소 버튼 클릭 핸들러
-	 * - 취소 확인 모달을 열고, 모달에서 성공 시 `onCancelSuccess`를 호출합니다.
+	 * - 취소 확인 모달을 열고, 확인 시 `onCancelSuccess`를 호출합니다.
 	 * @returns {void}
 	 */
 	const handleCancelClick = () => {
-		openModal(<CancelConfirmModal gatheringId={gathering.id} onSuccess={onCancelSuccess} />);
+		openModal(<CancelConfirmModal onConfirm={() => onCancelSuccess(gathering.id)} />);
 	};
 
 	/**

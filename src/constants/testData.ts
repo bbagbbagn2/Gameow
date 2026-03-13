@@ -21,3 +21,10 @@ export const DEFAULT_SIGNIN_FORM_VALUES = {
 	id: 'viscacha@email.com',
 	password: 'viscacha88'
 };
+
+/**
+ * 테스트 댐미
+ */
+export function testDummy() {
+	return 'test';
+}

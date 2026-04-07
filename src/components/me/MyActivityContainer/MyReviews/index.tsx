@@ -1,12 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { getJoinedGathering } from '@/apis/gatherings/joined';
-import { getReviews } from '@/apis/reviews/reviews';
+import { useQueryClient } from '@tanstack/react-query';
+import { useWritableReviews, useWrittenReviews } from './hooks';
 import { useUserStore } from '@/stores/user';
 import type { JoinedGathering } from '@/types/response/gatherings';
-import type { ReviewResponse, GetReviewsResponse } from '@/types/response/reviews';
 import WritableReviewCard from './WritableReviewCard';
 import WrittenReviewCard from './WrittenReviewCard';
 import NoDataMessage from '../../../commons/NoDataMessage/NoDataMessage';
@@ -21,27 +19,15 @@ import Chip from '@/components/commons/Chip';
  *
  * @returns {JSX.Element} 나의 리뷰 탭 UI
  *
- * TODO:
- * - 현재 내부 fetch 함수의 catch 블록에서 `console.error`로만 처리하고 있습니다.
- *   추후 `BasicPopup` 같은 UI로 에러를 알려줄 예정입니다.
  */
 export default function MyReviews() {
 	const { user } = useUserStore();
 	const queryClient = useQueryClient();
 	const [activeTab, setActiveTab] = useState<'writable' | 'written'>('writable');
 
-	const { data: writableReviewsData = [] } = useQuery<JoinedGathering[]>({
-		queryKey: ['writableReviews', user?.userId],
-		queryFn: () => getJoinedGathering({ completed: true, reviewed: false }),
-		enabled: !!user,
-		select: g => g.filter(gathering => gathering.canceledAt === null)
-	});
+	const { data: writableReviewsData = [] } = useWritableReviews(user?.userId);
 
-	const { data: writtenReviewsData = [] } = useQuery<ReviewResponse[]>({
-		queryKey: ['writtenReviews', user?.userId],
-		queryFn: () => getReviews({ userId: user!.userId }).then((res: GetReviewsResponse) => res.data),
-		enabled: !!user
-	});
+	const { data: writtenReviewsData = [] } = useWrittenReviews(user?.userId);
 	/**
 	 * 리뷰 작성 성공 시 해당 모임의 isReviewed를 true로 업데이트
 	 * @param gatheringId 리뷰 작성 완료한 모임 ID
@@ -50,9 +36,6 @@ export default function MyReviews() {
 		if (!user) return;
 
 		try {
-			// Note: actual POST is performed by ReviewWriteModal.
-			// Here we update the react-query cache so the UI reflects the new state
-			// and trigger a refetch of the written reviews.
 			queryClient.setQueryData<JoinedGathering[]>(
 				['writableReviews', user.userId],
 				old => old?.filter(g => g.id !== gatheringId) ?? []

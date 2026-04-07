@@ -1,7 +1,6 @@
 import { useState } from 'react';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { getJoinedGathering } from '@/apis/gatherings/joined';
-import { useErrorHandler } from '@/hooks/useErrorHandler';
+import { useQueryClient } from '@tanstack/react-query';
+import { useJoinedGatherings } from './hooks';
 import type { JoinedGathering } from '@/types/response/gatherings';
 import GatheringCard from './GatheringCard';
 import NoDataMessage from '../../../commons/NoDataMessage/NoDataMessage';
@@ -32,7 +31,6 @@ import Chip from '@/components/commons/Chip';
 
 export default function JoinedGatherings() {
 	const queryClient = useQueryClient();
-	const { handleError } = useErrorHandler();
 	const [showFilteredOnly, setShowFilteredOnly] = useState(false);
 
 	/**
@@ -40,17 +38,7 @@ export default function JoinedGatherings() {
 	 * - queryKey: ['joinedGatherings'] 로 캐싱/무효화에 사용됩니다.
 	 * - queryFn: API에서 참여한 모임을 불러오고 취소된 모임을 뒤로 보냅니다.
 	 */
-	const { data: gatherings = [], isLoading } = useQuery<JoinedGathering[]>({
-		queryKey: ['joinedGatherings'],
-		queryFn: async () => {
-			try {
-				return await getJoinedGathering({ sortBy: 'dateTime', sortOrder: 'asc' });
-			} catch (err) {
-				handleError(err);
-				throw err;
-			}
-		}
-	});
+	const { data: gatherings = [], isLoading } = useJoinedGatherings();
 
 	if (isLoading) return <GatheringSkeleton />;
 
@@ -114,6 +102,7 @@ export default function JoinedGatherings() {
 					))}
 				</ul>
 			)}
+			{/* pagination handled in hook (future) */}
 		</div>
 	);
 }

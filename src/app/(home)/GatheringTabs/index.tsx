@@ -4,10 +4,11 @@ import Chip from '@/components/commons/Chip';
 import Tab from '@/components/commons/Tab';
 import { SUB_TYPE_OPTIONS, TYPE_OPTIONS } from '@/constants/options';
 import { Dispatch, SetStateAction, useLayoutEffect, useState } from 'react';
+import { cn } from '@/utils/cn';
 
 interface GatheringTabsProps {
 	/** 상위 컴포넌트에 선택된 모임 유형을 전달하는 함수 */
-	setSelectedType: Dispatch<SetStateAction<string>>;
+	setSelectedType: (type: string) => void;
 	/** 탭 오른쪽에 표시할 버튼 요소 (예: '모임 만들기' 버튼) */
 	button: React.ReactNode;
 }
@@ -24,23 +25,29 @@ export default function GatheringTabs({ setSelectedType, button }: GatheringTabs
 	const [type, setType] = useState<string>(DEFAULT_TYPE);
 	const [subType, setSubType] = useState<string>(DEFAULT_TYPE);
 
-	useLayoutEffect(() => {
-		setSelectedType(type);
-		if (type === DEFAULT_TYPE) setSubType(DEFAULT_TYPE);
-	}, [type, setSelectedType]);
+	const handleTypeChange = (newType: string) => {
+		setType(newType);
+		if (newType === DEFAULT_TYPE) {
+			setSubType(DEFAULT_TYPE);
+			setSelectedType(DEFAULT_TYPE);
+		} else {
+			setSelectedType(newType);
+		}
+	};
 
-	useLayoutEffect(() => {
-		setSelectedType(subType);
-	}, [subType, setSelectedType]);
+	const handleSubTypeChange = (newSubType: string) => {
+		setSubType(newSubType);
+		setSelectedType(newSubType);
+	};
 
 	return (
-		<div className="flex flex-col gap-4">
+		<div className="flex flex-col gap-6">
 			<div className="flex items-center justify-between">
-				<Tab options={TYPE_OPTIONS} selectedTab={type} onTabChange={setType} />
+				<Tab options={TYPE_OPTIONS} selectedTab={type} onTabChange={handleTypeChange} />
 				{button}
 			</div>
-			{/* TODO: Activity로 변경 */}
-			<div className="flex gap-2">
+			
+			<div className="flex flex-wrap gap-2">
 				{type === DEFAULT_TYPE ? (
 					SUB_TYPE_OPTIONS.map(({ value, text, icon }) => (
 						<Chip
@@ -48,7 +55,7 @@ export default function GatheringTabs({ setSelectedType, button }: GatheringTabs
 							text={text}
 							isActive={subType === value}
 							imgUrl={icon}
-							onClick={() => setSubType(value as string)}
+							onClick={() => handleSubTypeChange(value as string)}
 						/>
 					))
 				) : (
@@ -58,3 +65,6 @@ export default function GatheringTabs({ setSelectedType, button }: GatheringTabs
 		</div>
 	);
 }
+
+
+

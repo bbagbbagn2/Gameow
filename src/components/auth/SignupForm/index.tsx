@@ -46,8 +46,8 @@ export function SignupForm({ onSubmit }: SignupFormProps) {
 	});
 
 	return (
-		<form className="flex w-full flex-col gap-10" onSubmit={handleSubmit(onSubmit)}>
-			<div className="flex w-full flex-col gap-6">
+		<form className="flex w-full flex-col gap-6" onSubmit={handleSubmit(onSubmit)}>
+			<div className="flex w-full flex-col gap-4">
 				<DebouncedInput
 					label={SIGNUP_LABEL.name}
 					placeholder={SIGNUP_PLACEHOLDERS.name}
@@ -86,17 +86,17 @@ export function SignupForm({ onSubmit }: SignupFormProps) {
 					onDebouncedBlur={() => trigger('confirm')}
 				/>
 			</div>
-			<div className="flex w-full flex-col gap-6">
+			<div className="mt-2 flex w-full flex-col gap-3">
 				<BasicButton isLarge isActive={isValid && !isSubmitting && isDirty} ariaLabel="회원가입 확인">
-					확인
+					Continue
 				</BasicButton>
-				<div className="flex items-center justify-center gap-1">
-					<p className="text-base font-medium text-gray-100">{AUTH_GUIDE_MESSAGES.EXISTING_MEMBER}</p>
-					<Link href="/signin" className="text-primary-600 underline">
-						로그인
+				<div className="mt-1 flex items-center justify-start">
+					<Link href="/signin" className="text-primary-400 text-xs font-bold hover:underline">
+						이미 계정이 있나요?
 					</Link>
 				</div>
 			</div>
 		</form>
 	);
 }
+

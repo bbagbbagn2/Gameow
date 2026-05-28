@@ -12,9 +12,10 @@ interface NoDataMessageProps {
  */
 export default function NoDataMessage({ text }: NoDataMessageProps) {
 	return (
-		<div className="flex h-full flex-1 flex-col items-center justify-center">
-			<Image src={PROFILE_PATHS.NO_DATA_SRC} alt="데이터 없음 이미지" width={171} height={136} />
-			<p className="text-sm text-white text-shadow-white">{text}</p>
+		<div className="flex min-h-[200px] flex-1 flex-col items-center justify-center gap-4 opacity-50">
+			<Image src={PROFILE_PATHS.NO_DATA_SRC} alt="데이터 없음" width={120} height={100} className="grayscale" />
+			<p className="text-discord-muted text-base font-medium">{text}</p>
 		</div>
 	);
 }
+

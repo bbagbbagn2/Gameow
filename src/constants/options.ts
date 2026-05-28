@@ -7,9 +7,9 @@ export const TYPE_OPTIONS: TabOption[] = [
 ] as const;
 
 export const TABS: TabOption[] = [
-	{ value: 'JoinedGathering', text: '나의 크루' },
-	{ value: 'MyReview', text: '나의 리뷰' },
-	{ value: 'CreatedGathering', text: '내가 만든 크루' }
+	{ value: 'JoinedGathering', text: '나의 크루', icon: '/icons/heart_to_heart.svg' },
+	{ value: 'MyReview', text: '나의 리뷰', icon: '/icons/edit.svg' },
+	{ value: 'CreatedGathering', text: '내가 만든 크루', icon: '/icons/plus_gathering.svg' }
 ] as const;
 
 export const SUB_TYPE_OPTIONS: TabOption[] = [

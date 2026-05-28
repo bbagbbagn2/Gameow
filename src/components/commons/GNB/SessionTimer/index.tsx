@@ -12,13 +12,11 @@ export default function SessionTimer() {
 	if (!formattedTime) return null;
 
 	return (
-		<div
-			className={cn(
-				'text-primary-100 mb:text-sm flex items-center justify-between gap-0.5 text-center text-xs font-semibold',
-				'[text-shadow:0_0_2px_#b3b3b3,0_0_4px_#b3b3b3,0_0_8px_#b3b3b3,0_0_16px_#b3b3b3,0_0_20px_#b3b3b3]'
-			)}>
-			<Image priority src="/icons/clock.svg" alt="시계 아이콘" width={24} height={24} />
-			{formattedTime}
+		<div className="bg-discord-card/50 flex items-center gap-2 rounded-full border border-white/5 px-3 py-1.5 transition-colors hover:bg-discord-hover">
+			<Image priority src="/icons/clock.svg" alt="시계" width={16} height={16} className="opacity-60 brightness-0 invert" />
+			<span className="text-primary-400 text-xs font-black tracking-widest tabular-nums uppercase">
+				{formattedTime}
+			</span>
 		</div>
 	);
 }

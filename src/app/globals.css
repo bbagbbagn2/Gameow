@@ -9,6 +9,14 @@
 	--color-white: #ffffff;
 	--color-root: #00010d;
 
+	/* Discord 스타일 다크 테마 컬러 */
+	--color-discord-bg: #1e1f22;
+	--color-discord-surface: #2b2d31;
+	--color-discord-card: #313338;
+	--color-discord-hover: #35373c;
+	--color-discord-text: #dbdee1;
+	--color-discord-muted: #949ba4;
+
 	/* 커스텀 컬러색상  */
 	--color-primary-50: #e6fffa;
 	--color-primary-100: #b2fff3;
@@ -36,8 +44,6 @@
 	--color-gray-800: #1f2937;
 	--color-gray-900: #111827;
 	--color-gray-950: #030712;
-
-	/* 커스텀 폰트 설정 */
 
 	/* 사이즈 */
 	--text-xs: 12px;
@@ -139,80 +145,38 @@ input[type='number']::-webkit-outer-spin-button {
 
 :root {
 	--radius: 0.625rem;
-	--background: oklch(1 0 0);
-	--foreground: oklch(0.145 0 0);
-	--card: oklch(1 0 0);
-	--card-foreground: oklch(0.145 0 0);
-	--popover: oklch(1 0 0);
-	--popover-foreground: oklch(0.145 0 0);
-	--primary: oklch(0.205 0 0);
-	--primary-foreground: oklch(0.985 0 0);
-	--secondary: oklch(0.97 0 0);
-	--secondary-foreground: oklch(0.205 0 0);
-	--muted: oklch(0.97 0 0);
-	--muted-foreground: oklch(0.556 0 0);
-	--accent: oklch(0.97 0 0);
-	--accent-foreground: oklch(0.205 0 0);
-	--destructive: oklch(0.577 0.245 27.325);
-	--border: oklch(0.922 0 0);
-	--input: oklch(0.922 0 0);
-	--ring: oklch(0.708 0 0);
-	--chart-1: oklch(0.646 0.222 41.116);
-	--chart-2: oklch(0.6 0.118 184.704);
-	--chart-3: oklch(0.398 0.07 227.392);
-	--chart-4: oklch(0.828 0.189 84.429);
-	--chart-5: oklch(0.769 0.188 70.08);
-	--sidebar: oklch(0.985 0 0);
-	--sidebar-foreground: oklch(0.145 0 0);
-	--sidebar-primary: oklch(0.205 0 0);
-	--sidebar-primary-foreground: oklch(0.985 0 0);
-	--sidebar-accent: oklch(0.97 0 0);
-	--sidebar-accent-foreground: oklch(0.205 0 0);
-	--sidebar-border: oklch(0.922 0 0);
-	--sidebar-ring: oklch(0.708 0 0);
+	--background: #1e1f22;
+	--foreground: #dbdee1;
+	--card: #2b2d31;
+	--card-foreground: #dbdee1;
+	--popover: #2b2d31;
+	--popover-foreground: #dbdee1;
+	--primary: #05f2db;
+	--primary-foreground: #00010d;
+	--secondary: #313338;
+	--secondary-foreground: #dbdee1;
+	--muted: #313338;
+	--muted-foreground: #949ba4;
+	--accent: #35373c;
+	--accent-foreground: #dbdee1;
+	--destructive: #f23f42;
+	--border: #1e1f22;
+	--input: #1e1f22;
+	--ring: #05f2db;
 }
 
 .dark {
-	--background: oklch(0.145 0 0);
-	--foreground: oklch(0.985 0 0);
-	--card: oklch(0.205 0 0);
-	--card-foreground: oklch(0.985 0 0);
-	--popover: oklch(0.205 0 0);
-	--popover-foreground: oklch(0.985 0 0);
-	--primary: oklch(0.922 0 0);
-	--primary-foreground: oklch(0.205 0 0);
-	--secondary: oklch(0.269 0 0);
-	--secondary-foreground: oklch(0.985 0 0);
-	--muted: oklch(0.269 0 0);
-	--muted-foreground: oklch(0.708 0 0);
-	--accent: oklch(0.269 0 0);
-	--accent-foreground: oklch(0.985 0 0);
-	--destructive: oklch(0.704 0.191 22.216);
-	--border: oklch(1 0 0 / 10%);
-	--input: oklch(1 0 0 / 15%);
-	--ring: oklch(0.556 0 0);
-	--chart-1: oklch(0.488 0.243 264.376);
-	--chart-2: oklch(0.696 0.17 162.48);
-	--chart-3: oklch(0.769 0.188 70.08);
-	--chart-4: oklch(0.627 0.265 303.9);
-	--chart-5: oklch(0.645 0.246 16.439);
-	--sidebar: oklch(0.205 0 0);
-	--sidebar-foreground: oklch(0.985 0 0);
-	--sidebar-primary: oklch(0.488 0.243 264.376);
-	--sidebar-primary-foreground: oklch(0.985 0 0);
-	--sidebar-accent: oklch(0.269 0 0);
-	--sidebar-accent-foreground: oklch(0.985 0 0);
-	--sidebar-border: oklch(1 0 0 / 10%);
-	--sidebar-ring: oklch(0.556 0 0);
+	--background: #1e1f22;
+	--foreground: #dbdee1;
 }
 
 @layer base {
 	* {
-		@apply outline-ring/50 box-border;
+		@apply box-border;
 		@apply select-none;
 	}
 	body {
-		@apply bg-background text-foreground;
+		@apply bg-discord-bg text-discord-text;
 		font-family: var(--font-pretendard);
 	}
 }
@@ -231,87 +195,25 @@ input[type='number']::-webkit-outer-spin-button {
 	animation: heart-bounce 0.6s ease-in-out infinite;
 }
 
-@keyframes shadowFade {
-	0% {
-		box-shadow: 0 0 0 rgba(95, 247, 230, 0);
-	}
-	50% {
-		box-shadow: 0 0 50px rgba(95, 247, 230, 0.4);
-	}
-	100% {
-		box-shadow: 0 0 0 rgba(95, 247, 230, 0);
-	}
-}
-
-.animate-shadow-fade {
-	animation: shadowFade 4s ease-in-out infinite;
-	/* 아이콘 글로우 효과 */
-
-	.icon-glow {
-		filter: drop-shadow(0 0 4px #1ef5d7) drop-shadow(0 0 10px #1ef5d7) !important;
-	}
-
-	.group:hover .icon-glow-hover:not(.icon-glow) {
-		filter: drop-shadow(0 0 4px #1ef5d7) drop-shadow(0 0 10px #1ef5d7) !important;
-	}
-}
-
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus {
-	-webkit-box-shadow: 0 0 0px 1000px #0d0d15 inset !important;
-	-webkit-text-fill-color: var(--color-white) !important;
+	-webkit-box-shadow: 0 0 0px 1000px #1e1f22 inset !important;
+	-webkit-text-fill-color: var(--color-discord-text) !important;
 }
 
 @layer utilities {
-	:root {
-		--glow-primary: var(--color-primary-500);
-		--glow-accent: var(--color-highlight);
-		--glow-gray: #b3b3b3;
+	.discord-card {
+		@apply bg-discord-surface rounded-lg overflow-hidden;
 	}
-
-	.box-shadow-primary {
-		box-shadow:
-			0 0 2px var(--glow-primary),
-			0 0 4px var(--glow-primary),
-			0 0 8px var(--glow-primary),
-			0 0 16px var(--glow-primary),
-			0 0 32px var(--glow-primary);
+	.discord-item {
+		@apply bg-discord-card hover:bg-discord-hover transition-colors rounded-md;
 	}
-
-	.box-shadow-accent {
-		box-shadow:
-			0 0 2px var(--glow-accent),
-			0 0 4px var(--glow-accent),
-			0 0 8px var(--glow-accent),
-			0 0 16px var(--glow-accent),
-			0 0 32px var(--glow-accent);
+	.text-muted {
+		@apply text-discord-muted;
 	}
-
-	.box-shadow-white {
-		box-shadow:
-			0 0 2px var(--glow-gray),
-			0 0 4px var(--glow-gray),
-			0 0 8px var(--glow-gray),
-			0 0 16px var(--glow-gray),
-			0 0 32px var(--glow-gray);
-	}
-
-	.text-shadow-primary {
-		text-shadow:
-			0 0 2px var(--glow-primary),
-			0 0 4px var(--glow-primary),
-			0 0 8px var(--glow-primary),
-			0 0 16px var(--glow-primary),
-			0 0 32px var(--glow-primary);
-	}
-
-	.text-shadow-white {
-		text-shadow:
-			0 0 2px var(--glow-gray),
-			0 0 4px var(--glow-gray),
-			0 0 8px var(--glow-gray),
-			0 0 16px var(--glow-gray),
-			0 0 32px var(--glow-gray);
+	.accent-glow {
+		box-shadow: 0 0 15px rgba(5, 242, 219, 0.3);
 	}
 }
+

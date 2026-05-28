@@ -66,7 +66,11 @@ export default function BasicDropbox({
 	return (
 		<div
 			ref={ref}
-			className={`z-floating absolute right-0 mt-1 max-h-60 ${isLarge ? 'w-full' : 'w-[110px]'} bg-root overflow-y-auto rounded-[12px] border-2 border-gray-200 shadow-xl ${className}`}
+			className={cn(
+				'z-floating bg-discord-surface border-white/10 absolute right-0 mt-2 max-h-60 overflow-y-auto rounded-lg border p-1 shadow-2xl',
+				isLarge ? 'w-full' : 'w-48',
+				className
+			)}
 			role="listbox"
 			aria-label="옵션 목록">
 			{options.map(option => (
@@ -74,19 +78,15 @@ export default function BasicDropbox({
 					key={`${option.value}-${option.text}`}
 					type="button"
 					className={cn(
-						'hover:text-primary-400 w-full p-[4px] text-white',
-						'[text-shadow:0_0_4px_#e6fffa,0_0_0px_#e6fffa,0_0_0px_#e6fffa,0_0_40px_#e6fffa]',
-						'hover:[text-shadow:0_0_4px_#1ef5d7,0_0_0px_#1ef5d7,0_0_0px_#1ef5d7,0_0_40px_#1ef5d7]',
-						'first:rounded-t-[12px] last:rounded-b-[12px] hover:cursor-pointer'
+						'flex w-full cursor-pointer items-center rounded px-2 py-2 text-sm font-semibold transition-colors',
+						selectedValue === option.value
+							? 'bg-primary-500 text-discord-bg'
+							: 'text-discord-muted hover:bg-primary-500/10 hover:text-primary-400'
 					)}
 					onClick={() => handleSelect(option.value)}
 					role="option"
-					aria-selected={selectedValue === option.value}
-					aria-label={`${option.value}-${option.text}`}>
-					<div
-						className={`rounded-[12px] py-[6px] pl-[8px] text-left text-[14px] ${selectedValue === option.value ? 'text-primary-400 font-medium' : ''}`}>
-						{option.text}
-					</div>
+					aria-selected={selectedValue === option.value}>
+					{option.text}
 				</button>
 			))}
 		</div>

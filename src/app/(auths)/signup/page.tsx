@@ -28,20 +28,8 @@ import { ApiError } from '@/utils/fetch';
 export default function SignupPage() {
 	const { openModal } = useModal();
 
-	/**
-	 * 회원가입 폼 제출 핸들러
-	 *
-	 * @async
-	 * @param {SignupFormValues} data - 폼 입력값 (이메일, 비밀번호 등)
-	 *
-	 * @description
-	 * - `postSignup()` API 호출을 통해 회원가입을 시도합니다.
-	 * - 성공 시 `SignupSuccessPopup` 모달을 띄웁니다.
-	 * - 실패 시 `ApiError` 여부를 판단해 `SignupFailurePopup` 모달을 띄웁니다.
-	 */
 	const onSubmit = async (data: SignupFormValues) => {
 		try {
-			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			const { confirm, ...signupData } = data;
 			await postSignup(signupData);
 			openModal(<SignupSuccessPopup />);
@@ -53,16 +41,10 @@ export default function SignupPage() {
 	};
 
 	return (
-		<>
+		<div className="flex flex-col">
 			<h1 className="sr-only">GAMEOW 회원가입 페이지</h1>
-			<h2
-				className={cn(
-					'tb:text-2xl text-primary-500 text-center text-xl font-semibold',
-					'[text-shadow:0_0_1px_#5ff7e6,0_0_0px_#5ff7e6,0_0_0px_#5ff7e6,0_0_10px_#5ff7e6]'
-				)}>
-				회원가입
-			</h2>
 			<SignupForm onSubmit={onSubmit} />
-		</>
+		</div>
 	);
 }
+

@@ -86,9 +86,6 @@ export default function Tab({ options, selectedTab, onTabChange, className }: Ta
 	const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
 	useEffect(() => {
-		/**
-		 * 선택된 탭의 위치에 따라 인디케이터의 위치와 너비를 업데이트
-		 */
 		const updateIndicator = () => {
 			const selectedIndex = options.findIndex(option => option.value === selectedTab);
 			if (selectedIndex !== -1 && tabRefs.current[selectedIndex]) {
@@ -105,7 +102,6 @@ export default function Tab({ options, selectedTab, onTabChange, className }: Ta
 			}
 		};
 
-		// 초기 설정 및 윈도우 리사이즈 시 업데이트
 		updateIndicator();
 		window.addEventListener('resize', updateIndicator);
 
@@ -113,9 +109,8 @@ export default function Tab({ options, selectedTab, onTabChange, className }: Ta
 	}, [selectedTab, options]);
 
 	return (
-		<div className={`relative ${className}`}>
-			{/* 피그마에 gap이 12px로 되어있어서 수정 */}
-			<div className="flex gap-3">
+		<div className={`relative border-b border-white/5 ${className}`}>
+			<div className="flex gap-6">
 				{options.map((option, index) => (
 					<button
 						key={option.value}
@@ -124,22 +119,36 @@ export default function Tab({ options, selectedTab, onTabChange, className }: Ta
 						}}
 						onClick={() => onTabChange(option.value)}
 						className={cn(
-							'hover:text-primary-400 relative mb-1 flex cursor-pointer items-center gap-1 pb-[3px] text-sm hover:font-extrabold',
-							'hover:[text-shadow:0_0_2px_#1ef5d7,0_0_4px_#1ef5d7,0_0_8px_#1ef5d7]',
-							'group font-medium transition-colors duration-200',
-							`${selectedTab === option.value ? 'text-shadow-primary font-extrabold text-white' : 'text-gray-400'}`
+							'relative flex cursor-pointer items-center gap-2 pb-3 text-sm transition-all duration-200',
+							'group font-semibold',
+							`${selectedTab === option.value ? 'text-white' : 'text-discord-muted hover:text-discord-text'}`
 						)}>
-						<span className="font-semibol mb:text-lg text-sm">{option.text}</span>
-
-						{/* SVG를 컴포넌트로 동적 로드하여 글로우 효과 적용 */}
-						{option.icon && <IconWithGlow iconUrl={option.icon} isSelected={selectedTab === option.value} />}
+						<span className="text-base">{option.text}</span>
+						{option.icon && (
+							<span
+								className={cn(
+									'h-4 w-4 transition-colors',
+									selectedTab === option.value ? 'bg-primary-500' : 'bg-discord-muted group-hover:bg-discord-text'
+								)}
+								style={{
+									WebkitMaskImage: `url(${option.icon})`,
+									maskImage: `url(${option.icon})`,
+									WebkitMaskRepeat: 'no-repeat',
+									maskRepeat: 'no-repeat',
+									WebkitMaskPosition: 'center',
+									maskPosition: 'center',
+									WebkitMaskSize: 'contain',
+									maskSize: 'contain'
+								}}
+							/>
+						)}
 					</button>
 				))}
 			</div>
 
 			{/* 애니메이션 막대 */}
 			<div
-				className="box-shadow-primary absolute bottom-0 h-0.5 bg-white transition-all duration-300 ease-out"
+				className="absolute bottom-0 h-0.5 bg-primary-500 transition-all duration-300 ease-out"
 				style={{
 					left: `${indicatorStyle.left}px`,
 					width: `${indicatorStyle.width}px`
@@ -148,3 +157,4 @@ export default function Tab({ options, selectedTab, onTabChange, className }: Ta
 		</div>
 	);
 }
+

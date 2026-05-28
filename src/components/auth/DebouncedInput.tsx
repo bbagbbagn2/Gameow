@@ -3,6 +3,8 @@ import Image from 'next/image';
 import { useEffect, useMemo, useState } from 'react';
 import { UseFormRegisterReturn } from 'react-hook-form';
 
+import { cn } from '@/utils/cn';
+
 export interface InputProps {
 	/** 입력창의 placeholder 텍스트 */
 	placeholder: string;
@@ -59,47 +61,50 @@ export default function DebouncedInput({
 		register?.onBlur?.(e);
 	};
 
-	const getBorderClass = () => {
-		if (invalidText && isFocused) return 'border-highlight shadow-highlight/50 shadow-lg';
-		if (invalidText) return 'border-highlight';
-		if (isFocused) return 'border-primary-300 shadow-primary-500/50 shadow-lg';
-		return 'border-primary-300';
-	};
-
 	useEffect(() => {
 		return () => debouncedBlur.cancel();
 	}, [debouncedBlur]);
 
 	return (
 		<div className="flex w-full flex-col gap-2">
-			<label className="text-primary-50 text-sm font-semibold" htmlFor={label}>
+			<label className="text-discord-muted text-xs font-black tracking-wide uppercase" htmlFor={label}>
 				{label}
+				{invalidText && <span className="text-destructive ml-1 lowercase font-medium italic">- {invalidText}</span>}
 			</label>
 			<div
-				className={`mb:h-11 inputBox bg-root box-border flex h-10 w-full items-center justify-between rounded-[12px] border-2 px-[16px] py-[10px] text-white placeholder-gray-300 focus:outline-none ${getBorderClass()} ${className}`}>
+				className={cn(
+					'bg-discord-bg relative flex w-full items-center justify-between rounded px-3 py-2.5 transition-all border border-transparent',
+					isFocused ? 'ring-2 ring-primary-500/20 border-primary-500' : '',
+					invalidText && !isFocused ? 'border-destructive' : '',
+					className
+				)}>
 				<input
 					id={label}
 					type={isPassword ? (isShowPw ? 'text' : 'password') : 'text'}
 					placeholder={placeholder}
-					className="w-full bg-transparent outline-none"
+					className="text-discord-text w-full bg-transparent text-sm font-medium outline-none placeholder:text-discord-muted/40"
 					{...register}
 					onFocus={handleFocus}
 					onBlur={handleBlur}
 					onChange={handleChange}
 				/>
 				{isPassword && (
-					<Image
-						src={`/icons/visibility_${isShowPw ? 'on' : 'off'}.svg`}
-						width="20"
-						height="20"
-						alt="password visible toggle button"
+					<button
+						type="button"
 						onClick={() => setIsShowPw(prev => !prev)}
-						className="cursor-pointer"
-					/>
+						className="ml-2 flex items-center justify-center opacity-60 transition-opacity hover:opacity-100">
+						<Image
+							src={`/icons/visibility_${isShowPw ? 'on' : 'off'}.svg`}
+							width="20"
+							height="20"
+							alt="toggle password"
+							className="brightness-0 invert"
+						/>
+					</button>
 				)}
 				{children}
 			</div>
-			{invalidText && <div className="text-highlight text-sm">{invalidText}</div>}
 		</div>
 	);
 }
+

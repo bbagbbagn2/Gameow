@@ -30,10 +30,6 @@ export default function GNB() {
 	const { isAuthenticated } = useAuth();
 	const screenSize = useScreenSize();
 
-	/**
-	 * 드롭다운 메뉴 클릭 시 실행되는 함수
-	 * @param value - 선택된 메뉴 옵션의 value
-	 */
 	const handleDropdownMenuClick = async (value: string | number) => {
 		if (value === DROPDOWN_MENU_OPTIONS[0].value) {
 			router.push('/me');
@@ -48,55 +44,46 @@ export default function GNB() {
 		}
 
 		router.replace('/');
-		// TODO: 이게 최선인가? 시간되면 useTransition 시도해보기
 		setTimeout(async () => {
 			await postSignout();
-			// TODO: 추후에 단일 스토어들 합쳐서 사용
 			signoutToken();
 			signoutUser();
 		}, 800);
 	};
 
-	/**
-	 * 로그인 버튼 클릭 시 실행되는 함수
-	 * 현재 경로(pathname)를 쿼리 파라미터로 전달하여 로그인 후 리다이렉트 가능하게 함
-	 */
 	const handleSigninClick = () => {
 		if (pathname === '/signin') return;
 		const path = pathname !== '/' ? '/signin?redirectTo=' + encodeURIComponent(pathname) : '/signin';
 		router.push(path);
 	};
 
-	// TODO: 구조 정리하기
 	return (
-		<header className="z-layout bg-root sticky top-0 w-full">
-			<div className="mb:px-6 mb:h-15 flex h-14 w-full items-center justify-center px-4">
+		<header className="z-layout bg-discord-bg/80 sticky top-0 w-full border-b border-white/5 backdrop-blur-md">
+			<div className="mb:px-6 mb:h-16 flex h-14 w-full items-center justify-center px-4">
 				<div className="tb:max-w-300 flex w-full items-center justify-between">
-					<div className="mb:gap-6 flex items-center gap-5">
-						<h1 className="tb:w-38 tb:h-7 relative h-10 w-12">
-							<Link href="/">
+					<div className="flex items-center gap-8">
+						<h1 className="relative h-8 w-32">
+							<Link href="/" className="flex items-center gap-2">
 								<Image
 									priority
 									src={screenSize === 'desktop' ? '/images/text_logo.svg' : '/images/profile_logo.svg'}
 									alt="GAMEOW"
-									fill
-									className="object-cover"
+									width={screenSize === 'desktop' ? 120 : 32}
+									height={32}
+									className="object-contain brightness-0 invert"
 								/>
 							</Link>
 						</h1>
-						<nav className="mb:text-base mb:gap-6 flex items-center gap-3 text-sm leading-none font-semibold">
+						<nav className="hidden items-center gap-1 tb:flex">
 							{NAVBAR_MENU_LINKS.map(({ href, label }) => (
 								<Link
 									key={href}
 									href={href}
-									// TODO: shadow 따로 뺴기
 									className={cn(
-										'hover:text-highlight align-middle transition-all',
-										'[text-shadow:0_0_4px_#e6fffa,0_0_0px_#e6fffa,0_0_0px_#e6fffa,0_0_40px_#e6fffa]',
-										'hover:[text-shadow:0_0_4px_#e34dfd,0_0_0px_#e34dfd,0_0_0px_#e34dfd,0_0_40px_#e34dfd]',
+										'rounded-md px-4 py-2 text-sm font-bold transition-all uppercase tracking-wide',
 										pathname === href
-											? 'text-highlight font-extrabold [text-shadow:0_0_4px_#e34dfd,0_0_0px_#e34dfd,0_0_0px_#e34dfd,0_0_40px_#e34dfd]'
-											: 'text-primary-50'
+											? 'bg-primary-500/10 text-primary-400'
+											: 'text-discord-muted hover:bg-discord-hover hover:text-discord-text'
 									)}>
 									{label}
 								</Link>
@@ -105,41 +92,41 @@ export default function GNB() {
 					</div>
 
 					{isAuthenticated ? (
-						<div className="mb:gap-2 flex items-center justify-between gap-1">
-							<SessionTimer />
+						<div className="flex items-center gap-4">
+							<div className="hidden tb:block">
+								<SessionTimer />
+							</div>
 							<DropdownMenu>
 								<DropdownMenu.Trigger>
-									<div
-										className={`${PROFILE_BOX_GLOW} relative size-[40px] overflow-hidden rounded-full border-2 border-white`}>
-										<Image
-											priority
-											src={user?.image || PROFILE_PATHS.DEFAULT_PROFILE_SRC}
-											alt="프로필 사진"
-											fill
-											className="object-cover"
-										/>
+									<div className="bg-discord-surface group relative size-10 cursor-pointer overflow-hidden rounded-full border border-white/10 p-0.5 transition-all hover:border-primary-500/50">
+										<div className="relative h-full w-full overflow-hidden rounded-full">
+											<Image
+												priority
+												src={user?.image || PROFILE_PATHS.DEFAULT_PROFILE_SRC}
+												alt="프로필 사진"
+												fill
+												className="object-cover"
+											/>
+										</div>
 									</div>
 								</DropdownMenu.Trigger>
 								<DropdownMenu.Content options={DROPDOWN_MENU_OPTIONS} onClick={handleDropdownMenuClick} />
 							</DropdownMenu>
 						</div>
 					) : (
-						// TODO: button or Link로 바꿀지 고민해서 수정
-						<div
-							role="button"
-							tabIndex={0}
+						<button
 							onClick={handleSigninClick}
-							className={cn(
-								'leading-sm mb:leading-base mb:text-base cursor-pointer text-sm font-semibold text-white',
-								'[text-shadow:0_0_4px_#e6fffa,0_0_0px_#e6fffa,0_0_0px_#e6fffa,0_0_40px_#e6fffa]',
-								'hover:text-primary-500 hover:[text-shadow:0_0_4px_#5ff7e6,0_0_0px_#5ff7e6,0_0_0px_#5ff7e6,0_0_40px_#5ff7e6]'
-							)}>
-							로그인
-						</div>
+							className="bg-primary-500 text-discord-bg hover:bg-primary-400 rounded-md px-5 py-2 text-sm font-black transition-all active:scale-95 uppercase tracking-tighter">
+							Login
+						</button>
 					)}
 				</div>
 			</div>
-			<div aria-hidden className="from-primary-500 to-highlight h-1 bg-gradient-to-r"></div>
+			{/* Discord 스타일의 얇고 세련된 프로그레스 바 (선택 사항) */}
+			<div className="bg-primary-500/20 h-[1px] w-full">
+				<div className="bg-primary-500 h-full w-full opacity-50" />
+			</div>
 		</header>
 	);
 }
+

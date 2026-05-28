@@ -1,3 +1,5 @@
+import { cn } from "@/utils/cn";
+
 /**
  * Chip 컴포넌트의 Props 인터페이스
  */
@@ -25,17 +27,17 @@ interface ChipProps {
  */
 export default function Chip({ text, isActive = false, imgUrl, onClick }: ChipProps) {
 	return (
-		<div className="group relative flex cursor-pointer items-center gap-2">
-			{isActive && (
-				<div
-					className={`bg-primary-400 absolute -inset-1 rounded-lg bg-gradient-to-tr opacity-40 blur transition duration-400 group-hover:opacity-100`}></div>
-			)}
-			<div
-				className={`mb:px-[16px] mb:py-[10px] relative box-border flex h-10 cursor-pointer items-center gap-2 rounded-[12px] px-[12px] py-[8px] leading-none transition duration-400 ${isActive ? 'bg-primary-600 text-white' : 'border-2 border-gray-500 text-gray-50'}`}
-				onClick={onClick}>
-				{imgUrl && <img src={imgUrl} alt="" className="h-5 w-5" />}
-				<span className={`text-sm font-medium`}>{text}</span>
-			</div>
-		</div>
+		<button
+			onClick={onClick}
+			className={cn(
+				'flex h-8 cursor-pointer items-center gap-2 rounded-md px-3 py-1 transition-all duration-200',
+				isActive
+					? 'bg-primary-500/10 text-primary-400 border border-primary-500/30'
+					: 'bg-discord-surface text-discord-muted border border-white/5 hover:bg-discord-hover hover:text-discord-text'
+			)}>
+			{imgUrl && <img src={imgUrl} alt="" className="h-4 w-4" />}
+			<span className="text-sm font-bold tracking-tight">{text}</span>
+		</button>
 	);
 }
+

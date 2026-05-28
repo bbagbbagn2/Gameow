@@ -60,8 +60,8 @@ export function SigninForm({ onSubmit }: SigninFormProps) {
 	};
 
 	return (
-		<form className="flex w-full flex-col gap-10" onSubmit={handleSubmit(handleFormSubmit)}>
-			<div className="flex w-full flex-col gap-6">
+		<form className="flex w-full flex-col gap-6" onSubmit={handleSubmit(handleFormSubmit)}>
+			<div className="flex w-full flex-col gap-4">
 				<DebouncedInput
 					label={SIGNIN_LABEL.id}
 					placeholder={SIGNIN_PLACEHOLDERS.id}
@@ -78,17 +78,18 @@ export function SigninForm({ onSubmit }: SigninFormProps) {
 					onDebouncedBlur={() => trigger('password')}
 				/>
 			</div>
-			<div className="flex w-full flex-col gap-6">
+			<div className="mt-2 flex w-full flex-col gap-3">
 				<BasicButton isLarge isActive={isValid && !isSubmitting && isDirty} ariaLabel="로그인 확인">
-					로그인
+					Login
 				</BasicButton>
-				<div className="flex items-center justify-center gap-1">
-					<p className="text-base font-medium text-gray-100">{AUTH_GUIDE_MESSAGES.NEW_MEMBER}</p>
-					<Link href="/signup" className="text-primary-600 underline">
-						회원가입
+				<div className="mt-1 flex items-center justify-start gap-1">
+					<span className="text-discord-muted text-xs font-medium">Need an account?</span>
+					<Link href="/signup" className="text-primary-400 text-xs font-bold hover:underline">
+						Register
 					</Link>
 				</div>
 			</div>
 		</form>
 	);
 }
+

@@ -65,19 +65,13 @@ function SigninPageContent() {
 	};
 
 	return (
-		<>
+		<div className="flex flex-col">
 			<h1 className="sr-only">GAMEOW 로그인 페이지</h1>
-			<h2
-				className={cn(
-					'tb:text-2xl text-primary-500 text-center text-xl font-semibold',
-					'[text-shadow:0_0_1px_#5ff7e6,0_0_0px_#5ff7e6,0_0_0px_#5ff7e6,0_0_10px_#5ff7e6]'
-				)}>
-				로그인
-			</h2>
 			<SigninForm onSubmit={handleSigninAndRedirect} />
-		</>
+		</div>
 	);
 }
+
 // TODO: 빌드 에러에 따른 임시 조치 추후에 다시 코드 검토 필요
 export default function SigninPage() {
 	return (

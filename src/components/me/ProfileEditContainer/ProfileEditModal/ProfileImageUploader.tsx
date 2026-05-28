@@ -22,11 +22,6 @@ export default function ProfileImageUploader({ currentImage, onChange }: Profile
 	const { DEFAULT_PROFILE_SRC, EDIT_ICON_SRC } = PROFILE_PATHS;
 	const fileInputRef = useRef<HTMLInputElement>(null);
 
-	/**
-	 * 파일 입력(Input) 변경 이벤트 핸들러.
-	 * 선택된 파일을 읽어 미리보기 URL을 생성하고 onChange 콜백을 호출합니다.
-	 * @param {React.ChangeEvent<HTMLInputElement>} e - 파일 입력 이벤트 객체
-	 */
 	const handleProfileImage = useCallback(
 		(e: React.ChangeEvent<HTMLInputElement>) => {
 			const selectedFile = e.target.files?.[0];
@@ -55,11 +50,16 @@ export default function ProfileImageUploader({ currentImage, onChange }: Profile
 		<>
 			<button
 				type="button"
-				className="bg-root box-shadow-primary hover:border-primary-500 relative h-16 w-16 cursor-pointer rounded-full border-3 border-white transition-colors duration-200"
+				className="bg-discord-bg group relative h-24 w-24 cursor-pointer rounded-full border border-white/10 p-1 transition-all hover:border-primary-500/50"
 				onClick={handleButtonClick}>
-				<Image src={preview || DEFAULT_PROFILE_SRC} alt="프로필 사진" fill className="rounded-full object-fill" />
-				<div className="box-shadow-primary absolute right-0 bottom-0 flex items-center justify-center rounded-full">
-					<Image src={EDIT_ICON_SRC} alt="프로필 변경 아이콘" width={18} height={18} />
+				<div className="relative h-full w-full overflow-hidden rounded-full">
+					<Image src={preview || DEFAULT_PROFILE_SRC} alt="프로필 사진" fill className="object-cover" />
+					<div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 transition-opacity group-hover:opacity-100">
+						<span className="text-[10px] font-bold text-white">CHANGE</span>
+					</div>
+				</div>
+				<div className="bg-primary-500 absolute right-0 bottom-0 flex h-7 w-7 items-center justify-center rounded-full shadow-lg">
+					<Image src={EDIT_ICON_SRC} alt="변경" width={16} height={16} className="brightness-0" />
 				</div>
 			</button>
 
@@ -67,3 +67,4 @@ export default function ProfileImageUploader({ currentImage, onChange }: Profile
 		</>
 	);
 }
+

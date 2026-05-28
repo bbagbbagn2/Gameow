@@ -51,19 +51,6 @@ export default function SortButton({ options, register, defaultValue, className 
 	);
 
 	useEffect(() => {
-		if (!isOpen) return;
-
-		const handleClickOutside = (event: MouseEvent) => {
-			if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
-				setIsOpen(false);
-			}
-		};
-
-		document.addEventListener('click', handleClickOutside);
-		return () => document.removeEventListener('click', handleClickOutside);
-	}, [isOpen]);
-
-	useEffect(() => {
 		if (currentValue !== undefined && currentValue !== null) {
 			setSelectedValue(currentValue);
 		}
@@ -92,14 +79,11 @@ export default function SortButton({ options, register, defaultValue, className 
 							setIsOpen(!isOpen);
 						}}
 						className={cn(
-							'mb:w-auto mb:px-3 mb:py-2 relative box-border flex w-[36px]',
-							'[text-shadow:0_0_4px_#e6fffa,0_0_0px_#e6fffa,0_0_0px_#e6fffa,0_0_40px_#e6fffa]',
-							'cursor-pointer items-center justify-between gap-[4px] rounded-[12px] border-2',
-							'border-gray-100 p-1.5 text-white',
-							`${className}`
+							'bg-discord-surface border-white/5 hover:bg-discord-hover flex cursor-pointer items-center gap-2 rounded-md border px-3 py-2 transition-all',
+							className
 						)}>
-						<img src="/icons/sort_invert.svg" alt="sort button" className="h-[24px] w-[24px]" />
-						<span className="mb:inline font-gray-800 hidden text-[14px]">{selectedOption && selectedOption.text}</span>
+						<img src="/icons/sort_invert.svg" alt="sort" className="h-5 w-5 brightness-0 invert opacity-60" />
+						<span className="text-discord-text text-sm font-bold">{selectedOption && selectedOption.text}</span>
 					</button>
 				</DropdownMenu.Trigger>
 				<DropdownMenu.Content options={options} onClick={handleSelect} />
@@ -107,3 +91,4 @@ export default function SortButton({ options, register, defaultValue, className 
 		</div>
 	);
 }
+

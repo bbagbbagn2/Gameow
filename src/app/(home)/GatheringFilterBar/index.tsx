@@ -61,13 +61,15 @@ export default function GatheringFilterBar({ setFilterCriteria }: GatheringFilte
 
 	return (
 		<FormProvider {...methods}>
-			<div className="flex w-full flex-col gap-4">
+			<div className="flex w-full flex-col gap-6">
 				<GatheringTabs setSelectedType={setSelectedType} button={<CreateGatheringButton />} />
-				<hr className="bg-primary-500 h-[1px] border-0" />
 
-				<div className="flex w-full justify-between">
-					<div className="flex gap-2">
+				<div className="bg-white/5 h-px w-full" />
+
+				<div className="flex w-full items-center justify-between">
+					<div className="flex items-center gap-3">
 						<SelectBox options={GENRE_OPTIONS} placeholder="장르 전체" onChange={setSelectedLocation} />
+						<div className="bg-white/10 h-6 w-px" />
 						<SearchCalendar date={selectedDate} setDate={setSelectedDate} />
 					</div>
 					<Controller
@@ -93,3 +95,4 @@ export default function GatheringFilterBar({ setFilterCriteria }: GatheringFilte
 		</FormProvider>
 	);
 }
+

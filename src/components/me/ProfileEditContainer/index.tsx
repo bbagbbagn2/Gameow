@@ -28,16 +28,11 @@ import ProfileEditModal from './ProfileEditModal/ProfileEditModal';
  * @returns {JSX.Element} 프로필 카드 UI 및 Modal을 렌더링합니다.
  */
 export default function ProfileEditCard() {
-	const { DEFAULT_PROFILE_SRC, EDIT_ICON_SRC, PROFILE_BACKGROUND_SRC } = PROFILE_PATHS;
+	const { DEFAULT_PROFILE_SRC, EDIT_ICON_SRC } = PROFILE_PATHS;
 	const { openModal } = useModal();
 	const { handleError } = useErrorHandler();
 	const { user, updateUser } = useUserStore();
 
-	/**
-	 * 컴포넌트 마운트 시 최초 사용자 정보를 불러오는 비동기 함수.
-	 * `user` 상태가 null일 때만 실행됩니다.
-	 * @async
-	 */
 	useEffect(() => {
 		const fetchUserInfo = async () => {
 			try {
@@ -50,12 +45,6 @@ export default function ProfileEditCard() {
 		if (!user) fetchUserInfo();
 	}, [user, updateUser, handleError]);
 
-	/**
-	 * 사용자 프로필 정보를 업데이트하는 비동기 콜백 함수.
-	 * ProfileEditModal의 onSubmit으로 전달됩니다.
-	 * @param {ProfileUpdateData} updated - 업데이트할 사용자 정보 객체.
-	 * @async
-	 */
 	const handleUpdateUserInfo = useCallback(
 		async (updated: { companyName?: string; image?: File | null }) => {
 			try {
@@ -68,14 +57,10 @@ export default function ProfileEditCard() {
 		[handleError, updateUser]
 	);
 
-	/**
-	 * 프로필 수정 모달을 여는 콜백 함수.
-	 * 수정 버튼 클릭 시 실행됩니다.
-	 */
 	const handleOpenEditModal = useCallback(() => {
 		openModal(
 			<ProfileEditModal
-				currentCompanyName={user?.companyName}
+				currentNickname={user?.companyName}
 				currentImage={user?.image}
 				onSubmit={handleUpdateUserInfo}
 			/>
@@ -83,58 +68,60 @@ export default function ProfileEditCard() {
 	}, [openModal, user?.companyName, user?.image, handleUpdateUserInfo]);
 
 	return (
-		<section>
-			<div className="tb:mb-7.5 box-shadow-white mb-4 overflow-hidden rounded-3xl border-3 border-white text-white">
-				{/* 프로필 수정 카드 배경 이미지 섹션*/}
-				<div className="relative flex items-center justify-between px-6 py-4 before:absolute before:bottom-1.5 before:left-0 before:h-[2.5px] before:w-full before:bg-white before:content-['']">
-					{/* 배경 이미지 */}
-					<Image
-						src={PROFILE_BACKGROUND_SRC}
-						alt="배경 이미지"
-						width={100}
-						height={38}
-						className="mb:right-[100px] absolute right-15 bottom-[6.5px]"
-					/>
+		<section className="mb-8">
+			<div className="bg-discord-surface relative overflow-hidden rounded-2xl border border-white/5 shadow-2xl">
+				{/* 배너 영역 (민트 그라데이션) */}
+				<div className="h-24 w-full bg-gradient-to-r from-primary-600 to-primary-400 opacity-80" />
 
-					{/* 프로필 사진 표시 영역 */}
-					<div className="bg-root box-shadow-white absolute top-13 h-16 w-16 rounded-full border-3 border-white">
-						<Image
-							src={user?.image || DEFAULT_PROFILE_SRC}
-							alt="프로필 사진 이미지"
-							fill
-							className="h-14 w-14 rounded-full object-fill"
-						/>
+				<div className="relative px-4 pb-4">
+					{/* 프로필 이미지 (배너에 걸침) */}
+					<div className="relative -mt-12 mb-3">
+						<div className="bg-discord-surface h-24 w-24 rounded-full p-1.5 shadow-lg">
+							<div className="relative h-full w-full overflow-hidden rounded-full">
+								<Image
+									src={user?.image || DEFAULT_PROFILE_SRC}
+									alt="프로필 사진"
+									fill
+									className="object-cover"
+								/>
+							</div>
+						</div>
 					</div>
 
-					<p className="z-base font-semibold">{user?.name}&apos;s Profile</p>
-
-					{/* 프로필 수정 버튼 (버튼 클릭 시 모달 오픈) */}
-					<motion.button
-						type="button"
-						onClick={handleOpenEditModal}
-						className="z-base cursor-pointer rounded-full [box-shadow:0_0_14px_rgba(5,242,219,0.9)] transition duration-50"
-						whileHover={{ scale: 1.05, boxShadow: '0 0 10px 2px #05F2DB, 0 0 20px 5px rgba(5,242,219,0.4)' }}
-						whileTap={{ scale: 0.95, boxShadow: '0 0 8px #05F2DB' }}
-						transition={{ type: 'spring', stiffness: 400, damping: 10 }}>
-						<Image src={EDIT_ICON_SRC} alt="회사명 수정 이미지" width={32} height={32} />
-					</motion.button>
-				</div>
-
-				{/* 프로필 정보 섹션*/}
-				<div>
-					<dl className="pt-4 pb-4.5 pl-28">
-						<div className="flex gap-2 text-sm">
-							<dt className="font-medium">E-mail.</dt>
-							<dd className="font-normal opacity-80">{user?.email}</dd>
+					{/* 유저 정보 및 수정 버튼 */}
+					<div className="bg-discord-bg flex items-start justify-between rounded-xl p-4">
+						<div className="flex flex-col gap-1">
+							<div className="flex items-center gap-2">
+								<h2 className="text-xl font-bold text-white">{user?.name}</h2>
+								<span className="bg-primary-500/10 text-primary-500 rounded px-1.5 py-0.5 text-xs font-bold">
+									GAMER
+								</span>
+							</div>
+							<p className="text-discord-muted text-sm font-medium">{user?.email}</p>
+							<div className="mt-2 flex items-center gap-2">
+								<span className="text-discord-muted text-xs font-bold uppercase tracking-wider">Nickname</span>
+								<p className="text-primary-400 text-sm font-semibold">{user?.companyName || '닉네임 없음'}</p>
+							</div>
 						</div>
-						<div className="flex gap-2 text-sm">
-							<dt className="font-medium">Nickname.</dt>
-							<dd className="font-normal opacity-80">{user?.companyName}</dd>
-						</div>
-					</dl>
+
+						<motion.button
+							type="button"
+							onClick={handleOpenEditModal}
+							className="bg-discord-card hover:bg-discord-hover group flex h-10 w-10 items-center justify-center rounded-full transition-all"
+							whileHover={{ scale: 1.1 }}
+							whileTap={{ scale: 0.9 }}>
+							<Image
+								src={EDIT_ICON_SRC}
+								alt="수정"
+								width={20}
+								height={20}
+								className="opacity-60 transition-opacity group-hover:opacity-100"
+							/>
+						</motion.button>
+					</div>
 				</div>
 			</div>
-			<hr className="box-shadow-primary h-[3px] w-full border-white bg-white" />
 		</section>
 	);
 }
+

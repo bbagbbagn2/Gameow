@@ -2,43 +2,35 @@
 
 export default function CardSkeleton() {
 	return (
-		<div className="tb:gap-0 tb:h-[156px] tb:flex-row flex h-[316px] cursor-pointer flex-col gap-4 overflow-hidden rounded-3xl border-2 border-gray-600 transition-shadow">
-			{/* 이미지 */}
-			<div className="tb:w-[280px] relative block h-[156px] w-full animate-pulse overflow-hidden bg-gray-700">
-				{/* Tag */}
-				<div className="absolute top-0 right-0 h-8 w-[123px] rounded-bl-[12px] bg-gray-600" />
-			</div>
+		<div className="bg-discord-card relative flex flex-col overflow-hidden rounded-xl border border-white/5 shadow-xl animate-pulse">
+			{/* 상단 이미지 영역 */}
+			<div className="bg-discord-surface h-48 w-full shrink-0" />
 
-			{/* 컨텐츠 */}
-			<div className="tb:gap-0 flex flex-1 flex-col gap-5 animate-pulse">
-				<div className="tb:pt-4 tb:pr-4 tb:pb-[21px] tb:pl-6 flex justify-between px-4">
-					<div className="flex flex-col justify-start gap-2">
-						{/* Title & Genre */}
+			{/* 하단 정보 영역 */}
+			<div className="flex flex-1 flex-col p-5">
+				<div className="flex flex-col gap-3">
+					<div className="flex flex-col gap-2">
+						{/* 제목 */}
+						<div className="h-6 w-3/4 rounded bg-discord-surface" />
+						{/* 태그 */}
 						<div className="flex items-center gap-2">
-							<div className="h-5 w-30 rounded bg-gray-600" />
-							<div className="h-5 w-2 rounded bg-gray-600" />
-							<div className="h-4 w-20 rounded bg-gray-600" />
-						</div>
-
-						{/* 날짜 & 시간 ChipInfo */}
-						<div className="flex gap-2">
-							<div className="h-6 w-20 rounded bg-gray-600" />
-							<div className="h-6 w-[70px] rounded bg-gray-600" />
+							<div className="h-4 w-20 rounded bg-discord-surface" />
+							<div className="h-4 w-24 rounded bg-discord-surface" />
 						</div>
 					</div>
 
-					{/* HeartButton */}
-					<div className="size-12 rounded-full border-2 border-gray-600 bg-gray-700" />
+					{/* 인원 정보 */}
+					<div className="h-7 w-24 rounded-full bg-discord-surface" />
 				</div>
 
-				{/* ClassProgressBar */}
-				<div className="tb:px-6 px-4 pt-2 pb-4">
-					<div className="flex flex-col gap-2">
-						<div className="h-[14px] w-20 rounded bg-gray-600" />
-						<div className="h-[6px] w-full rounded-full bg-gray-700" />
-					</div>
+				{/* 버튼 영역 */}
+				<div className="mt-8 flex items-center gap-2">
+					<div className="h-10 flex-1 rounded-md bg-discord-surface" />
+					<div className="h-10 flex-1 rounded-md bg-discord-surface" />
 				</div>
 			</div>
 		</div>
 	);
 }
+
+

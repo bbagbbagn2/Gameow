@@ -22,10 +22,11 @@ export default function CardList({ gatherings }: CardListProps) {
 	};
 
 	return (
-		<div className="flex flex-col gap-6">
+		<div className="grid grid-cols-1 gap-6 tb:grid-cols-2 pc:grid-cols-3">
 			{gatherings.map(gathering => (
 				<Card key={gathering.id} gathering={gathering} onClick={() => handleClick(gathering.id)} />
 			))}
 		</div>
 	);
 }
+

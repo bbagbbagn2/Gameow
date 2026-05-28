@@ -37,44 +37,67 @@ export default function CardLayout({ gathering, badgeContent, children }: Gather
 			break;
 	}
 	return (
-		<article key={gathering.id}>
-			<div className="tb:flex-row relative mb-6 flex flex-col gap-4">
-				{/* 모임 이미지 */}
-				<div className="tb:w-70 relative h-39 w-full overflow-hidden rounded-3xl">
-					<Image src={gathering.image} alt="모임 이미지" fill className="rounded-3xl bg-gray-300 object-cover" />
+		<article
+			key={gathering.id}
+			className="bg-discord-card hover:bg-discord-hover group relative flex flex-col overflow-hidden rounded-xl border border-white/5 transition-all hover:-translate-y-1 hover:shadow-2xl">
+			{/* 모임 이미지 (상단 배치) */}
+			<div className="relative h-48 w-full shrink-0 overflow-hidden shadow-inner">
+				<Image
+					src={gathering.image}
+					alt="모임 이미지"
+					fill
+					className="object-cover transition-transform duration-700 group-hover:scale-110"
+				/>
+				<div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60" />
+
+				{/* 이미지 위 배지 */}
+				<div className="absolute top-3 right-3">{badgeContent}</div>
+
+				{/* 이미지 위 장르 태그 */}
+				<div className="absolute bottom-3 left-3">
+					<span className="bg-primary-500 text-discord-bg rounded px-2 py-0.5 text-[10px] font-black uppercase tracking-wider">
+						{genre}
+					</span>
 				</div>
+			</div>
 
-				{/* 모임 정보 */}
-				<div className="tb:justify-between flex flex-col gap-4.5 text-lg font-semibold text-white">
-					<div className="flex flex-col gap-3">
-						{badgeContent}
-						<div className="flex flex-col gap-1.5">
-							<div className="flex items-center gap-2 text-lg font-semibold">
-								<h3 id={`gathering-title-${gathering.id}`}>{gathering.name}</h3>
-								<p className="text-sm">|</p>
-								<p className="text-primary-600 text-sm font-medium">{genre}</p>
-							</div>
-
-							<dl className="flex gap-3 text-sm font-medium text-white">
-								<dt className="sr-only">날짜 및 시간</dt>
-								<dd className="text-primary-600">
-									<time>{formatKoreanDate(gathering.dateTime)}</time>
-								</dd>
-
-								<dt className="sr-only">현재 인원 / 최대 인원</dt>
-								<dd className="flex justify-center gap-1">
-									<Image src="/icons/person.svg" alt="모임 인원 아이콘" width={16} height={16} />
-									<p>
-										{gathering.participantCount} / {gathering.capacity}
-									</p>
-								</dd>
-							</dl>
+			{/* 모임 정보 (하단 배치) */}
+			<div className="flex flex-1 flex-col p-5">
+				<div className="flex flex-col gap-3">
+					<div className="flex flex-col gap-1">
+						<h3
+							className="text-lg font-bold text-white transition-colors group-hover:text-primary-400"
+							id={`gathering-title-${gathering.id}`}>
+							{gathering.name}
+						</h3>
+						<div className="flex items-center gap-2 text-xs">
+							<span className="text-primary-500 font-bold uppercase tracking-tighter">
+								{formatKoreanDate(gathering.dateTime)}
+							</span>
+							<span className="text-discord-muted">•</span>
+							<span className="text-discord-muted font-semibold">{location}</span>
 						</div>
 					</div>
+
+					<div className="flex items-center gap-3">
+						<div className="bg-discord-bg flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-bold">
+							<Image src="/icons/person.svg" alt="인원" width={12} height={12} className="opacity-60" />
+							<span className="text-discord-text">
+								{gathering.participantCount} / {gathering.capacity}
+							</span>
+						</div>
+						{gathering.participantCount >= gathering.capacity && (
+							<span className="text-[10px] font-black text-destructive italic uppercase">Full House</span>
+						)}
+					</div>
+				</div>
+
+				<div className="mt-6 flex items-center gap-2">
 					{children}
 				</div>
 			</div>
-			<hr className="box-shadow-white h-px w-full border-white" />
 		</article>
 	);
 }
+
+

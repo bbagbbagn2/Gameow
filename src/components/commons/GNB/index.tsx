@@ -8,12 +8,11 @@ import SessionTimer from './SessionTimer';
 
 import { DropdownMenu } from '@/components/commons/GNB/DropdownMenu';
 
-import { postSignout } from '@/apis/auths/signout';
 import { PROFILE_PATHS } from '@/constants/assetPath';
 import { DROPDOWN_MENU_OPTIONS, NAVBAR_MENU_LINKS } from '@/constants/options';
 import { useAuth } from '@/hooks/useAuth';
 import { useScreenSize } from '@/hooks/useScreenSize';
-import { useTokenStore } from '@/stores/token';
+import { useSignout } from '@/hooks/useSignout';
 import { useUserStore } from '@/stores/user';
 import { cn } from '@/utils/cn';
 
@@ -27,8 +26,7 @@ export default function GNB() {
 	const pathname = usePathname();
 	const user = useUserStore(state => state.user);
 	const hasHydrated = useUserStore(state => state.hasHydrated);
-	const signoutToken = useTokenStore(state => state.signoutUser);
-	const signoutUser = useUserStore(state => state.signoutUser);
+	const { handleSignout } = useSignout();
 	const { isAuthenticated } = useAuth();
 	const screenSize = useScreenSize();
 
@@ -38,19 +36,7 @@ export default function GNB() {
 			return;
 		}
 
-		if (!pathname.startsWith('/me')) {
-			await postSignout();
-			signoutToken();
-			signoutUser();
-			return;
-		}
-
-		router.replace('/');
-		setTimeout(async () => {
-			await postSignout();
-			signoutToken();
-			signoutUser();
-		}, 800);
+		handleSignout();
 	};
 
 	const handleSigninClick = () => {

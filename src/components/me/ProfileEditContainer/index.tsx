@@ -1,11 +1,11 @@
 'use client';
 
 import Image from 'next/image';
-import * as motion from 'motion/react-client';
 import { useCallback, useEffect } from 'react';
 import { getUserInfo, updateUserInfo } from '@/apis/auths/user';
 import { PROFILE_PATHS } from '@/constants/assetPath';
 import { useUserStore } from '@/stores/user';
+import { useSignout } from '@/hooks/useSignout';
 import { useModal } from '@/hooks/useModal';
 import { useErrorHandler } from '@/hooks/useErrorHandler';
 import ProfileEditModal from './ProfileEditModal/ProfileEditModal';
@@ -32,6 +32,7 @@ export default function ProfileEditCard() {
 	const { openModal } = useModal();
 	const { handleError } = useErrorHandler();
 	const { user, updateUser, hasHydrated } = useUserStore();
+	const { handleSignout } = useSignout();
 
 	useEffect(() => {
 		const fetchUserInfo = async () => {
@@ -76,60 +77,110 @@ export default function ProfileEditCard() {
 	}
 
 	return (
-		<section className="mb-8">
-			<div className="bg-discord-surface relative overflow-hidden rounded-2xl border border-white/5 shadow-2xl">
-				{/* 배너 영역 (민트 그라데이션) */}
-				<div className="h-24 w-full bg-gradient-to-r from-primary-600 to-primary-400 opacity-80" />
+		<div className="animate-in fade-in slide-in-from-bottom-4 flex flex-col gap-8 duration-500">
+			{/* Profile Hero Section */}
+			<div className="relative">
+				{/* Modern Banner / Background */}
+				<div className="pc:h-48 bg-discord-card relative h-32 w-full overflow-hidden rounded-2xl border border-white/5 shadow-inner">
+					<div className="from-primary-900/30 to-highlight/10 absolute inset-0 bg-gradient-to-br via-transparent" />
+					<div className="bg-primary-500/10 absolute -top-24 -right-24 h-64 w-64 rounded-full blur-[100px]" />
+					<div className="bg-highlight/5 absolute -bottom-12 -left-12 h-48 w-48 rounded-full blur-[80px]" />
 
-				<div className="relative px-4 pb-4">
-					{/* 프로필 이미지 (배너에 걸침) */}
-					<div className="relative -mt-12 mb-3">
-						<div className="bg-discord-surface h-24 w-24 rounded-full p-1.5 shadow-lg">
-							<div className="relative h-full w-full overflow-hidden rounded-full">
+					{/* Abstract Grid Pattern */}
+					<div
+						className="absolute inset-0 opacity-[0.03]"
+						style={{
+							backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)',
+							backgroundSize: '20px 20px'
+						}}
+					/>
+				</div>
+
+				{/* Identity Overlay */}
+				<div className="pc:px-10 pc:-mt-16 pc:flex-row pc:items-end pc:justify-between -mt-12 flex flex-col gap-6 px-6">
+					<div className="pc:flex-row pc:items-end flex flex-col gap-6">
+						{/* Large Avatar */}
+						<div className="group relative">
+							<div className="pc:w-40 pc:h-40 border-discord-surface bg-discord-bg relative h-28 w-28 overflow-hidden rounded-3xl border-[6px] shadow-2xl">
 								<Image
 									src={user?.image || DEFAULT_PROFILE_SRC}
 									alt="프로필 사진"
 									fill
-									className="object-cover"
+									className="object-cover transition-transform duration-500"
 								/>
+							</div>
+							<div className="bg-primary-500 text-discord-bg border-discord-surface absolute -right-2 -bottom-2 rounded-xl border-4 p-1.5 shadow-lg">
+								<svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+									<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+								</svg>
+							</div>
+						</div>
+
+						{/* Identity Text */}
+						<div className="pc:mb-2">
+							<div className="flex items-center gap-3">
+								<h2 className="pc:text-4xl text-3xl font-black tracking-tighter text-white uppercase">
+									{user?.companyName}
+								</h2>
+							</div>
+							<div className="text-discord-muted mt-1.5 flex items-center gap-3 text-sm font-medium">
+								<span className="flex items-center gap-1.5">
+									<div className="bg-primary-500 h-1.5 w-1.5 rounded-full" />
+									Online
+								</span>
 							</div>
 						</div>
 					</div>
 
-					{/* 유저 정보 및 수정 버튼 */}
-					<div className="bg-discord-bg flex items-start justify-between rounded-xl p-4">
-						<div className="flex flex-col gap-1">
-							<div className="flex items-center gap-2">
-								<h2 className="text-xl font-bold text-white">{user?.name}</h2>
-								<span className="bg-primary-500/10 text-primary-500 rounded px-1.5 py-0.5 text-xs font-bold">
-									GAMER
-								</span>
-							</div>
-							<p className="text-discord-muted text-sm font-medium">{user?.email}</p>
-							<div className="mt-2 flex items-center gap-2">
-								<span className="text-discord-muted text-xs font-bold uppercase tracking-wider">Nickname</span>
-								<p className="text-primary-400 text-sm font-semibold">{user?.companyName || '닉네임 없음'}</p>
-							</div>
-						</div>
-
-						<motion.button
-							type="button"
+					{/* Quick Primary Action */}
+					<div className="pc:mb-2">
+						<button
 							onClick={handleOpenEditModal}
-							className="bg-discord-card hover:bg-discord-hover group flex h-10 w-10 items-center justify-center rounded-full transition-all"
-							whileHover={{ scale: 1.1 }}
-							whileTap={{ scale: 0.9 }}>
-							<Image
-								src={EDIT_ICON_SRC}
-								alt="수정"
-								width={20}
-								height={20}
-								className="opacity-60 transition-opacity group-hover:opacity-100"
-							/>
-						</motion.button>
+							className="bg-primary-500 hover:bg-primary-400 text-discord-bg pc:w-auto w-full rounded-xl px-8 py-3 text-sm font-black tracking-tight uppercase shadow-[0_8px_20px_-4px_rgba(5,242,219,0.3)] transition-all active:scale-95">
+							Edit Profile
+						</button>
 					</div>
 				</div>
 			</div>
-		</section>
+
+			{/* Information Grid */}
+			<div className="pc:grid-cols-3 grid grid-cols-1 gap-6">
+				{/* Account Info Card */}
+				<div className="pc:col-span-3 bg-discord-card pc:p-8 flex flex-col gap-8 rounded-2xl border border-white/5 p-6">
+					<div>
+						<h3 className="mb-6 text-xs font-black tracking-widest text-white uppercase opacity-40">Account Details</h3>
+						<div className="flex flex-col gap-6">
+							<div className="bg-discord-bg/40 flex flex-col gap-1 rounded-xl border border-white/[0.02] px-4 py-3">
+								<span className="text-discord-muted text-[10px] font-black tracking-widest uppercase">
+									Email Address
+								</span>
+								<p className="font-bold text-white">{user?.email || 'Not verified'}</p>
+							</div>
+							<div className="bg-discord-bg/40 flex flex-col gap-1 rounded-xl border border-white/[0.02] px-4 py-3">
+								<span className="text-discord-muted text-[10px] font-black tracking-widest uppercase">Active Name</span>
+								<p className="font-bold text-white">{user?.name || 'Not set'}</p>
+							</div>
+						</div>
+					</div>
+
+					{/* Danger Zone / Logout */}
+					<div className="mt-4 border-t border-white/5 pt-8">
+						<div className="bg-destructive/5 border-destructive/20 pc:flex-row pc:items-center flex flex-col justify-between gap-4 rounded-2xl border p-6">
+							<div>
+								<h4 className="text-destructive text-sm font-black tracking-tight uppercase">Danger Zone</h4>
+								<p className="text-discord-muted mt-1 text-xs font-medium">
+									로그아웃 시 현재 세션이 종료됩니다. 다시 로그인해야 합니다.
+								</p>
+							</div>
+							<button
+								onClick={handleSignout}
+								className="bg-destructive hover:bg-destructive/80 shadow-destructive/20 rounded-xl px-6 py-2.5 text-xs font-bold tracking-wider text-white uppercase shadow-lg transition-all active:scale-95">
+								Sign Out
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	);
 }
-

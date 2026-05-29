@@ -120,7 +120,7 @@ export default function Reviews() {
 							<span className="text-primary-400 text-xs font-black tracking-[0.3em] uppercase">Feedback</span>
 							<h2 className="text-3xl font-black tracking-tighter text-white tb:text-4xl">
 								{REVIEWS_MESSAGE.subtitle.split(' ').map((word, i) => (
-									<span key={i} className={i === 1 ? 'text-primary-500 underline decoration-primary-500/30 underline-offset-8' : ''}>
+									<span key={i} className={i === 0 ? 'text-primary-500 underline decoration-primary-500/30 underline-offset-8' : ''}>
 										{word}{' '}
 									</span>
 								))}

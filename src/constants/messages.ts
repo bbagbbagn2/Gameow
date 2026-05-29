@@ -108,5 +108,5 @@ export const REVIEW_SECTION_TITLE = {
 
 export const REVIEWS_MESSAGE = {
 	title: '모든 리뷰',
-	subtitle: 'Gameow 유저들은 이렇게 말했어요 👾'
+	subtitle: '유저들은 이렇게 말했어요'
 };

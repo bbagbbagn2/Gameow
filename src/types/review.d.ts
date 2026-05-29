@@ -1,3 +1,5 @@
+import { GatheringLocation, GatheringType } from './response/gatherings';
+
 /**
  * 리뷰 조회를 위한 쿼리 파라미터들
  *

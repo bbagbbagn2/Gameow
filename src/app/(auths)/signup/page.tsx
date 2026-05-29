@@ -30,6 +30,7 @@ export default function SignupPage() {
 
 	const onSubmit = async (data: SignupFormValues) => {
 		try {
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			const { confirm, ...signupData } = data;
 			await postSignup(signupData);
 			openModal(<SignupSuccessPopup />);

@@ -56,7 +56,6 @@ const BasicSelectButton = forwardRef<HTMLButtonElement, BasicSelectButtonProps>(
 			value,
 			displayText,
 			isOpen = false,
-			side = 'bottom',
 			children,
 			onClick,
 			...rest

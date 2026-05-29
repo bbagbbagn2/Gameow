@@ -43,18 +43,15 @@ export default function FavoriteGatherings() {
 		const wishlistIds = Array.from(wishlist);
 		const likedGatherings = favoriteGatherings.filter(g => wishlistIds.includes(g.id));
 
-		const result = likedGatherings.filter(
-			g => {
-				if (selectedTab === 'WORKATION') return g.type === 'WORKATION';
-				if (selectedTab === 'DALLAEMFIT') {
-					if (selectedChip === 'DALLAEMFIT') return g.type !== 'WORKATION';
-					if (selectedChip === 'OFFICE_STRETCHING') return g.type === 'OFFICE_STRETCHING';
-					if (selectedChip === 'MINDFULNESS') return g.type === 'MINDFULNESS';
-				}
-				return false;
-			},
-			[hasHydrated]
-		);
+		const result = likedGatherings.filter(g => {
+			if (selectedTab === 'WORKATION') return g.type === 'WORKATION';
+			if (selectedTab === 'DALLAEMFIT') {
+				if (selectedChip === 'DALLAEMFIT') return g.type !== 'WORKATION';
+				if (selectedChip === 'OFFICE_STRETCHING') return g.type === 'OFFICE_STRETCHING';
+				if (selectedChip === 'MINDFULNESS') return g.type === 'MINDFULNESS';
+			}
+			return false;
+		});
 
 		return result.sort((a, b) => {
 			const now = new Date();
@@ -65,7 +62,7 @@ export default function FavoriteGatherings() {
 			if (aIsExpired === bIsExpired) return aEndDate.getTime() - bEndDate.getTime();
 			return aIsExpired ? 1 : -1;
 		});
-	}, [favoriteGatherings, wishlist, selectedTab, selectedChip]);
+	}, [favoriteGatherings, wishlist, selectedTab, selectedChip, hasHydrated]);
 
 	const currentPage = pageState[selectedTab];
 	const totalPages = Math.ceil(filteredGatherings.length / ITEMS_PER_PAGE);

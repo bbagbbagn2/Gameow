@@ -66,18 +66,19 @@ export default function BasicTextArea({
 
 	const getBorderClass = () => {
 		if (!isValid && touched) return 'border-highlight';
-		else if (isFocused) return 'border-primary-300';
-		return 'border-gray-50';
+		else if (isFocused) return 'border-primary-500/50';
+		return 'border-white/5';
 	};
 
 	return (
-		<div>
+		<div className="flex flex-col gap-1.5">
 			<textarea
 				placeholder={placeholder}
 				// prettier-ignore
 				className={`
-          h-[120px] w-full resize-none rounded-[12px] border-2 border-gray-50 bg-gray-50 
-          px-[16px] py-[10px] font-medium text-gray-800 outline-none box-border
+          h-[120px] w-full resize-none rounded-xl border bg-discord-bg
+          px-4 py-3 font-medium text-discord-text outline-none box-border
+          placeholder:text-discord-muted/50 transition-all
           ${getBorderClass()} 
           ${className} 
         `}
@@ -85,7 +86,7 @@ export default function BasicTextArea({
 				onFocus={handleFocus}
 				onBlur={handleBlur}
 			/>
-			{touched && !isValid && invalidText && <div className="text-sm text-highlight">{invalidText}</div>}
+			{touched && !isValid && invalidText && <div className="text-[11px] font-bold text-highlight uppercase tracking-wider pl-1">{invalidText}</div>}
 		</div>
 	);
 }

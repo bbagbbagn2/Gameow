@@ -35,14 +35,14 @@ export default function ReviewSection({
 			</div>
 
 			{isLoading ? (
-				<div className="flex flex-col gap-6">
-					{Array.from({ length: 3 }).map((_, i) => (
+				<div className="grid grid-cols-1 gap-6 tb:grid-cols-2 pc:grid-cols-3">
+					{Array.from({ length: 6 }).map((_, i) => (
 						<ReviewSkeleton key={i} />
 					))}
 				</div>
 			) : reviewData && reviewData.data.length > 0 ? (
 				<>
-					<div className="flex w-full flex-col gap-6">
+					<div className="grid grid-cols-1 gap-6 tb:grid-cols-2 pc:grid-cols-3">
 						{reviewData.data.map((item: ReviewResponse) => (
 							<ReviewItem key={item.id} reviewData={item} />
 						))}

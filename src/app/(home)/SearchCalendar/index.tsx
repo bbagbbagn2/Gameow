@@ -76,31 +76,6 @@ export default function SearchCalendar({ date, setDate }: SearchCalendarProps) {
 						formatters={{
 							formatWeekdayName: (date, options) => format(date, 'EEE', { locale: options?.locale })
 						}}
-						classNames={{
-							months: 'flex flex-col space-y-4',
-							month: 'space-y-4',
-							caption: 'flex justify-center pt-1 relative items-center px-8',
-							caption_label: 'text-sm font-bold text-white',
-							nav: 'space-x-1 flex items-center',
-							nav_button: 'h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100 transition-opacity',
-							nav_button_previous: 'absolute left-1',
-							nav_button_next: 'absolute right-1',
-							table: 'w-full border-collapse space-y-1',
-							head_row: 'flex w-full mt-2',
-							head_cell: 'text-discord-muted rounded-md w-9 font-bold text-[10px] uppercase tracking-wider flex-1',
-							row: 'flex w-full mt-2',
-							cell: 'relative p-0 text-center text-sm focus-within:relative focus-within:z-20 flex-1',
-							day: cn(
-								'h-9 w-9 p-0 font-normal aria-selected:opacity-100 hover:bg-discord-hover rounded-md transition-all flex items-center justify-center m-auto text-discord-text'
-							),
-							day_selected:
-								'bg-primary-500 text-discord-bg font-bold hover:bg-primary-500 hover:text-discord-bg focus:bg-primary-500 focus:text-discord-bg',
-							day_today: 'bg-discord-card text-primary-500 font-bold',
-							day_outside: 'text-discord-muted opacity-30 pointer-events-none',
-							day_disabled: 'text-discord-muted opacity-30',
-							day_range_middle: 'aria-selected:bg-discord-accent aria-selected:text-discord-accent-foreground',
-							day_hidden: 'invisible'
-						}}
 						fixedWeeks
 					/>
 					<div className="mt-6 flex w-full gap-2">

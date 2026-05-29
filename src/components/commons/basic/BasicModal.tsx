@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { cn } from '@/utils/cn';
 
 interface BasicModalProps {
 	/** 모달 내부에 표시될 콘텐츠 */
@@ -39,18 +40,20 @@ export default function BasicModal({ children, onClose, className, width }: Basi
 
 	return (
 		<div
-			className="z-modal fixed inset-0 flex items-center justify-center bg-black/50 p-4"
+			className="z-modal fixed inset-0 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4 animate-in fade-in duration-200"
 			onClick={closeModalOnBackgroundClick}>
 			<div
-				className={`bg-root animate-shadow-fade relative rounded-lg p-[24px] shadow-2xl`}
-				style={{ width: width }}
+				className="bg-discord-surface relative flex flex-col overflow-hidden rounded-xl border border-white/5 shadow-2xl animate-in zoom-in-95 duration-200"
+				style={{ width: width || 'auto' }}
 				onClick={e => e.stopPropagation()}>
+				{/* Discord-style Close Button */}
 				<button
 					onClick={onClose}
-					className="z-base absolute top-2 right-[24px] ml-auto block cursor-pointer text-xl font-bold text-white">
-					<Image src="/icons/close.svg" alt="close" width={24} height={24} className="invert" />
+					className="absolute top-4 right-4 z-base flex h-8 w-8 items-center justify-center rounded-md text-discord-muted transition-all hover:bg-white/5 hover:text-white">
+					<Image src="/icons/close.svg" alt="close" width={20} height={20} className="opacity-60 invert" />
 				</button>
-				<div className={`flex h-full w-full flex-col ${className}`}>{children}</div>
+
+				<div className={cn('flex flex-col', className)}>{children}</div>
 			</div>
 		</div>
 	);

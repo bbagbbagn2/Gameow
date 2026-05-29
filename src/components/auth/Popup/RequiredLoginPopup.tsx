@@ -32,5 +32,13 @@ export default function RequiredLoginPopup({ next }: RequiredLoginPopupProps) {
 		router.push('/signin?redirectTo=' + encodeURIComponent(next));
 	};
 
-	return <BasicPopup title={POPUP_MESSAGE.REQUIRED_LOGIN.title} onConfirm={handleClick} />;
+	return (
+		<BasicPopup
+			title="로그인이 필요해요!"
+			subTitle="GAMEOW의 크루가 되어 더 많은 동료들을 만나보세요."
+			confirmText="로그인하러 가기"
+			cancelText="나중에 하기"
+			onConfirm={handleClick}
+		/>
+	);
 }

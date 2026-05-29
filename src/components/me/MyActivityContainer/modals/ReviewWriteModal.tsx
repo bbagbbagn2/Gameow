@@ -55,51 +55,72 @@ export default function ReviewWriteModal({ gatheringId, onSuccess }: ReviewWrite
 	};
 
 	return (
-		<BasicModal onClose={closeModal} className="tb:min-w-[472px] min-w-[290px]">
-			<form onSubmit={handleSubmit(onSubmit)}>
-				<div className="text-white">
-					<h3 className="text-shadow-primary text-start text-lg font-semibold">리뷰 쓰기</h3>
-					<div className="mt-6 flex w-full flex-col gap-6">
-						<div className="flex flex-col gap-3 font-semibold">
-							<div className="flex flex-col items-start gap-3">
-								<p className="text-shadow-white">만족스러운 경험이었나요?</p>
-								<div className="flex gap-0.5">
-									{Array.from({ length: 5 }).map((_, index) => (
-										<button
-											key={`heart-${index}`}
-											type="button"
-											onClick={() => handleHeartClick(index)}
-											className="cursor-pointer">
-											<Image
-												src={index < rating ? '/icons/heart_active.svg' : '/icons/heart.svg'}
-												alt={index < rating ? '활성화된 하트' : '비활성화된 하트'}
-												width={24}
-												height={24}
-												className={`transform transition-transform duration-500 ease-out ${
-													animatingIndex === index ? 'scale-115' : index < rating ? 'scale-110' : 'scale-100'
-												}`}
-											/>
-										</button>
-									))}
-								</div>
-							</div>
-							<div className="flex w-full flex-col items-stretch gap-3">
-								<p className="text-start text-shadow-white">경험에 대해 남겨주세요.</p>
-								<BasicTextArea
-									register={register('comment', { required: true })}
-									isValid={comment.trim().length > 0}
-									invalidText="내용을 입력해주세요"
-								/>
+		<BasicModal onClose={closeModal} className="tb:min-w-[480px] min-w-[320px]">
+			<form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
+				{/* Discord-style Header */}
+				<div className="flex flex-col gap-1 p-6 pb-2">
+					<h3 className="text-xl font-black text-white tracking-tight">리뷰 작성하기</h3>
+					<p className="text-discord-muted text-sm font-medium">크루원들과 소중한 경험을 공유해 주세요.</p>
+				</div>
+
+				{/* Discord-style Body (Scrollable if needed) */}
+				<div className="flex flex-col gap-8 p-6 pt-4">
+					<div className="flex flex-col gap-4">
+						<label className="text-discord-muted text-[11px] font-black uppercase tracking-wider">만족도 평가</label>
+						<div className="bg-discord-bg flex items-center justify-center rounded-xl border border-white/5 py-8 transition-colors hover:border-primary-500/20">
+							<div className="flex gap-2">
+								{Array.from({ length: 5 }).map((_, index) => (
+									<button
+										key={`heart-${index}`}
+										type="button"
+										onClick={() => handleHeartClick(index)}
+										className="group relative cursor-pointer outline-none">
+										<Image
+											src={index < rating ? '/icons/heart_active.svg' : '/icons/heart.svg'}
+											alt={index < rating ? '활성화된 하트' : '비활성화된 하트'}
+											width={40}
+											height={40}
+											className={`transform transition-all duration-300 ${
+												animatingIndex === index 
+													? 'scale-125' 
+													: index < rating 
+														? 'scale-100 drop-shadow-[0_0_10px_rgba(5,242,219,0.4)]' 
+														: 'scale-90 opacity-20 grayscale brightness-0 invert group-hover:opacity-40 group-hover:scale-100'
+											}`}
+										/>
+									</button>
+								))}
 							</div>
 						</div>
-						<div className="flex gap-4">
-							<BasicButton outlined onClick={closeModal} className="font-semibold" isLarge type="button">
-								취소
-							</BasicButton>
-							<BasicButton className="font-semibold" isLarge isActive={isFormValid} type="submit">
-								리뷰 등록
-							</BasicButton>
-						</div>
+					</div>
+
+					<div className="flex flex-col gap-4">
+						<label className="text-discord-muted text-[11px] font-black uppercase tracking-wider">상세 후기</label>
+						<BasicTextArea
+							register={register('comment', { required: true })}
+							isValid={comment.trim().length > 0}
+							placeholder="이곳에 내용을 입력하세요..."
+							className="bg-discord-bg min-h-[120px] rounded-lg border-white/5 p-4 text-base focus:border-primary-500/50"
+							invalidText="내용을 입력해주세요"
+						/>
+					</div>
+				</div>
+
+				{/* Discord-style Footer */}
+				<div className="bg-discord-bg mt-2 flex items-center justify-end gap-3 p-4 px-6 border-t border-white/5">
+					<button 
+						type="button"
+						onClick={closeModal}
+						className="text-white text-sm font-bold px-4 py-2 hover:underline transition-all">
+						취소
+					</button>
+					<div className="w-32">
+						<BasicButton 
+							className="w-full font-black text-sm uppercase tracking-tighter" 
+							isActive={isFormValid} 
+							type="submit">
+							리뷰 등록
+						</BasicButton>
 					</div>
 				</div>
 			</form>

@@ -21,10 +21,11 @@ export default function DateFilter({ onChange }: { onChange: (date?: Date) => vo
 				<BasicSelectButton placeholder="날짜 선택" isOpen={isOpen} />
 			</PopoverTrigger>
 			<PopoverContent
-				className="bg-root mr-4 flex min-w-[300px] flex-col items-center justify-center rounded-[12px] border-2 border-gray-200"
+				className="bg-discord-surface border-white/10 flex min-w-[320px] flex-col items-center justify-center rounded-2xl border p-4 shadow-2xl backdrop-blur-md"
 				align="start"
+				sideOffset={8}
 				isModal={false}>
-				<div className="flex w-auto flex-col">
+				<div className="flex w-full flex-col">
 					<Calendar
 						mode="single"
 						selected={date}
@@ -32,27 +33,17 @@ export default function DateFilter({ onChange }: { onChange: (date?: Date) => vo
 						formatters={{
 							formatWeekdayName: (date, options) => format(date, 'EEE', { locale: options?.locale })
 						}}
-						classNames={{
-							day: 'text-primary-50 hover:bg-primary-500/10 transition-colors',
-							today: 'font-bold text-primary-500',
-							selected: 'bg-primary-500 text-primary-50 rounded-md',
-							outside: 'text-primary-700 opacity-80',
-							weekday: 'font-bold text-sm text-primary-50 flex-1 justify-between',
-							month_caption: 'relative flex items-center justify-center mb-2 pointer-events-none',
-							caption_label: 'text-sm font-bold text-primary-500 pointer-events-auto',
-							nav: 'absolute left-0 top-0 w-full flex justify-between items-center gap-1 z-10 pointer-events-auto',
-							button_next: 'text-primary-500 hover:text-primary-400 transition-colors rounded-full p-1',
-							button_previous: 'text-primary-500 hover:text-primary-400 transition-colors rounded-full p-1'
-						}}
 					/>
-					<SearchInCalendarButton
-						date={date}
-						setDate={res => {
-							console.log(res);
-							onChange?.(res);
-						}}
-						setIsOpen={setIsOpen}
-					/>
+					<div className="mt-4 flex w-full">
+						<SearchInCalendarButton
+							date={date}
+							setDate={res => {
+								console.log(res);
+								onChange?.(res);
+							}}
+							setIsOpen={setIsOpen}
+						/>
+					</div>
 				</div>
 			</PopoverContent>
 		</Popover>

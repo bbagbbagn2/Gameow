@@ -1,5 +1,6 @@
 import { scoreData } from '@/types/response/reviews';
 import { useMemo } from 'react';
+import ScoreSkeleton from './ScoreSkeleton';
 
 /**
  * 리뷰 점수 섹션 컴포넌트
@@ -31,11 +32,7 @@ export default function ScoreSection({ data, isLoading }: { data?: scoreData | n
 	];
 
 	if (isLoading) {
-		return (
-			<div className="flex h-40 animate-pulse items-center justify-center">
-				<div className="text-discord-muted text-sm font-bold uppercase tracking-widest">Loading Analytics...</div>
-			</div>
-		);
+		return <ScoreSkeleton />;
 	}
 
 	return (

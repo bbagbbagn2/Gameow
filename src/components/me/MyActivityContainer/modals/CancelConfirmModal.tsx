@@ -36,17 +36,37 @@ export default function CancelConfirmModal({ gatheringId, onSuccess }: CancelCon
 	};
 
 	return (
-		<BasicModal onClose={closeModal} className="tb:min-w-[402px]">
-			<div className="mt-12">
-				<form onSubmit={handleCancel} className="flex flex-col items-center gap-6">
-					<p className="font-medium text-white text-shadow-white">정말 예약을 취소하시겠습니까?</p>
-					<div className="flex gap-2 font-semibold">
-						<BasicButton outlined onClick={closeModal} type="button">
-							닫기
-						</BasicButton>
-						<BasicButton type="submit">취소하기</BasicButton>
+		<BasicModal onClose={closeModal} className="tb:min-w-[440px] min-w-[320px]">
+			<div className="flex flex-col">
+				{/* Discord-style Header (Minimal) */}
+				<div className="p-6 pb-2">
+					<h3 className="text-xl font-black text-white tracking-tight">예약 취소</h3>
+				</div>
+
+				{/* Discord-style Body */}
+				<div className="p-6 pt-2">
+					<p className="text-discord-text text-base font-medium leading-relaxed">
+						정말 예약을 취소하시겠습니까? <br/>
+						취소된 예약은 복구할 수 없으며, 다시 참여하려면 새로 신청해야 합니다.
+					</p>
+				</div>
+
+				{/* Discord-style Footer */}
+				<div className="bg-discord-bg mt-4 flex items-center justify-end gap-3 p-4 px-6 border-t border-white/5">
+					<button 
+						type="button"
+						onClick={closeModal}
+						className="text-white text-sm font-bold px-4 py-2 hover:underline transition-all outline-none">
+						돌아가기
+					</button>
+					<div className="w-32">
+						<button
+							onClick={handleCancel}
+							className="w-full bg-destructive hover:bg-destructive/80 text-white font-black text-sm uppercase tracking-tighter py-2.5 rounded-md transition-all active:scale-95 shadow-lg shadow-destructive/10">
+							취소하기
+						</button>
 					</div>
-				</form>
+				</div>
 			</div>
 		</BasicModal>
 	);

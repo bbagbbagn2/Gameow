@@ -98,8 +98,8 @@ export default function BasicInput({
 		if (!isValid) return 'border-highlight';
 		else if (required && touched && value.length === 0)
 			return 'border-highlight'; // register가 없을 때만 체크
-		else if (isFocused) return 'border-primary-300 shadow-primary-500/50 shadow-lg';
-		return 'border-gray-50';
+		else if (isFocused) return 'border-primary-500/50';
+		return 'border-white/5';
 	};
 
 	const getErrorMessage = useCallback(() => {
@@ -118,16 +118,16 @@ export default function BasicInput({
 
 	return (
 		<div className="flex flex-col gap-2">
-			<label className="mb-[4px] text-[16px] font-[600] text-white" htmlFor={id}>
+			<label className="text-discord-muted text-[11px] font-black uppercase tracking-wider pl-1" htmlFor={id}>
 				{label}
 			</label>
 			<div
-				className={`inputBox border-primary-300 bg-root box-border flex items-center justify-between rounded-[12px] border-2 px-[16px] py-[10px] text-white placeholder-gray-300 focus:outline-none ${getBorderClass()} ${className}`}>
+				className={`inputBox bg-discord-bg box-border flex items-center justify-between rounded-xl border px-4 py-3 text-discord-text placeholder:text-discord-muted/50 transition-all focus:outline-none ${getBorderClass()} ${className}`}>
 				<input
 					id={id}
 					type={isPassword ? (isShowPw ? 'text' : 'password') : 'text'}
 					placeholder={placeholder}
-					className="w-full bg-transparent outline-none"
+					className="w-full bg-transparent outline-none text-base font-medium"
 					{...register}
 					onFocus={handleFocus}
 					onBlur={handleBlur}
@@ -137,11 +137,11 @@ export default function BasicInput({
 				{isPassword && (
 					<Image
 						src={`/icons/visibility_${isShowPw ? 'on' : 'off'}.svg`}
-						width="20"
-						height="20"
+						width={20}
+						height={20}
 						alt="password visible toggle button"
 						onClick={() => setIsShowPw(prev => !prev)}
-						className="cursor-pointer"
+						className="cursor-pointer opacity-40 hover:opacity-100 transition-opacity"
 					/>
 				)}
 				{children}
@@ -149,7 +149,7 @@ export default function BasicInput({
 
 			{(() => {
 				const errorMessage = getErrorMessage();
-				return touched && errorMessage && <div className="text-highlight text-sm">{errorMessage}</div>;
+				return touched && errorMessage && <div className="text-[11px] font-bold text-highlight uppercase tracking-wider pl-1">{errorMessage}</div>;
 			})()}
 		</div>
 	);

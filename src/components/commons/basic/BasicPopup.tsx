@@ -43,21 +43,41 @@ export default function BasicPopup({
 	};
 
 	return (
-		<BasicModal onClose={handleCancel} width="450px">
-			<div className="flex flex-col items-center gap-4">
-				<div className="flex flex-col text-white">
-					<h2 className="text-lg font-semibold">{title}</h2>
-					{subTitle && <p className="text-gray-600">{subTitle}</p>}
+		<BasicModal onClose={handleCancel} className="tb:min-w-[440px] min-w-[320px]">
+			<div className="flex flex-col">
+				{/* Discord-style Header */}
+				<div className="p-6 pb-2">
+					<h3 className="text-xl font-black text-white tracking-tight">{title}</h3>
 				</div>
-				<div className="flex w-full justify-center gap-3">
-					{cancelText && (
-						<BasicButton isActive={true} onClick={handleCancel} outlined={true} ariaLabel="팝업 취소">
-							{cancelText}
-						</BasicButton>
+
+				{/* Discord-style Body */}
+				<div className="p-6 pt-2">
+					{subTitle ? (
+						<p className="text-discord-text text-base font-medium leading-relaxed">
+							{subTitle}
+						</p>
+					) : (
+						<p className="text-discord-muted text-sm font-medium">
+							계속하려면 로그인이 필요합니다.
+						</p>
 					)}
-					<BasicButton onClick={handleConfirm} ariaLabel="팝업 확인">
-						{confirmText}
-					</BasicButton>
+				</div>
+
+				{/* Discord-style Footer */}
+				<div className="bg-discord-bg mt-4 flex items-center justify-end gap-3 p-4 px-6 border-t border-white/5">
+					<button 
+						type="button"
+						onClick={handleCancel}
+						className="text-white text-sm font-bold px-4 py-2 hover:underline transition-all outline-none">
+						{cancelText || '취소'}
+					</button>
+					<div className="w-32">
+						<BasicButton 
+							className="w-full font-black text-sm uppercase tracking-tighter" 
+							onClick={handleConfirm}>
+							{confirmText}
+						</BasicButton>
+					</div>
 				</div>
 			</div>
 		</BasicModal>

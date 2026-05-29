@@ -61,25 +61,33 @@ export default function MyReviews() {
 			</div>
 
 			{isLoading ? (
-				<div className="flex flex-col gap-6">
+				<div className="grid grid-cols-1 gap-6 tb:grid-cols-2 pc:grid-cols-3">
 					{Array.from({ length: 3 }).map((_, i) => (
 						<ReviewSkeleton key={i} />
 					))}
 				</div>
 			) : activeTab === 'writable' ? (
-				writableReviewsData.length > 0 ? (
-					writableReviewsData.map(gathering => (
-						<WritableReviewCard
-							key={gathering.id}
-							gathering={gathering}
-							onSuccess={() => handleReviewSuccess(gathering.id)}
-						/>
-					))
-				) : (
-					<NoDataMessage text="작성 가능한 리뷰가 아직 없어요" />
-				)
+				<div className="grid grid-cols-1 gap-6 tb:grid-cols-2 pc:grid-cols-3">
+					{writableReviewsData.length > 0 ? (
+						writableReviewsData.map(gathering => (
+							<WritableReviewCard
+								key={gathering.id}
+								gathering={gathering}
+								onSuccess={() => handleReviewSuccess(gathering.id)}
+							/>
+						))
+					) : (
+						<div className="col-span-full">
+							<NoDataMessage text="작성 가능한 리뷰가 아직 없어요" />
+						</div>
+					)}
+				</div>
 			) : writtenReviewsData.length > 0 ? (
-				writtenReviewsData.map(review => <WrittenReviewCard key={review.id} review={review} />)
+				<div className="grid grid-cols-1 gap-6 tb:grid-cols-2 pc:grid-cols-3">
+					{writtenReviewsData.map(review => (
+						<WrittenReviewCard key={review.id} review={review} />
+					))}
+				</div>
 			) : (
 				<NoDataMessage text="작성한 리뷰가 아직 없어요" />
 			)}

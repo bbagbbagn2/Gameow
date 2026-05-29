@@ -91,7 +91,7 @@ export function SignupForm({ onSubmit }: SignupFormProps) {
 					Continue
 				</BasicButton>
 				<div className="mt-1 flex items-center justify-start">
-					<Link href="/signin" className="text-primary-400 text-xs font-bold hover:underline">
+					<Link href="/signin" className="text-primary-400 text-xs hover:underline">
 						이미 계정이 있나요?
 					</Link>
 				</div>

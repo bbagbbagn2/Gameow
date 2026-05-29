@@ -31,7 +31,7 @@ export default function ProfileEditCard() {
 	const { DEFAULT_PROFILE_SRC, EDIT_ICON_SRC } = PROFILE_PATHS;
 	const { openModal } = useModal();
 	const { handleError } = useErrorHandler();
-	const { user, updateUser } = useUserStore();
+	const { user, updateUser, hasHydrated } = useUserStore();
 
 	useEffect(() => {
 		const fetchUserInfo = async () => {
@@ -42,8 +42,8 @@ export default function ProfileEditCard() {
 				handleError(err);
 			}
 		};
-		if (!user) fetchUserInfo();
-	}, [user, updateUser, handleError]);
+		if (hasHydrated && !user) fetchUserInfo();
+	}, [user, updateUser, handleError, hasHydrated]);
 
 	const handleUpdateUserInfo = useCallback(
 		async (updated: { companyName?: string; image?: File | null }) => {
@@ -66,6 +66,14 @@ export default function ProfileEditCard() {
 			/>
 		);
 	}, [openModal, user?.companyName, user?.image, handleUpdateUserInfo]);
+
+	if (!hasHydrated) {
+		return (
+			<section className="mb-8">
+				<div className="bg-discord-surface h-48 w-full animate-pulse rounded-2xl border border-white/5 shadow-2xl" />
+			</section>
+		);
+	}
 
 	return (
 		<section className="mb-8">

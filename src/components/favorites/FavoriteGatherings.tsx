@@ -3,7 +3,6 @@
 import { useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-import { cn } from '@/utils/cn';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { getGatherings } from '@/apis/gatherings';
 import { useWishlistStore } from '@/stores/wishlist';
@@ -30,7 +29,6 @@ export default function FavoriteGatherings() {
 	const { wishlist, hasHydrated } = useWishlistStore();
 	const router = useRouter();
 
-	/** 찜한 모임 목록 쿼리 */
 	const { data: favoriteGatherings = [], isLoading } = useQuery({
 		queryKey: ['favoriteGatherings', Array.from(wishlist)],
 		queryFn: async () => {
@@ -41,8 +39,8 @@ export default function FavoriteGatherings() {
 		placeholderData: keepPreviousData
 	});
 
-	/** 필터링 */
 	const filteredGatherings = useMemo(() => {
+		if (!hasHydrated) return [];
 		const wishlistIds = Array.from(wishlist);
 		const likedGatherings = favoriteGatherings.filter(g => wishlistIds.includes(g.id));
 
@@ -60,15 +58,9 @@ export default function FavoriteGatherings() {
 			const now = new Date();
 			const aEndDate = new Date(a.registrationEnd);
 			const bEndDate = new Date(b.registrationEnd);
-
 			const aIsExpired = aEndDate < now;
 			const bIsExpired = bEndDate < now;
-
-			// 만료된 모임은 뒤로 보내기
-			if (aIsExpired === bIsExpired) {
-				// 둘 다 같은 상태라면 날짜순 정렬 (가까운 순)
-				return aEndDate.getTime() - bEndDate.getTime();
-			}
+			if (aIsExpired === bIsExpired) return aEndDate.getTime() - bEndDate.getTime();
 			return aIsExpired ? 1 : -1;
 		});
 	}, [favoriteGatherings, wishlist, selectedTab, selectedChip]);
@@ -78,41 +70,58 @@ export default function FavoriteGatherings() {
 	const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
 	const paginatedGatherings = filteredGatherings.slice(startIndex, startIndex + ITEMS_PER_PAGE);
 
-	/** 페이지 변경 핸들러 */
 	const handlePageChange = (page: number) => {
-		setPageState(prev => ({
-			...prev,
-			[selectedTab]: page
-		}));
+		setPageState(prev => ({ ...prev, [selectedTab]: page }));
 	};
 
-	return (
-		<div className="max-mb:px-4 max-mb:pt-6 flex h-auto flex-col items-center pt-[46px]">
-			<div className="w-full max-w-[996px]">
-				{/* 타이틀 */}
-				<section className="flex gap-4">
-					<Image priority src="/icons/favorite_cat.svg" alt={'찜한 크루 이미지'} width={72} height={72} />
+	if (!hasHydrated) {
+		return (
+			<div className="tb:px-6 tb:pt-12 pc:max-w-300 pc:px-25 mx-auto flex w-full flex-col px-4 pt-8 pb-20">
+				<div className="bg-discord-surface h-64 w-full animate-pulse rounded-2xl" />
+				<div className="mt-12 grid grid-cols-1 gap-6 tb:grid-cols-2 pc:grid-cols-3">
+					{Array.from({ length: 3 }).map((_, idx) => (
+						<CardSkeleton key={idx} />
+					))}
+				</div>
+			</div>
+		);
+	}
 
-					<div className="flex flex-col items-start justify-center gap-2">
-						<h1
-							className={cn(
-								'text-primary-500 text-sm font-medium',
-								'[text-shadow:0_0_1px_#5ff7e6,0_0_0px_#5ff7e6,0_0_0px_#5ff7e6,0_0_2px_#5ff7e6]'
-							)}>
-							{LIKED_GATHERING_MESSAGE.title}
-						</h1>
-						<p
-							className={cn(
-								'mb:text-2xl text-primary-50 text-lg font-semibold',
-								'[text-shadow:0_0_1px_#e6fffa,0_0_0px_#e6fffa,0_0_0px_#e6fffa,0_0_2px_#e6fffa]'
-							)}>
+	return (
+		<div className="tb:px-6 tb:pt-12 pc:max-w-300 pc:px-25 mx-auto flex w-full flex-col px-4 pt-8 pb-20">
+			<h1 className="sr-only">찜한 크루 페이지</h1>
+
+			{/* 히어로 섹션 */}
+			<section className="bg-discord-surface relative mb-12 overflow-hidden rounded-2xl border border-white/5 p-8 shadow-2xl tb:p-12">
+				<div className="bg-highlight/10 absolute -top-24 -right-24 h-64 w-64 rounded-full blur-3xl" />
+
+				<div className="relative flex flex-col items-start gap-8 pc:flex-row pc:items-center">
+					<div className="bg-discord-bg flex h-24 w-24 shrink-0 items-center justify-center rounded-3xl border border-white/10 shadow-2xl">
+						<Image
+							priority
+							src="/icons/favorite_cat.svg"
+							alt="Favorite"
+							width={56}
+							height={56}
+							className="brightness-0 invert opacity-80"
+						/>
+					</div>
+
+					<div className="flex flex-col gap-2">
+						<span className="text-highlight text-xs font-black tracking-[0.3em] uppercase">Collection</span>
+						<h2 className="text-3xl font-black tracking-tighter text-white tb:text-4xl">
+							언제나 함께할 <span className="text-primary-500 underline decoration-primary-500/30 underline-offset-8">준비 완료</span>
+						</h2>
+						<p className="text-discord-muted mt-2 max-w-2xl text-base font-medium leading-relaxed">
 							{LIKED_GATHERING_MESSAGE.subTitle}
 						</p>
 					</div>
-				</section>
+				</div>
+			</section>
 
-				{/* 탭 */}
-				<div className="mt-6 mb-3">
+			<div className="flex flex-col gap-10">
+				{/* 탭 및 필터 영역 */}
+				<div className="flex flex-col gap-6">
 					<Tab
 						options={TYPE_OPTIONS}
 						selectedTab={selectedTab}
@@ -122,68 +131,78 @@ export default function FavoriteGatherings() {
 							setPageState(prev => ({ ...prev, [tabValue]: 1 }));
 						}}
 					/>
-				</div>
 
-				{/* 칩 */}
-				<div className="mb:pb-4 mb:border-b-2 mb:border-gray-200 flex gap-2">
-					{selectedTab === 'DALLAEMFIT' ? (
-						<>
-							<Chip
-								text="전체"
-								isActive={selectedChip === 'DALLAEMFIT'}
-								onClick={() => setSelectedChip('DALLAEMFIT')}
-							/>
-							<Chip
-								text="스팀"
-								imgUrl="/icons/steam_logo.svg"
-								isActive={selectedChip === 'OFFICE_STRETCHING'}
-								onClick={() => {
-									setSelectedChip('OFFICE_STRETCHING');
-									setPageState(prev => ({ ...prev, [selectedTab]: 1 }));
-								}}
-							/>
-							<Chip
-								text="온라인"
-								imgUrl="/icons/online.svg"
-								isActive={selectedChip === 'MINDFULNESS'}
-								onClick={() => {
-									setSelectedChip('MINDFULNESS');
-									setPageState(prev => ({ ...prev, [selectedTab]: 1 }));
-								}}
-							/>
-						</>
-					) : (
-						<Chip text="전체" isActive />
-					)}
-				</div>
-
-				{/* 카드 리스트 + 페이지네이션 영역 */}
-				<div className="max-mb:min-h-[1500px] flex min-h-[820px] flex-col justify-between">
-					{/* 카드 리스트 */}
-					<div className="mt-6 flex grow flex-col gap-6">
-						{isLoading ? (
-							// 로딩 중일 때: 스켈레톤 4개 렌더링
-							Array.from({ length: 4 }).map((_, idx) => <CardSkeleton key={idx} />)
-						) : paginatedGatherings.length === 0 ? (
-							<NoDataMessage text="찜한 크루가 없네요" />
+					<div className="flex flex-wrap gap-2">
+						{selectedTab === 'DALLAEMFIT' ? (
+							<>
+								<Chip
+									text="전체"
+									isActive={selectedChip === 'DALLAEMFIT'}
+									onClick={() => setSelectedChip('DALLAEMFIT')}
+								/>
+								<Chip
+									text="스팀"
+									imgUrl="/icons/steam_logo.svg"
+									isActive={selectedChip === 'OFFICE_STRETCHING'}
+									onClick={() => setSelectedChip('OFFICE_STRETCHING')}
+								/>
+								<Chip
+									text="온라인"
+									imgUrl="/icons/online.svg"
+									isActive={selectedChip === 'MINDFULNESS'}
+									onClick={() => setSelectedChip('MINDFULNESS')}
+								/>
+							</>
 						) : (
-							paginatedGatherings.map(gathering => (
-								<motion.div
-									initial={{ opacity: 0 }}
-									animate={{ opacity: 1 }}
-									transition={{ duration: 0.8 }}
-									key={gathering.id}
-									onClick={() => router.push(`/gatherings/${gathering.id}`)}
-									className="hover:cursor-pointer">
-									<CardList data={gathering} />
-								</motion.div>
-							))
+							<Chip text="전체" isActive />
 						)}
 					</div>
+				</div>
+
+				{/* 그리드 리스트 영역 */}
+				<div className="flex flex-col gap-8">
+					{isLoading ? (
+						<div className="grid grid-cols-1 gap-6 tb:grid-cols-2 pc:grid-cols-3">
+							{Array.from({ length: 3 }).map((_, idx) => (
+								<CardSkeleton key={idx} />
+							))}
+						</div>
+					) : paginatedGatherings.length === 0 ? (
+						<motion.div
+							initial={{ opacity: 0, y: 10 }}
+							animate={{ opacity: 1, y: 0 }}
+							className="bg-discord-surface flex min-h-[400px] flex-1 flex-col items-center justify-center rounded-2xl border border-dashed border-white/10 p-12 text-center">
+							<div className="bg-discord-bg mb-6 flex h-20 w-20 items-center justify-center rounded-full opacity-20">
+								<Image src="/images/no_data.svg" alt="No Data" width={48} height={48} className="grayscale" />
+							</div>
+							<p className="text-discord-text text-xl font-bold">찜한 크루가 하나도 없어요</p>
+							<p className="text-discord-muted mt-2 text-base">
+								관심 있는 크루를 발견하면 하트를 눌러보세요. 나중에 여기서 빠르게 확인할 수 있습니다!
+							</p>
+							<button
+								onClick={() => router.push('/')}
+								className="bg-primary-500 text-discord-bg mt-8 rounded-md px-6 py-3 text-sm font-black transition-all hover:bg-primary-400 active:scale-95 uppercase">
+								Discover Crews
+							</button>
+						</motion.div>
+					) : (
+						<div className="grid grid-cols-1 gap-6 tb:grid-cols-2 pc:grid-cols-3">
+							{paginatedGatherings.map(gathering => (
+								<motion.div
+									initial={{ opacity: 0, y: 10 }}
+									animate={{ opacity: 1, y: 0 }}
+									key={gathering.id}
+									onClick={() => router.push(`/gatherings/${gathering.id}`)}
+									className="cursor-pointer">
+									<CardList data={gathering} />
+								</motion.div>
+							))}
+						</div>
+					)}
 
 					{/* 페이지네이션 */}
 					{totalPages > 1 && (
-						<div className="my-12 flex justify-center">
+						<div className="mt-12 flex justify-center">
 							<BasicPagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
 						</div>
 					)}
@@ -192,3 +211,4 @@ export default function FavoriteGatherings() {
 		</div>
 	);
 }
+

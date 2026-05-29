@@ -6,6 +6,8 @@ import Image from 'next/image';
 import MyActivitySkeleton from '../me/skeleton/MyActivitySkeleton';
 import NoDataMessage from '../commons/NoDataMessage/NoDataMessage';
 
+import ReviewSkeleton from './ReviewSkeleton';
+
 export default function ReviewSection({
 	reviewData,
 	isLoading,
@@ -25,29 +27,44 @@ export default function ReviewSection({
 		callBackOnPageChange(page);
 	};
 
-	if (isLoading || !reviewData) {
-		return <MyActivitySkeleton />;
-	}
-
 	return (
-		<div className="tb:p-6 bg-root flex flex-col items-center justify-center gap-4 border-t-[2px] border-gray-900 p-4">
-			<FilterSection onFilterChange={handleFilterChange} />
-			{reviewData && reviewData.data.length > 0 ? (
+		<div className="flex flex-col gap-8">
+			{/* 필터 섹션 영역 */}
+			<div className="bg-discord-surface rounded-xl border border-white/5 p-4 shadow-lg">
+				<FilterSection onFilterChange={handleFilterChange} />
+			</div>
+
+			{isLoading ? (
+				<div className="flex flex-col gap-6">
+					{Array.from({ length: 3 }).map((_, i) => (
+						<ReviewSkeleton key={i} />
+					))}
+				</div>
+			) : reviewData && reviewData.data.length > 0 ? (
 				<>
-					<div className="flex w-full flex-col items-center gap-6">
+					<div className="flex w-full flex-col gap-6">
 						{reviewData.data.map((item: ReviewResponse) => (
 							<ReviewItem key={item.id} reviewData={item} />
 						))}
 					</div>
-					<BasicPagination
-						currentPage={reviewData?.currentPage}
-						totalPages={reviewData?.totalPages}
-						onPageChange={handlePageChange}
-					/>
+					<div className="mt-8 flex justify-center">
+						<BasicPagination
+							currentPage={reviewData?.currentPage}
+							totalPages={reviewData?.totalPages}
+							onPageChange={handlePageChange}
+						/>
+					</div>
 				</>
 			) : (
-				<NoDataMessage text="등록된 리뷰가 없어요!" />
+				<div className="bg-discord-surface flex min-h-[300px] flex-col items-center justify-center rounded-2xl border border-dashed border-white/10 p-12 text-center">
+					<div className="bg-discord-bg mb-6 flex h-20 w-20 items-center justify-center rounded-full opacity-20">
+						<Image src="/images/no_data.svg" alt="No Data" width={48} height={48} className="grayscale" />
+					</div>
+					<p className="text-discord-text text-xl font-bold">아직 작성된 리뷰가 없네요</p>
+					<p className="text-discord-muted mt-2 text-base">첫 번째 리뷰의 주인공이 되어보세요!</p>
+				</div>
 			)}
 		</div>
 	);
 }
+

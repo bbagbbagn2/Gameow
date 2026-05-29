@@ -25,6 +25,7 @@ export default function GNB() {
 	const router = useRouter();
 	const pathname = usePathname();
 	const user = useUserStore(state => state.user);
+	const hasHydrated = useUserStore(state => state.hasHydrated);
 	const signoutToken = useTokenStore(state => state.signoutUser);
 	const signoutUser = useUserStore(state => state.signoutUser);
 	const { isAuthenticated } = useAuth();
@@ -91,7 +92,9 @@ export default function GNB() {
 						</nav>
 					</div>
 
-					{isAuthenticated ? (
+					{!hasHydrated ? (
+						<div className="h-10 w-24 animate-pulse rounded-md bg-white/5" />
+					) : isAuthenticated ? (
 						<div className="flex items-center gap-4">
 							<div className="hidden tb:block">
 								<SessionTimer />

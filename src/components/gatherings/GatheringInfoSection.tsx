@@ -17,8 +17,10 @@ import Image from 'next/image';
 import GatheringInfoSectionSkeleton from './skeleton/GatheringInfoSectionSkeleton';
 import { PROFILE_PATHS } from '@/constants/assetPath';
 
+import { useEffect, useState } from 'react';
+
 /** 모임 상세페이지 - 이미지 + 마감정보 */
-function GatheringMainImage({ data }: { data: Gathering }) {
+function GatheringMainImage({ data, isHydrated }: { data: Gathering; isHydrated: boolean }) {
 	const { registrationEnd, image } = data;
 
 	const now = new Date();
@@ -26,7 +28,9 @@ function GatheringMainImage({ data }: { data: Gathering }) {
 
 	let tagText = '';
 
-	if (isPast(endDate)) {
+	if (!isHydrated) {
+		tagText = '';
+	} else if (isPast(endDate)) {
 		tagText = '모집 마감';
 	} else if (isSameDay(now, endDate)) {
 		const endHour = endDate.getHours();
@@ -39,9 +43,11 @@ function GatheringMainImage({ data }: { data: Gathering }) {
 	return (
 		<div className="relative h-full w-full overflow-hidden rounded-3xl border-2 border-gray-200">
 			<Image src={image} alt="사진" fill className="object-cover" />
-			<div className="z-base absolute top-0 right-0">
-				<Tag text={tagText} />
-			</div>
+			{tagText && (
+				<div className="z-base absolute top-0 right-0">
+					<Tag text={tagText} />
+				</div>
+			)}
 		</div>
 	);
 }
@@ -148,6 +154,11 @@ function GatheringSubInfo({ data }: { data: Gathering }) {
 
 /** 상위 섹션: 데이터 Fetch + 하위 컴포넌트 전달 */
 export default function GatheringInfoSection({ gatheringId }: { gatheringId: number }) {
+	const [isHydrated, setIsHydrated] = useState(false);
+	useEffect(() => {
+		setIsHydrated(true);
+	}, []);
+
 	const { data, isLoading } = useQuery<Gathering>({
 		queryKey: ['gathering', gatheringId],
 		queryFn: () =>
@@ -170,7 +181,7 @@ export default function GatheringInfoSection({ gatheringId }: { gatheringId: num
 					duration: 0.8
 				}}
 				className="relative aspect-video flex-1 overflow-hidden rounded-3xl">
-				<GatheringMainImage data={data} />
+				<GatheringMainImage data={data} isHydrated={isHydrated} />
 			</motion.div>
 
 			{/* 모임정보 */}

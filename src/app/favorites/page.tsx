@@ -2,10 +2,11 @@ import FavoriteGatherings from '@/components/favorites/FavoriteGatherings';
 
 export default function Page() {
 	return (
-		<div className="min-h-screen bg-gray-900">
-			<div className="bg-root mx-auto min-h-screen max-w-[1200px]">
+		<div className="bg-discord-bg min-h-screen">
+			<div className="m-auto flex min-h-screen w-full flex-col">
 				<FavoriteGatherings />
 			</div>
 		</div>
 	);
 }
+

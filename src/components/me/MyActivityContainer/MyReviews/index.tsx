@@ -9,6 +9,7 @@ import WritableReviewCard from './WritableReviewCard';
 import WrittenReviewCard from './WrittenReviewCard';
 import NoDataMessage from '../../../commons/NoDataMessage/NoDataMessage';
 import Chip from '@/components/commons/Chip';
+import ReviewSkeleton from '@/components/reviews/ReviewSkeleton';
 
 /**
  * MyReviews 컴포넌트
@@ -25,9 +26,12 @@ export default function MyReviews() {
 	const queryClient = useQueryClient();
 	const [activeTab, setActiveTab] = useState<'writable' | 'written'>('writable');
 
-	const { data: writableReviewsData = [] } = useWritableReviews(user?.userId);
+	const { data: writableReviewsData = [], isLoading: isLoadingWritable } = useWritableReviews(user?.userId);
 
-	const { data: writtenReviewsData = [] } = useWrittenReviews(user?.userId);
+	const { data: writtenReviewsData = [], isLoading: isLoadingWritten } = useWrittenReviews(user?.userId);
+
+	const isLoading = activeTab === 'writable' ? isLoadingWritable : isLoadingWritten;
+
 	/**
 	 * 리뷰 작성 성공 시 해당 모임의 isReviewed를 true로 업데이트
 	 * @param gatheringId 리뷰 작성 완료한 모임 ID
@@ -55,7 +59,14 @@ export default function MyReviews() {
 				<Chip text="작성 가능한 리뷰" isActive={activeTab === 'writable'} onClick={() => setActiveTab('writable')} />
 				<Chip text="작성한 리뷰" isActive={activeTab === 'written'} onClick={() => setActiveTab('written')} />
 			</div>
-			{activeTab === 'writable' ? (
+
+			{isLoading ? (
+				<div className="flex flex-col gap-6">
+					{Array.from({ length: 3 }).map((_, i) => (
+						<ReviewSkeleton key={i} />
+					))}
+				</div>
+			) : activeTab === 'writable' ? (
 				writableReviewsData.length > 0 ? (
 					writableReviewsData.map(gathering => (
 						<WritableReviewCard
@@ -75,3 +86,4 @@ export default function MyReviews() {
 		</div>
 	);
 }
+

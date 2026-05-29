@@ -83,9 +83,9 @@ export function SigninForm({ onSubmit }: SigninFormProps) {
 					Login
 				</BasicButton>
 				<div className="mt-1 flex items-center justify-start gap-1">
-					<span className="text-discord-muted text-xs font-medium">Need an account?</span>
-					<Link href="/signup" className="text-primary-400 text-xs font-bold hover:underline">
-						Register
+					<span className="text-discord-muted text-xs">계정이 필요한가요?</span>
+					<Link href="/signup" className="text-primary-400 text-xs hover:underline">
+						가입하기
 					</Link>
 				</div>
 			</div>

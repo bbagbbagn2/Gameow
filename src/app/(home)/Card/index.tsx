@@ -9,6 +9,7 @@ import type { Gathering } from '@/types/response/gatherings';
 import { formatDateAndTime, getDeadlineLabel } from '@/utils/date';
 import * as motion from 'motion/react-client';
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
 
 interface CardProps {
 	/** 모임 정보 객체 */
@@ -22,9 +23,14 @@ interface CardProps {
  * @param {CardProps} props - 모임 데이터와 클릭 핸들러를 포함한 props
  */
 export default function Card({ gathering, onClick }: CardProps) {
+	const [isHydrated, setIsHydrated] = useState(false);
+	useEffect(() => {
+		setIsHydrated(true);
+	}, []);
+
 	const { id, name, dateTime, registrationEnd, location, participantCount, image } = gathering;
 	const { date, time } = formatDateAndTime(dateTime);
-	const deadlineLabel = getDeadlineLabel(registrationEnd);
+	const deadlineLabel = isHydrated ? getDeadlineLabel(registrationEnd) : null;
 
 	return (
 		<motion.div

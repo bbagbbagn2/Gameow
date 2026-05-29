@@ -24,7 +24,7 @@ export function useAuth() {
 			signoutToken();
 			signoutUser();
 		}
-	}, [hasHydrated, exp]);
+	}, [hasHydrated, exp, signoutUser, signoutToken]);
 
 	return {
 		isAuthenticated

@@ -17,7 +17,7 @@ export default function CreatedGatherings() {
 			setGatherings(data as Gathering[]);
 		};
 		fetchGatherings();
-	}, []);
+	}, [user?.userId]);
 
 	if (gatherings.length === 0) {
 		return <NoDataMessage text="아직 만든 크루가 없어요" />;

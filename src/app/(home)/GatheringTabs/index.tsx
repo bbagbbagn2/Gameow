@@ -1,10 +1,11 @@
 'use client';
 
+import { useState } from 'react';
+
 import Chip from '@/components/commons/Chip';
 import Tab from '@/components/commons/Tab';
+
 import { SUB_TYPE_OPTIONS, TYPE_OPTIONS } from '@/constants/options';
-import { Dispatch, SetStateAction, useLayoutEffect, useState } from 'react';
-import { cn } from '@/utils/cn';
 
 interface GatheringTabsProps {
 	/** 상위 컴포넌트에 선택된 모임 유형을 전달하는 함수 */

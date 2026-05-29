@@ -1,4 +1,4 @@
-import { cn } from "@/utils/cn";
+import { cn } from '@/utils/cn';
 
 /**
  * Chip 컴포넌트의 Props 인터페이스
@@ -32,12 +32,11 @@ export default function Chip({ text, isActive = false, imgUrl, onClick }: ChipPr
 			className={cn(
 				'flex h-8 cursor-pointer items-center gap-2 rounded-md px-3 py-1 transition-all duration-200',
 				isActive
-					? 'bg-primary-500/10 text-primary-400 border border-primary-500/30'
-					: 'bg-discord-surface text-discord-muted border border-white/5 hover:bg-discord-hover hover:text-discord-text'
+					? 'bg-primary-500/10 text-primary-400 border-primary-500/30 border'
+					: 'bg-discord-surface text-discord-muted hover:bg-discord-hover hover:text-discord-text border border-white/5'
 			)}>
 			{imgUrl && <img src={imgUrl} alt="" className="h-4 w-4" />}
 			<span className="text-sm font-bold tracking-tight">{text}</span>
 		</button>
 	);
 }
-

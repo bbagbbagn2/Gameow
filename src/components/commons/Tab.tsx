@@ -2,36 +2,6 @@ import { useEffect, useRef, useState } from 'react';
 import { cn } from '@/utils/cn';
 
 /**
- * 글로우 효과가 있는 아이콘 컴포넌트
- */
-function IconWithGlow({ iconUrl, isSelected }: { iconUrl: string; isSelected: boolean }) {
-	const glowFilter = 'drop-shadow(0 0 4px #1ef5d7) drop-shadow(0 0 10px #1ef5d7)';
-
-	return (
-		<span
-			className={`icon-glow-hover mb:h-5 mb:w-5 relative inline-block h-4 w-4 transition-all duration-200 ${
-				isSelected ? 'icon-glow' : ''
-			}`}
-			style={isSelected ? { filter: glowFilter } : undefined}>
-			<span
-				className={`group-hover:bg-primary-400 mb:h-5 mb:w-5 block h-4 w-4 transition-colors duration-200 ${
-					isSelected ? 'bg-white' : 'bg-gray-400/80'
-				}`}
-				style={{
-					WebkitMaskImage: `url(${iconUrl})`,
-					maskImage: `url(${iconUrl})`,
-					WebkitMaskRepeat: 'no-repeat',
-					maskRepeat: 'no-repeat',
-					WebkitMaskPosition: 'center',
-					maskPosition: 'center',
-					WebkitMaskSize: 'contain',
-					maskSize: 'contain'
-				}}
-			/>
-		</span>
-	);
-}
-/**
  * 탭 옵션의 타입 정의
  */
 export interface TabOption {
@@ -148,7 +118,7 @@ export default function Tab({ options, selectedTab, onTabChange, className }: Ta
 
 			{/* 애니메이션 막대 */}
 			<div
-				className="absolute bottom-0 h-0.5 bg-primary-500 transition-all duration-300 ease-out"
+				className="bg-primary-500 absolute bottom-0 h-0.5 transition-all duration-300 ease-out"
 				style={{
 					left: `${indicatorStyle.left}px`,
 					width: `${indicatorStyle.width}px`
@@ -157,4 +127,3 @@ export default function Tab({ options, selectedTab, onTabChange, className }: Ta
 		</div>
 	);
 }
-

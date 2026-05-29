@@ -33,7 +33,7 @@ export default function Step2Funnel() {
 			setImagePreview(url);
 			setImageName(file.name);
 		}
-	}, [file]);
+	}, [file, setFileUrl]);
 
 	const handleNext = async () => {
 		const isStepValid = await trigger(['type', 'image']);

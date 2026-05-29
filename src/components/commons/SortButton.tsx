@@ -1,8 +1,10 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useFormContext, UseFormRegisterReturn } from 'react-hook-form';
-import BasicDropbox, { OptionType } from './basic/BasicDropbox';
-import { cn } from '@/utils/cn';
+
+import { OptionType } from './basic/BasicDropbox';
 import { DropdownMenu } from './GNB/DropdownMenu';
+
+import { cn } from '@/utils/cn';
 
 /**
  * SortButton 컴포넌트의 Props 인터페이스
@@ -41,7 +43,6 @@ interface SortButtonProps {
 export default function SortButton({ options, register, defaultValue, className }: SortButtonProps) {
 	const [isOpen, setIsOpen] = useState(false);
 	const [selectedValue, setSelectedValue] = useState<string | number>('');
-	const containerRef = useRef<HTMLDivElement>(null);
 	const formContext = useFormContext();
 	const currentValue = register?.name ? formContext?.watch(register.name) : '';
 
@@ -79,10 +80,10 @@ export default function SortButton({ options, register, defaultValue, className 
 							setIsOpen(!isOpen);
 						}}
 						className={cn(
-							'bg-discord-surface border-white/5 hover:bg-discord-hover flex cursor-pointer items-center gap-2 rounded-md border px-3 py-2 transition-all',
+							'bg-discord-surface hover:bg-discord-hover flex cursor-pointer items-center gap-2 rounded-md border border-white/5 px-3 py-2 transition-all',
 							className
 						)}>
-						<img src="/icons/sort_invert.svg" alt="sort" className="h-5 w-5 brightness-0 invert opacity-60" />
+						<img src="/icons/sort_invert.svg" alt="sort" className="h-5 w-5 opacity-60 brightness-0 invert" />
 						<span className="text-discord-text text-sm font-bold">{selectedOption && selectedOption.text}</span>
 					</button>
 				</DropdownMenu.Trigger>
@@ -91,4 +92,3 @@ export default function SortButton({ options, register, defaultValue, className 
 		</div>
 	);
 }
-

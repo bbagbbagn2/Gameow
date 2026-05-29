@@ -1,19 +1,18 @@
 'use client';
 
-import GatheringFilterBar, { type FilterCriteria } from '@/app/(home)/GatheringFilterBar';
-import { getGatheringQuery } from '@/utils/query';
-// TODO: motion import 최적화
-import { useInfiniteGatheringsQuery } from '@/hooks/useInfiniteGatheringsQuery';
-import { Gathering } from '@/types/response/gatherings';
+import { useDeferredValue, useMemo, useState } from 'react';
 import * as motion from 'motion/react-client';
 import Image from 'next/image';
-import { useDeferredValue, useMemo, useState } from 'react';
+
 import CardList from './CardList';
 import CardSkeleton from './CardSkeleton';
 
-import Link from 'next/link';
-import CreateGatheringButton from './CreateGatheringButton';
-import GatheringTabs from './GatheringTabs';
+import GatheringFilterBar, { type FilterCriteria } from '@/app/(home)/GatheringFilterBar';
+
+import { getGatheringQuery } from '@/utils/query';
+import { useInfiniteGatheringsQuery } from '@/hooks/useInfiniteGatheringsQuery';
+import { Gathering } from '@/types/response/gatherings';
+
 
 const SKELETON_ITEMS = Array.from({ length: 3 }, (_, i) => i);
 

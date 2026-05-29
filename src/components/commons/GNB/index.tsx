@@ -1,8 +1,14 @@
 'use client';
 
-import { postSignout } from '@/apis/auths/signout';
+import { usePathname, useRouter } from 'next/navigation';
+import Image from 'next/image';
+import Link from 'next/link';
+
+import SessionTimer from './SessionTimer';
 
 import { DropdownMenu } from '@/components/commons/GNB/DropdownMenu';
+
+import { postSignout } from '@/apis/auths/signout';
 import { PROFILE_PATHS } from '@/constants/assetPath';
 import { DROPDOWN_MENU_OPTIONS, NAVBAR_MENU_LINKS } from '@/constants/options';
 import { useAuth } from '@/hooks/useAuth';
@@ -10,12 +16,7 @@ import { useScreenSize } from '@/hooks/useScreenSize';
 import { useTokenStore } from '@/stores/token';
 import { useUserStore } from '@/stores/user';
 import { cn } from '@/utils/cn';
-import Image from 'next/image';
-import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
-import SessionTimer from './SessionTimer';
 
-const PROFILE_BOX_GLOW = '[box-shadow:0_0_2px_#b3b3b3,0_0_4px_#b3b3b3,0_0_8px_#b3b3b3,0_0_16px_#b3b3b3]';
 /**
  * GNB(Global Navigation Bar)
  * - 로그인 상태에 따라 다른 UI를 렌더링함
@@ -75,13 +76,13 @@ export default function GNB() {
 								/>
 							</Link>
 						</h1>
-						<nav className="hidden items-center gap-1 tb:flex">
+						<nav className="tb:flex hidden items-center gap-1">
 							{NAVBAR_MENU_LINKS.map(({ href, label }) => (
 								<Link
 									key={href}
 									href={href}
 									className={cn(
-										'rounded-md px-4 py-2 text-sm font-bold transition-all uppercase tracking-wide',
+										'rounded-md px-4 py-2 text-sm font-bold tracking-wide uppercase transition-all',
 										pathname === href
 											? 'bg-primary-500/10 text-primary-400'
 											: 'text-discord-muted hover:bg-discord-hover hover:text-discord-text'
@@ -96,12 +97,12 @@ export default function GNB() {
 						<div className="h-10 w-24 animate-pulse rounded-md bg-white/5" />
 					) : isAuthenticated ? (
 						<div className="flex items-center gap-4">
-							<div className="hidden tb:block">
+							<div className="tb:block hidden">
 								<SessionTimer />
 							</div>
 							<DropdownMenu>
 								<DropdownMenu.Trigger>
-									<div className="bg-discord-surface group relative size-10 cursor-pointer overflow-hidden rounded-full border border-white/10 p-0.5 transition-all hover:border-primary-500/50">
+									<div className="bg-discord-surface group hover:border-primary-500/50 relative size-10 cursor-pointer overflow-hidden rounded-full border border-white/10 p-0.5 transition-all">
 										<div className="relative h-full w-full overflow-hidden rounded-full">
 											<Image
 												priority
@@ -119,7 +120,7 @@ export default function GNB() {
 					) : (
 						<button
 							onClick={handleSigninClick}
-							className="bg-primary-500 text-discord-bg hover:bg-primary-400 rounded-md px-5 py-2 text-sm font-black transition-all active:scale-95 uppercase tracking-tighter">
+							className="bg-primary-500 text-discord-bg hover:bg-primary-400 rounded-md px-5 py-2 text-sm font-black tracking-tighter uppercase transition-all active:scale-95">
 							Login
 						</button>
 					)}
@@ -132,4 +133,3 @@ export default function GNB() {
 		</header>
 	);
 }
-

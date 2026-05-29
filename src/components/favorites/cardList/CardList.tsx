@@ -1,17 +1,15 @@
 'use client';
 
 import { differenceInDays, isPast, isSameDay, startOfDay } from 'date-fns';
-
-import { formatDateAndTime } from '@/utils/date';
-import { CLOSED_GATHERING_MESSAGE, FULL_GATHERING_MESSAGE } from '@/constants/messages';
-import { useWishlistStore } from '@/stores/wishlist';
-import type { Gathering } from '@/types/response/gatherings';
-
 import Image from 'next/image';
-import HeartButton from '@/app/(home)/HeartButton';
-import ChipInfo from '@/components/commons/ChipInfo';
-import ClassProgressBar from '@/components/commons/ClassProgressBar';
+
 import Tag from '@/components/commons/Tag';
+
+import HeartButton from '@/app/(home)/HeartButton';
+import { CLOSED_GATHERING_MESSAGE } from '@/constants/messages';
+import { useWishlistStore } from '@/stores/wishlist';
+import { formatKoreanDate } from '@/utils/date';
+import type { Gathering } from '@/types/response/gatherings';
 
 interface CardListProps {
 	data: Gathering;
@@ -58,7 +56,12 @@ export default function CardList({ data }: CardListProps) {
 		<article className="bg-discord-card hover:bg-discord-hover group relative flex h-full flex-col overflow-hidden rounded-xl border border-white/5 transition-all hover:-translate-y-1 hover:shadow-2xl">
 			{/* 상단 이미지 영역 */}
 			<div className="relative h-48 w-full shrink-0 overflow-hidden shadow-inner">
-				<Image src={image} alt={name} fill className="object-cover transition-transform duration-700 group-hover:scale-110" />
+				<Image
+					src={image}
+					alt={name}
+					fill
+					className="object-cover transition-transform duration-700 group-hover:scale-110"
+				/>
 				<div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60" />
 
 				{/* 마감 태그 */}
@@ -70,7 +73,7 @@ export default function CardList({ data }: CardListProps) {
 
 				{/* 장르 태그 */}
 				<div className="absolute bottom-3 left-3">
-					<span className="bg-primary-500 text-discord-bg rounded px-2 py-0.5 text-[10px] font-black uppercase tracking-wider">
+					<span className="bg-primary-500 text-discord-bg rounded px-2 py-0.5 text-[10px] font-black tracking-wider uppercase">
 						{genre}
 					</span>
 				</div>
@@ -81,11 +84,9 @@ export default function CardList({ data }: CardListProps) {
 				<div className="flex flex-col gap-3">
 					<div className="flex items-start justify-between">
 						<div className="flex flex-col gap-1">
-							<h3 className="text-lg font-bold text-white transition-colors group-hover:text-primary-400">
-								{name}
-							</h3>
+							<h3 className="group-hover:text-primary-400 text-lg font-bold text-white transition-colors">{name}</h3>
 							<div className="flex items-center gap-2 text-xs">
-								<span className="text-primary-500 font-bold uppercase tracking-tighter">
+								<span className="text-primary-500 font-bold tracking-tighter uppercase">
 									{formatKoreanDate(dateTime)}
 								</span>
 								<span className="text-discord-muted">•</span>
@@ -107,7 +108,7 @@ export default function CardList({ data }: CardListProps) {
 							</span>
 						</div>
 						{participantCount >= capacity && (
-							<span className="text-[10px] font-black text-destructive italic uppercase">Full House</span>
+							<span className="text-destructive text-[10px] font-black uppercase italic">Full House</span>
 						)}
 					</div>
 				</div>
@@ -116,9 +117,9 @@ export default function CardList({ data }: CardListProps) {
 			{/* 마감/종료 오버레이 (Discord 스타일) */}
 			{isClosed && (
 				<div
-					className="bg-discord-bg/90 absolute inset-0 z-layout flex flex-col items-center justify-center p-6 text-center backdrop-blur-sm"
+					className="bg-discord-bg/90 z-layout absolute inset-0 flex flex-col items-center justify-center p-6 text-center backdrop-blur-sm"
 					onClick={e => e.stopPropagation()}>
-					<p className="text-discord-text text-sm font-bold leading-relaxed">
+					<p className="text-discord-text text-sm leading-relaxed font-bold">
 						{CLOSED_GATHERING_MESSAGE.title}
 						<br />
 						<span className="text-discord-muted font-medium">{CLOSED_GATHERING_MESSAGE.subTitle}</span>
@@ -128,7 +129,7 @@ export default function CardList({ data }: CardListProps) {
 							e.stopPropagation();
 							removeWish(id);
 						}}
-						className="bg-primary-500 text-discord-bg mt-6 flex items-center gap-2 rounded-md px-4 py-2 text-xs font-black transition-all active:scale-95 uppercase tracking-tighter">
+						className="bg-primary-500 text-discord-bg mt-6 flex items-center gap-2 rounded-md px-4 py-2 text-xs font-black tracking-tighter uppercase transition-all active:scale-95">
 						<Image src="/icons/bye.svg" alt="remove" width={16} height={16} className="brightness-0" />
 						보내주기
 					</button>
@@ -137,4 +138,3 @@ export default function CardList({ data }: CardListProps) {
 		</article>
 	);
 }
-

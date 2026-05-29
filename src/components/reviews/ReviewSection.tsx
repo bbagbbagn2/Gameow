@@ -3,8 +3,6 @@ import FilterSection, { FilterData } from './FilterSection';
 import ReviewItem from './ReviewItem';
 import BasicPagination from '../commons/basic/BasicPagination';
 import Image from 'next/image';
-import MyActivitySkeleton from '../me/skeleton/MyActivitySkeleton';
-import NoDataMessage from '../commons/NoDataMessage/NoDataMessage';
 
 import ReviewSkeleton from './ReviewSkeleton';
 
@@ -35,14 +33,14 @@ export default function ReviewSection({
 			</div>
 
 			{isLoading ? (
-				<div className="grid grid-cols-1 gap-6 tb:grid-cols-2 pc:grid-cols-3">
+				<div className="tb:grid-cols-2 pc:grid-cols-3 grid grid-cols-1 gap-6">
 					{Array.from({ length: 6 }).map((_, i) => (
 						<ReviewSkeleton key={i} />
 					))}
 				</div>
 			) : reviewData && reviewData.data.length > 0 ? (
 				<>
-					<div className="grid grid-cols-1 gap-6 tb:grid-cols-2 pc:grid-cols-3">
+					<div className="tb:grid-cols-2 pc:grid-cols-3 grid grid-cols-1 gap-6">
 						{reviewData.data.map((item: ReviewResponse) => (
 							<ReviewItem key={item.id} reviewData={item} />
 						))}
@@ -67,4 +65,3 @@ export default function ReviewSection({
 		</div>
 	);
 }
-

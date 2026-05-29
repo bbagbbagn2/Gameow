@@ -78,7 +78,7 @@ export default function ProfileEditModal({ currentImage, currentNickname, onSubm
 	};
 
 	return (
-		<BasicModal onClose={closeModal} className="tb:min-w-118 border border-white/5 bg-discord-surface p-8 shadow-2xl">
+		<BasicModal onClose={closeModal} className="tb:min-w-118 bg-discord-surface border border-white/5 p-8 shadow-2xl">
 			<h1 className="text-xl font-bold tracking-tight text-white uppercase">Edit Profile</h1>
 			<p className="text-discord-muted mt-1 text-sm">유저 정보를 수정하여 본인만의 프로필을 완성하세요.</p>
 			<form onSubmit={handleSubmit(handleFormSubmit)} className="mt-8 flex flex-col items-center gap-8 self-stretch">

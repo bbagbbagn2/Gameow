@@ -1,6 +1,5 @@
-import { cn } from '@/utils/cn';
-import Image from 'next/image';
 import { ReactNode } from 'react';
+import Image from 'next/image';
 
 export default function AuthLayout({ children }: { children: ReactNode }) {
 	return (

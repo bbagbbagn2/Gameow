@@ -1,8 +1,18 @@
 'use client';
 
 import { forwardRef } from 'react';
-import { cva, type VariantProps } from 'class-variance-authority';
+import { cva } from 'class-variance-authority';
+
 import { cn } from '@/utils/cn';
+
+interface BasicSelectButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'value'> {
+	expanded?: boolean;
+	placeholder?: string;
+	value?: string | number | null;
+	displayText?: string;
+	isOpen?: boolean;
+	side?: 'top' | 'bottom' | 'left' | 'right';
+}
 
 const basicSelectButtonVariants = cva(
 	'bg-discord-surface border border-white/5 rounded-md font-bold text-sm outline-none flex items-center justify-between text-left transition-all cursor-pointer hover:bg-discord-hover hover:border-white/10',
@@ -85,7 +95,6 @@ const BasicSelectButton = forwardRef<HTMLButtonElement, BasicSelectButtonProps>(
 		);
 	}
 );
-
 
 BasicSelectButton.displayName = 'BasicSelectButton';
 

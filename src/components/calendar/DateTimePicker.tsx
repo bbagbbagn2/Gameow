@@ -1,8 +1,11 @@
 import { useEffect } from 'react';
 
+import BasicButton from '../commons/basic/BasicButton';
+
 import { Button } from '@/components/ui/button';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
-import BasicButton from '../commons/basic/BasicButton';
+
+import { cn } from '@/utils/cn';
 
 /**
  * 시간 선택을 위한 상태 인터페이스
@@ -91,13 +94,14 @@ export default function DateTimePicker({
 			}
 			return prev;
 		});
-	}, [date]);
+	}, [date, setTimeSelection]);
+
 	return (
 		<div className="flex flex-col gap-4">
-			<div className="mb:h-[280px] mb:flex-row mb:divide-x mb:divide-white/5 mb:w-full flex flex-col bg-discord-surface rounded-xl border border-white/5 overflow-hidden">
+			<div className="mb:h-[280px] mb:flex-row mb:divide-x mb:divide-white/5 mb:w-full bg-discord-surface flex flex-col overflow-hidden rounded-xl border border-white/5">
 				{/* Hour */}
 				<ScrollArea className="mb:w-auto mb:border-t-0 w-full border-t border-white/5">
-					<div className="mb:flex-col mb:w-auto flex p-2 gap-1">
+					<div className="mb:flex-col mb:w-auto flex gap-1 p-2">
 						{hours.map(h => (
 							<Button
 								key={h}
@@ -105,7 +109,9 @@ export default function DateTimePicker({
 								variant={timeSelection.hour === String(h) ? 'default' : 'ghost'}
 								className={cn(
 									'mb:w-full aspect-square shrink-0 font-bold transition-all',
-									timeSelection.hour === String(h) ? 'shadow-[0_0_12px_rgba(5,242,219,0.3)]' : 'text-discord-muted hover:text-white'
+									timeSelection.hour === String(h)
+										? 'shadow-[0_0_12px_rgba(5,242,219,0.3)]'
+										: 'text-discord-muted hover:text-white'
 								)}
 								onClick={() => setTimeSelection(prev => ({ ...prev, hour: String(h) }))}>
 								{h.toString().padStart(2, '0')}
@@ -117,7 +123,7 @@ export default function DateTimePicker({
 
 				{/* Minute */}
 				<ScrollArea className="mb:w-auto mb:border-t-0 mb:border-l w-full border-t border-l-0 border-white/5">
-					<div className="mb:flex-col flex p-2 gap-1">
+					<div className="mb:flex-col flex gap-1 p-2">
 						{minutes.map(m => (
 							<Button
 								key={m}
@@ -125,7 +131,9 @@ export default function DateTimePicker({
 								variant={timeSelection.minute === String(m) ? 'default' : 'ghost'}
 								className={cn(
 									'mb:w-full aspect-square shrink-0 font-bold transition-all',
-									timeSelection.minute === String(m) ? 'shadow-[0_0_12px_rgba(5,242,219,0.3)]' : 'text-discord-muted hover:text-white'
+									timeSelection.minute === String(m)
+										? 'shadow-[0_0_12px_rgba(5,242,219,0.3)]'
+										: 'text-discord-muted hover:text-white'
 								)}
 								onClick={() => setTimeSelection(prev => ({ ...prev, minute: String(m) }))}>
 								{m.toString().padStart(2, '0')}
@@ -137,7 +145,7 @@ export default function DateTimePicker({
 
 				{/* AM/PM */}
 				<ScrollArea className="mb:w-auto mb:border-t-0 mb:border-l w-full border-t border-l-0 border-white/5">
-					<div className="mb:flex-col flex p-2 gap-1">
+					<div className="mb:flex-col flex gap-1 p-2">
 						{ampmOptions.map(ap => (
 							<Button
 								key={ap}
@@ -145,7 +153,9 @@ export default function DateTimePicker({
 								variant={timeSelection.ampm === ap ? 'default' : 'ghost'}
 								className={cn(
 									'mb:w-full aspect-square shrink-0 font-black transition-all',
-									timeSelection.ampm === ap ? 'shadow-[0_0_12px_rgba(5,242,219,0.3)]' : 'text-discord-muted hover:text-white'
+									timeSelection.ampm === ap
+										? 'shadow-[0_0_12px_rgba(5,242,219,0.3)]'
+										: 'text-discord-muted hover:text-white'
 								)}
 								onClick={() => setTimeSelection(prev => ({ ...prev, ampm: ap }))}>
 								{ap}

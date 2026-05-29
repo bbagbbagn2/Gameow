@@ -1,17 +1,18 @@
 'use client';
 
-import { postSignin } from '@/apis/auths/signin';
-import { getUserInfo } from '@/apis/auths/user';
+import { Suspense } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+
 import ServerErrorPopup from '@/components/auth/Popup/ServerErrorPopup';
 import { SigninForm, type SigninFormValues } from '@/components/auth/SigninForm';
+
+import { postSignin } from '@/apis/auths/signin';
+import { getUserInfo } from '@/apis/auths/user';
 import { useModal } from '@/hooks/useModal';
 import { useTokenStore } from '@/stores/token';
 import { useUserStore } from '@/stores/user';
-import { cn } from '@/utils/cn';
 import { ApiError } from '@/utils/fetch';
 import { decodeToken } from '@/utils/token';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { Suspense } from 'react';
 
 function SigninPageContent() {
 	const searchParams = useSearchParams();

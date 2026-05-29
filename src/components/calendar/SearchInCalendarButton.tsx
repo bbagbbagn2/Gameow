@@ -11,7 +11,6 @@
  *
  */
 
-import { cn } from '@/utils/cn';
 import BasicButton from '../commons/basic/BasicButton';
 
 interface CalendarButtonProps {

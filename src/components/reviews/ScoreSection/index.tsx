@@ -36,10 +36,10 @@ export default function ScoreSection({ data, isLoading }: { data?: scoreData | n
 	}
 
 	return (
-		<div className="flex flex-col gap-10 tb:flex-row tb:items-center tb:justify-between">
+		<div className="tb:flex-row tb:items-center tb:justify-between flex flex-col gap-10">
 			{/* 평균 점수 영역 */}
-			<div className="flex flex-col items-center gap-4 tb:items-start tb:pl-4">
-				<div className="flex flex-col items-center tb:items-start">
+			<div className="tb:items-start tb:pl-4 flex flex-col items-center gap-4">
+				<div className="tb:items-start flex flex-col items-center">
 					<span className="text-primary-500 text-xs font-black tracking-[0.2em] uppercase">Average Rating</span>
 					<div className="mt-1 flex items-baseline gap-2">
 						<span className="text-5xl font-black text-white">{data?.averageScore?.toFixed(1) ?? '0.0'}</span>
@@ -51,7 +51,12 @@ export default function ScoreSection({ data, isLoading }: { data?: scoreData | n
 					{/* Base layer */}
 					<div className="flex gap-1">
 						{Array.from({ length: 5 }).map((_, i) => (
-							<img key={i} src="/icons/heart.svg" alt="heart" className="h-6 w-6 opacity-20 grayscale brightness-0 invert" />
+							<img
+								key={i}
+								src="/icons/heart.svg"
+								alt="heart"
+								className="h-6 w-6 opacity-20 brightness-0 grayscale invert"
+							/>
 						))}
 					</div>
 					{/* Overlay layer */}
@@ -69,19 +74,19 @@ export default function ScoreSection({ data, isLoading }: { data?: scoreData | n
 			</div>
 
 			{/* 점수 분포 영역 */}
-			<div className="flex flex-1 flex-col gap-3 pc:max-w-md">
+			<div className="pc:max-w-md flex flex-1 flex-col gap-3">
 				{scores.map((score, i) => (
 					<div key={i} className="group flex items-center gap-4">
-						<span className="text-discord-muted w-8 text-right text-xs font-black tracking-tighter group-hover:text-white transition-colors">
+						<span className="text-discord-muted w-8 text-right text-xs font-black tracking-tighter transition-colors group-hover:text-white">
 							{score.label}
 						</span>
 						<div className="bg-discord-bg relative h-2 flex-1 overflow-hidden rounded-full border border-white/5 shadow-inner">
 							<div
-								className="bg-primary-500 absolute top-0 left-0 h-full rounded-full transition-all duration-1000 ease-out shadow-[0_0_12px_rgba(95,247,230,0.3)]"
+								className="bg-primary-500 absolute top-0 left-0 h-full rounded-full shadow-[0_0_12px_rgba(95,247,230,0.3)] transition-all duration-1000 ease-out"
 								style={{ width: `${totalCount > 0 ? (score.value / totalCount) * 100 : 0}%` }}
 							/>
 						</div>
-						<span className="text-discord-muted w-10 text-xs font-bold group-hover:text-primary-400 transition-colors">
+						<span className="text-discord-muted group-hover:text-primary-400 w-10 text-xs font-bold transition-colors">
 							{score.value}
 						</span>
 					</div>
@@ -90,4 +95,3 @@ export default function ScoreSection({ data, isLoading }: { data?: scoreData | n
 		</div>
 	);
 }
-

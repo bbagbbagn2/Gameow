@@ -1,8 +1,8 @@
+import BasicModal from '@/components/commons/basic/BasicModal';
+
 import { leaveGathering } from '@/apis/gatherings/[id]';
 import { useErrorHandler } from '@/hooks/useErrorHandler';
 import { useModalClose } from '@/hooks/useModal';
-import BasicButton from '@/components/commons/basic/BasicButton';
-import BasicModal from '@/components/commons/basic/BasicModal';
 
 interface CancelConfirmModalProps {
 	/** 예약 취소할 모임 ID */
@@ -40,29 +40,29 @@ export default function CancelConfirmModal({ gatheringId, onSuccess }: CancelCon
 			<div className="flex flex-col">
 				{/* Discord-style Header (Minimal) */}
 				<div className="p-6 pb-2">
-					<h3 className="text-xl font-black text-white tracking-tight">예약 취소</h3>
+					<h3 className="text-xl font-black tracking-tight text-white">예약 취소</h3>
 				</div>
 
 				{/* Discord-style Body */}
 				<div className="p-6 pt-2">
-					<p className="text-discord-text text-base font-medium leading-relaxed">
-						정말 예약을 취소하시겠습니까? <br/>
+					<p className="text-discord-text text-base leading-relaxed font-medium">
+						정말 예약을 취소하시겠습니까? <br />
 						취소된 예약은 복구할 수 없으며, 다시 참여하려면 새로 신청해야 합니다.
 					</p>
 				</div>
 
 				{/* Discord-style Footer */}
-				<div className="bg-discord-bg mt-4 flex items-center justify-end gap-3 p-4 px-6 border-t border-white/5">
-					<button 
+				<div className="bg-discord-bg mt-4 flex items-center justify-end gap-3 border-t border-white/5 p-4 px-6">
+					<button
 						type="button"
 						onClick={closeModal}
-						className="text-white text-sm font-bold px-4 py-2 hover:underline transition-all outline-none">
+						className="px-4 py-2 text-sm font-bold text-white transition-all outline-none hover:underline">
 						돌아가기
 					</button>
 					<div className="w-32">
 						<button
 							onClick={handleCancel}
-							className="w-full bg-destructive hover:bg-destructive/80 text-white font-black text-sm uppercase tracking-tighter py-2.5 rounded-md transition-all active:scale-95 shadow-lg shadow-destructive/10">
+							className="bg-destructive hover:bg-destructive/80 shadow-destructive/10 w-full rounded-md py-2.5 text-sm font-black tracking-tighter text-white uppercase shadow-lg transition-all active:scale-95">
 							취소하기
 						</button>
 					</div>

@@ -2,12 +2,14 @@
 
 import { useEffect, useMemo } from 'react';
 import Image from 'next/image';
-import { useModal } from '@/hooks/useModal';
-import { useScreenSize } from './hooks/useScreenSize';
+
 import { profileAssets } from './assets/profileAssets';
-import { getUserInfo, updateUserInfo } from '@/apis/auths/user';
-import { useUserStore } from '@/stores/user';
+import { useScreenSize } from './hooks/useScreenSize';
 import ProfileEditModal from '../ProfileEditModal/ProfileEditModal';
+
+import { getUserInfo, updateUserInfo } from '@/apis/auths/user';
+import { useModal } from '@/hooks/useModal';
+import { useUserStore } from '@/stores/user';
 
 /**
  * `ProfileEditCard` 컴포넌트
@@ -84,7 +86,7 @@ export default function ProfileEditCard() {
 						onClick={() =>
 							openModal(
 								<ProfileEditModal
-									currentCompanyName={user?.companyName}
+									currentNickname={user?.companyName}
 									currentImage={user?.image}
 									onSubmit={handleUpdateUserInfo}
 								/>

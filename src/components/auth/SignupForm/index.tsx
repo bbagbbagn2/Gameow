@@ -1,16 +1,15 @@
 'use client';
 
-import { zodSchema } from '@/app/(auths)/signup/signupValidator/signupValidator.zod';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import Link from 'next/link';
+
 import DebouncedInput from '@/components/auth/DebouncedInput';
 import BasicButton from '@/components/commons/basic/BasicButton';
+
+import { zodSchema } from '@/app/(auths)/signup/signupValidator/signupValidator.zod';
 import { SIGNUP_LABEL, SIGNUP_PLACEHOLDERS } from '@/constants/form';
-import { AUTH_GUIDE_MESSAGES } from '@/constants/messages';
-import { zodResolver } from '@hookform/resolvers/zod';
-import Link from 'next/link';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-// import { yupSchema } from './signupValidator/signupValidator.yup';
-// import { yupResolver } from '@hookform/resolvers/yup';
 
 /**
  * Zod 기반 회원가입 폼의 입력값 타입
@@ -99,4 +98,3 @@ export function SignupForm({ onSubmit }: SignupFormProps) {
 		</form>
 	);
 }
-

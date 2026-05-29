@@ -17,9 +17,7 @@ import { PROFILE_PATHS } from '@/constants/assetPath';
  * <WrittenReviewCard gathering={gatheringData} />
  */
 export default function ReviewItem({ reviewData }: { reviewData: ReviewResponse | null }) {
-	const genre = reviewData?.Gathering?.location 
-		? GENRE_BY_LOCATION[reviewData.Gathering.location as Location] 
-		: '';
+	const genre = reviewData?.Gathering?.location ? GENRE_BY_LOCATION[reviewData.Gathering.location as Location] : '';
 
 	return (
 		<article className="bg-discord-card hover:bg-discord-hover group relative flex h-full flex-col overflow-hidden rounded-xl border border-white/5 transition-all hover:-translate-y-1 hover:shadow-2xl">
@@ -32,17 +30,17 @@ export default function ReviewItem({ reviewData }: { reviewData: ReviewResponse 
 					className="object-cover transition-transform duration-700 group-hover:scale-110"
 				/>
 				<div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60" />
-				
+
 				{/* 장르 태그 */}
 				<div className="absolute bottom-3 left-3">
-					<span className="bg-primary-500 text-discord-bg rounded px-2 py-0.5 text-[10px] font-black uppercase tracking-wider">
+					<span className="bg-primary-500 text-discord-bg rounded px-2 py-0.5 text-[10px] font-black tracking-wider uppercase">
 						{genre}
 					</span>
 				</div>
-				
+
 				{/* 날짜 태그 (이미지 위 배치) */}
 				<div className="absolute top-3 right-3">
-					<span className="bg-discord-bg/80 text-discord-text backdrop-blur-md border border-white/10 rounded-md px-2 py-1 text-[10px] font-bold tabular-nums">
+					<span className="bg-discord-bg/80 text-discord-text rounded-md border border-white/10 px-2 py-1 text-[10px] font-bold tabular-nums backdrop-blur-md">
 						{formatKoreanDate(reviewData?.createdAt || '', 'yyyy.MM.dd')}
 					</span>
 				</div>
@@ -61,17 +59,21 @@ export default function ReviewItem({ reviewData }: { reviewData: ReviewResponse 
 									alt="heart"
 									width={16}
 									height={16}
-									className={i >= (reviewData?.score || 0) ? 'opacity-10 grayscale brightness-0 invert' : 'drop-shadow-[0_0_8px_rgba(95,247,230,0.3)]'}
+									className={
+										i >= (reviewData?.score || 0)
+											? 'opacity-10 brightness-0 grayscale invert'
+											: 'drop-shadow-[0_0_8px_rgba(95,247,230,0.3)]'
+									}
 								/>
 							))}
 						</div>
-						<h4 className="text-primary-400 text-xs font-black tracking-widest uppercase line-clamp-1">
+						<h4 className="text-primary-400 line-clamp-1 text-xs font-black tracking-widest uppercase">
 							{reviewData?.Gathering?.name}
 						</h4>
 					</div>
 
-					<p className="text-discord-text text-base font-medium leading-relaxed tracking-tight group-hover:text-white transition-colors line-clamp-3 flex-1 min-h-[4.5rem]">
-						"{reviewData?.comment}"
+					<p className="text-discord-text line-clamp-3 min-h-[4.5rem] flex-1 text-base leading-relaxed font-medium tracking-tight transition-colors group-hover:text-white">
+						{reviewData?.comment}
 					</p>
 
 					{/* 작성자 정보 (Discord 멤버 스타일) */}
@@ -86,17 +88,19 @@ export default function ReviewItem({ reviewData }: { reviewData: ReviewResponse 
 								/>
 							</div>
 							<div className="flex flex-col">
-								<span className="text-white text-xs font-black tracking-tight">{reviewData?.User?.name}</span>
-								<span className="text-discord-muted text-[9px] font-bold uppercase tracking-[0.1em]">Verified Member</span>
+								<span className="text-xs font-black tracking-tight text-white">{reviewData?.User?.name}</span>
+								<span className="text-discord-muted text-[9px] font-bold tracking-[0.1em] uppercase">
+									Verified Member
+								</span>
 							</div>
 						</div>
-						
+
 						{/* Discord-like "More" button placeholder */}
 						<div className="flex h-6 w-6 items-center justify-center rounded-md opacity-0 transition-opacity group-hover:bg-white/5 group-hover:opacity-100">
 							<div className="flex gap-0.5">
-								<div className="size-0.5 rounded-full bg-discord-muted" />
-								<div className="size-0.5 rounded-full bg-discord-muted" />
-								<div className="size-0.5 rounded-full bg-discord-muted" />
+								<div className="bg-discord-muted size-0.5 rounded-full" />
+								<div className="bg-discord-muted size-0.5 rounded-full" />
+								<div className="bg-discord-muted size-0.5 rounded-full" />
 							</div>
 						</div>
 					</div>
@@ -105,5 +109,3 @@ export default function ReviewItem({ reviewData }: { reviewData: ReviewResponse 
 		</article>
 	);
 }
-
-

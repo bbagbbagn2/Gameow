@@ -1,9 +1,10 @@
 'use client';
 
-import BasicPopup from '@/components/commons/basic/BasicPopup';
-import { POPUP_MESSAGE } from '@/constants/messages';
-import { useModalClose } from '@/hooks/useModal';
 import { useRouter } from 'next/navigation';
+
+import BasicPopup from '@/components/commons/basic/BasicPopup';
+
+import { useModalClose } from '@/hooks/useModal';
 
 interface RequiredLoginPopupProps {
 	/** 로그인 후 다시 돌아갈 pathName */

@@ -17,7 +17,6 @@ import Chip from '../commons/Chip';
 import CardList from './cardList/CardList';
 import BasicPagination from '../commons/basic/BasicPagination';
 import CardSkeleton from '@/app/(home)/CardSkeleton';
-import NoDataMessage from '../commons/NoDataMessage/NoDataMessage';
 
 const ITEMS_PER_PAGE = 4;
 
@@ -44,15 +43,18 @@ export default function FavoriteGatherings() {
 		const wishlistIds = Array.from(wishlist);
 		const likedGatherings = favoriteGatherings.filter(g => wishlistIds.includes(g.id));
 
-		const result = likedGatherings.filter(g => {
-			if (selectedTab === 'WORKATION') return g.type === 'WORKATION';
-			if (selectedTab === 'DALLAEMFIT') {
-				if (selectedChip === 'DALLAEMFIT') return g.type !== 'WORKATION';
-				if (selectedChip === 'OFFICE_STRETCHING') return g.type === 'OFFICE_STRETCHING';
-				if (selectedChip === 'MINDFULNESS') return g.type === 'MINDFULNESS';
-			}
-			return false;
-		});
+		const result = likedGatherings.filter(
+			g => {
+				if (selectedTab === 'WORKATION') return g.type === 'WORKATION';
+				if (selectedTab === 'DALLAEMFIT') {
+					if (selectedChip === 'DALLAEMFIT') return g.type !== 'WORKATION';
+					if (selectedChip === 'OFFICE_STRETCHING') return g.type === 'OFFICE_STRETCHING';
+					if (selectedChip === 'MINDFULNESS') return g.type === 'MINDFULNESS';
+				}
+				return false;
+			},
+			[hasHydrated]
+		);
 
 		return result.sort((a, b) => {
 			const now = new Date();
@@ -78,7 +80,7 @@ export default function FavoriteGatherings() {
 		return (
 			<div className="tb:px-6 tb:pt-12 pc:max-w-300 pc:px-25 mx-auto flex w-full flex-col px-4 pt-8 pb-20">
 				<div className="bg-discord-surface h-64 w-full animate-pulse rounded-2xl" />
-				<div className="mt-12 grid grid-cols-1 gap-6 tb:grid-cols-2 pc:grid-cols-3">
+				<div className="tb:grid-cols-2 pc:grid-cols-3 mt-12 grid grid-cols-1 gap-6">
 					{Array.from({ length: 3 }).map((_, idx) => (
 						<CardSkeleton key={idx} />
 					))}
@@ -92,10 +94,10 @@ export default function FavoriteGatherings() {
 			<h1 className="sr-only">찜한 크루 페이지</h1>
 
 			{/* 히어로 섹션 */}
-			<section className="bg-discord-surface relative mb-12 overflow-hidden rounded-2xl border border-white/5 p-8 shadow-2xl tb:p-12">
+			<section className="bg-discord-surface tb:p-12 relative mb-12 overflow-hidden rounded-2xl border border-white/5 p-8 shadow-2xl">
 				<div className="bg-highlight/10 absolute -top-24 -right-24 h-64 w-64 rounded-full blur-3xl" />
 
-				<div className="relative flex flex-col items-start gap-8 pc:flex-row pc:items-center">
+				<div className="pc:flex-row pc:items-center relative flex flex-col items-start gap-8">
 					<div className="bg-discord-bg flex h-24 w-24 shrink-0 items-center justify-center rounded-3xl border border-white/10 shadow-2xl">
 						<Image
 							priority
@@ -103,16 +105,17 @@ export default function FavoriteGatherings() {
 							alt="Favorite"
 							width={56}
 							height={56}
-							className="brightness-0 invert opacity-80"
+							className="opacity-80 brightness-0 invert"
 						/>
 					</div>
 
 					<div className="flex flex-col gap-2">
 						<span className="text-highlight text-xs font-black tracking-[0.3em] uppercase">Collection</span>
-						<h2 className="text-3xl font-black tracking-tighter text-white tb:text-4xl">
-							언제나 함께할 <span className="text-primary-500 underline decoration-primary-500/30 underline-offset-8">준비 완료</span>
+						<h2 className="tb:text-4xl text-3xl font-black tracking-tighter text-white">
+							언제나 함께할{' '}
+							<span className="text-primary-500 decoration-primary-500/30 underline underline-offset-8">준비 완료</span>
 						</h2>
-						<p className="text-discord-muted mt-2 max-w-2xl text-base font-medium leading-relaxed">
+						<p className="text-discord-muted mt-2 max-w-2xl text-base leading-relaxed font-medium">
 							{LIKED_GATHERING_MESSAGE.subTitle}
 						</p>
 					</div>
@@ -162,7 +165,7 @@ export default function FavoriteGatherings() {
 				{/* 그리드 리스트 영역 */}
 				<div className="flex flex-col gap-8">
 					{isLoading ? (
-						<div className="grid grid-cols-1 gap-6 tb:grid-cols-2 pc:grid-cols-3">
+						<div className="tb:grid-cols-2 pc:grid-cols-3 grid grid-cols-1 gap-6">
 							{Array.from({ length: 3 }).map((_, idx) => (
 								<CardSkeleton key={idx} />
 							))}
@@ -181,12 +184,12 @@ export default function FavoriteGatherings() {
 							</p>
 							<button
 								onClick={() => router.push('/')}
-								className="bg-primary-500 text-discord-bg mt-8 rounded-md px-6 py-3 text-sm font-black transition-all hover:bg-primary-400 active:scale-95 uppercase">
+								className="bg-primary-500 text-discord-bg hover:bg-primary-400 mt-8 rounded-md px-6 py-3 text-sm font-black uppercase transition-all active:scale-95">
 								Discover Crews
 							</button>
 						</motion.div>
 					) : (
-						<div className="grid grid-cols-1 gap-6 tb:grid-cols-2 pc:grid-cols-3">
+						<div className="tb:grid-cols-2 pc:grid-cols-3 grid grid-cols-1 gap-6">
 							{paginatedGatherings.map(gathering => (
 								<motion.div
 									initial={{ opacity: 0, y: 10 }}
@@ -211,4 +214,3 @@ export default function FavoriteGatherings() {
 		</div>
 	);
 }
-

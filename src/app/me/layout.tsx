@@ -1,10 +1,12 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import { useAuth } from '@/hooks/useAuth';
-import { useModal } from '@/hooks/useModal';
+
 import RequiredLoginPopup from '@/components/auth/Popup/RequiredLoginPopup';
 import MeSkeleton from '@/components/me/skeleton';
+
+import { useAuth } from '@/hooks/useAuth';
+import { useModal } from '@/hooks/useModal';
 
 /**
  * `MeLayout` 컴포넌트
@@ -28,7 +30,7 @@ export default function MeLayout({ children }: { children: React.ReactNode }) {
 			openModal(<RequiredLoginPopup next="/me" />);
 			hasOpenedRef.current = true;
 		}
-	}, [isAuthenticated]);
+	}, [isAuthenticated, openModal]);
 
 	// 하이드레이션 중 (인증 확인 중)
 	if (isAuthenticated === null) return <MeSkeleton />;

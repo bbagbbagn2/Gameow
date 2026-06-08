@@ -1,12 +1,13 @@
-import Image from 'next/image';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import Image from 'next/image';
+
 import { postReviews } from '@/apis/reviews/reviews';
-import { useModalClose } from '@/hooks/useModal';
-import { useErrorHandler } from '@/hooks/useErrorHandler';
 import BasicButton from '@/components/commons/basic/BasicButton';
 import BasicModal from '@/components/commons/basic/BasicModal';
 import BasicTextArea from '@/components/commons/basic/BasicTextArea';
+import { useErrorHandler } from '@/hooks/useErrorHandler';
+import { useModalClose } from '@/hooks/useModal';
 
 interface ReviewWriteModalProps {
 	/** 리뷰를 작성할 모임 ID */
@@ -59,15 +60,15 @@ export default function ReviewWriteModal({ gatheringId, onSuccess }: ReviewWrite
 			<form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
 				{/* Discord-style Header */}
 				<div className="flex flex-col gap-1 p-6 pb-2">
-					<h3 className="text-xl font-black text-white tracking-tight">리뷰 작성하기</h3>
+					<h3 className="text-xl font-black tracking-tight text-white">리뷰 작성하기</h3>
 					<p className="text-discord-muted text-sm font-medium">크루원들과 소중한 경험을 공유해 주세요.</p>
 				</div>
 
 				{/* Discord-style Body (Scrollable if needed) */}
 				<div className="flex flex-col gap-8 p-6 pt-4">
 					<div className="flex flex-col gap-4">
-						<label className="text-discord-muted text-[11px] font-black uppercase tracking-wider">만족도 평가</label>
-						<div className="bg-discord-bg flex items-center justify-center rounded-xl border border-white/5 py-8 transition-colors hover:border-primary-500/20">
+						<label className="text-discord-muted text-[11px] font-black tracking-wider uppercase">만족도 평가</label>
+						<div className="bg-discord-bg hover:border-primary-500/20 flex items-center justify-center rounded-xl border border-white/5 py-8 transition-colors">
 							<div className="flex gap-2">
 								{Array.from({ length: 5 }).map((_, index) => (
 									<button
@@ -81,11 +82,11 @@ export default function ReviewWriteModal({ gatheringId, onSuccess }: ReviewWrite
 											width={40}
 											height={40}
 											className={`transform transition-all duration-300 ${
-												animatingIndex === index 
-													? 'scale-125' 
-													: index < rating 
-														? 'scale-100 drop-shadow-[0_0_10px_rgba(5,242,219,0.4)]' 
-														: 'scale-90 opacity-20 grayscale brightness-0 invert group-hover:opacity-40 group-hover:scale-100'
+												animatingIndex === index
+													? 'scale-125'
+													: index < rating
+														? 'scale-100 drop-shadow-[0_0_10px_rgba(5,242,219,0.4)]'
+														: 'scale-90 opacity-20 brightness-0 grayscale invert group-hover:scale-100 group-hover:opacity-40'
 											}`}
 										/>
 									</button>
@@ -95,29 +96,29 @@ export default function ReviewWriteModal({ gatheringId, onSuccess }: ReviewWrite
 					</div>
 
 					<div className="flex flex-col gap-4">
-						<label className="text-discord-muted text-[11px] font-black uppercase tracking-wider">상세 후기</label>
+						<label className="text-discord-muted text-[11px] font-black tracking-wider uppercase">상세 후기</label>
 						<BasicTextArea
 							register={register('comment', { required: true })}
 							isValid={comment.trim().length > 0}
 							placeholder="이곳에 내용을 입력하세요..."
-							className="bg-discord-bg min-h-[120px] rounded-lg border-white/5 p-4 text-base focus:border-primary-500/50"
+							className="bg-discord-bg focus:border-primary-500/50 min-h-[120px] rounded-lg border-white/5 p-4 text-base"
 							invalidText="내용을 입력해주세요"
 						/>
 					</div>
 				</div>
 
 				{/* Discord-style Footer */}
-				<div className="bg-discord-bg mt-2 flex items-center justify-end gap-3 p-4 px-6 border-t border-white/5">
-					<button 
+				<div className="bg-discord-bg mt-2 flex items-center justify-end gap-3 border-t border-white/5 p-4 px-6">
+					<button
 						type="button"
 						onClick={closeModal}
-						className="text-white text-sm font-bold px-4 py-2 hover:underline transition-all">
+						className="px-4 py-2 text-sm font-bold text-white transition-all hover:underline">
 						취소
 					</button>
 					<div className="w-32">
-						<BasicButton 
-							className="w-full font-black text-sm uppercase tracking-tighter" 
-							isActive={isFormValid} 
+						<BasicButton
+							className="w-full text-sm font-black tracking-tighter uppercase"
+							isActive={isFormValid}
 							type="submit">
 							리뷰 등록
 						</BasicButton>

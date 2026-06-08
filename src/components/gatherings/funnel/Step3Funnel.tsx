@@ -2,13 +2,12 @@
 
 import { Controller, useFormContext } from 'react-hook-form';
 
+import BasicButton from '@/components/commons/basic/BasicButton';
+import GatheringCalendar from '@/components/commons/GatheringCalendar';
 import { useFunnelStore } from '@/stores/useFunnelStore';
 import { Step3Schema, Step3SchemaType } from '@/utils/schema';
 
 import SliderAnimationDiv from '../sliderAnimation/SliderAnimationDiv';
-
-import BasicButton from '@/components/commons/basic/BasicButton';
-import GatheringCalendar from '@/components/commons/GatheringCalendar';
 
 export default function Step3Funnel() {
 	const {

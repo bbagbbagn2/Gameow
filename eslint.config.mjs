@@ -23,6 +23,10 @@ const eslintConfig = [
 					patterns: ['../*']
 				}
 			],
+			'react-hooks/incompatible-library': 'off',
+			'react-hooks/refs': 'off',
+			'react-hooks/set-state-in-effect': 'off',
+			'react-hooks/static-components': 'off',
 			'no-duplicate-imports': 'error',
 			'simple-import-sort/exports': 'error',
 			'simple-import-sort/imports': [

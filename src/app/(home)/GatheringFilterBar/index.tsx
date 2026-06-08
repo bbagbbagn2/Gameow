@@ -1,14 +1,14 @@
 'use client';
 
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Controller, FormProvider, useForm, type UseFormRegisterReturn } from 'react-hook-form';
+
 import GatheringTabs from '@/app/(home)/GatheringTabs';
 import SearchCalendar from '@/app/(home)/SearchCalendar';
-
 import SelectBox from '@/components/commons/SelectBox';
 import SortButton from '@/components/commons/SortButton';
 import { GENRE_OPTIONS, SORT_OPTIONS } from '@/constants/options';
 
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { Controller, FormProvider, useForm, type UseFormRegisterReturn } from 'react-hook-form';
 import CreateGatheringButton from '../CreateGatheringButton';
 
 export interface FilterCriteria {
@@ -64,12 +64,12 @@ export default function GatheringFilterBar({ setFilterCriteria }: GatheringFilte
 			<div className="flex w-full flex-col gap-6">
 				<GatheringTabs setSelectedType={setSelectedType} button={<CreateGatheringButton />} />
 
-				<div className="bg-white/5 h-px w-full" />
+				<div className="h-px w-full bg-white/5" />
 
 				<div className="flex w-full items-center justify-between">
 					<div className="flex items-center gap-3">
 						<SelectBox options={GENRE_OPTIONS} placeholder="장르 전체" onChange={setSelectedLocation} />
-						<div className="bg-white/10 h-6 w-px" />
+						<div className="h-6 w-px bg-white/10" />
 						<SearchCalendar date={selectedDate} setDate={setSelectedDate} />
 					</div>
 					<Controller
@@ -95,4 +95,3 @@ export default function GatheringFilterBar({ setFilterCriteria }: GatheringFilte
 		</FormProvider>
 	);
 }
-

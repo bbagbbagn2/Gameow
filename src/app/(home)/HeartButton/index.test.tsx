@@ -1,7 +1,9 @@
-import { useWishlistStore } from '@/stores/wishlist';
 import { render, screen } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { create } from 'zustand';
+
+import { useWishlistStore } from '@/stores/wishlist';
+
 import HeartButton from '.';
 
 jest.mock('@/stores/wishlist', () => {

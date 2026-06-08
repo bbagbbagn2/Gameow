@@ -3,11 +3,12 @@
 import { useState } from 'react';
 
 import { AnimatePresence, motion } from 'motion/react';
-import ProfileEditCard from '@/components/me/ProfileEditContainer';
+
+import CreatedGathering from '@/components/me/MyActivityContainer/CreatedGathering';
 import JoinedGatherings from '@/components/me/MyActivityContainer/JoinedGatherings';
 import MyReviews from '@/components/me/MyActivityContainer/MyReviews';
-import CreatedGathering from '@/components/me/MyActivityContainer/CreatedGathering';
 import MyPageSidebar, { type MeTab } from '@/components/me/MyPageSidebar';
+import ProfileEditCard from '@/components/me/ProfileEditContainer';
 
 export default function Me() {
 	const [activeTab, setActiveTab] = useState<MeTab>('profile');

@@ -1,13 +1,13 @@
 'use client';
 
 import { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react';
+
 import { format } from 'date-fns';
 
-import { Calendar } from '@/components/ui/calendar';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import BasicButton from '@/components/commons/basic/BasicButton';
 import BasicSelectButton from '@/components/commons/basic/BasicSelectButton';
-
+import { Calendar } from '@/components/ui/calendar';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 
 interface SearchCalendarProps {
 	/** 선택된 날짜 (없을 수 있음) */
@@ -64,7 +64,7 @@ export default function SearchCalendar({ date, setDate }: SearchCalendarProps) {
 				/>
 			</PopoverTrigger>
 			<PopoverContent
-				className="bg-discord-surface border-white/10 flex min-w-[320px] flex-col items-center justify-center rounded-xl border p-4 shadow-2xl backdrop-blur-md"
+				className="bg-discord-surface flex min-w-[320px] flex-col items-center justify-center rounded-xl border border-white/10 p-4 shadow-2xl backdrop-blur-md"
 				align="start"
 				side="bottom"
 				sideOffset={8}
@@ -93,7 +93,6 @@ export default function SearchCalendar({ date, setDate }: SearchCalendarProps) {
 					</div>
 				</div>
 			</PopoverContent>
-
 		</Popover>
 	);
 }

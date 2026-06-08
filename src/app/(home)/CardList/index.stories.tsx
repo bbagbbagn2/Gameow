@@ -1,5 +1,7 @@
-import type { Gathering } from '@/types/response/gatherings';
 import type { Meta, StoryObj } from '@storybook/nextjs';
+
+import type { Gathering } from '@/types/response/gatherings';
+
 import CardList from '.';
 
 const meta: Meta<typeof CardList> = {

@@ -4,7 +4,6 @@ import { useEffect, useRef } from 'react';
 
 import RequiredLoginPopup from '@/components/auth/Popup/RequiredLoginPopup';
 import MeSkeleton from '@/components/me/skeleton';
-
 import { useAuth } from '@/hooks/useAuth';
 import { useModal } from '@/hooks/useModal';
 

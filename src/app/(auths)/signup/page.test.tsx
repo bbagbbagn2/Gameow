@@ -1,9 +1,12 @@
+import { useRouter } from 'next/navigation';
+
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent, { UserEvent } from '@testing-library/user-event';
+
 import ModalContainer from '@/components/commons/ModalContainer';
 import { DEFAULT_SIGNUP_FORM_VALUES as DEFAULT_VALUES } from '@/constants/test';
 import { ModalStoreProvider } from '@/providers/ModalProvider';
-import { render, screen, waitFor } from '@testing-library/react';
-import userEvent, { UserEvent } from '@testing-library/user-event';
-import { useRouter } from 'next/navigation';
+
 import SignupPage from './page';
 
 jest.mock('next/navigation', () => ({

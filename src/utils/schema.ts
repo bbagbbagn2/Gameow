@@ -1,7 +1,7 @@
+import * as z from 'zod';
+
 import { CREATE_GATHERING_ERRORS, SIGNIN_ERRORS } from '@/constants/error';
 import type { GatheringLocation, GatheringType } from '@/types/response/gatherings';
-
-import * as z from 'zod';
 
 /** 이미지 파일 크기 (5MB) */
 const MAX_FILE_SIZE = 5 * 1024 * 1024;

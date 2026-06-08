@@ -1,5 +1,4 @@
 import { useForm } from 'react-hook-form';
-import type { ImageProps } from 'next/image';
 
 import { fireEvent, render, screen } from '@testing-library/react';
 
@@ -12,10 +11,10 @@ import BasicTextArea from './BasicTextArea';
 import BasicTextBox from './BasicTextBox';
 
 // Mock Next.js Image component
-jest.mock('next/image', () => ({
-	__esModule: true,
-	default: ({ src, alt, onClick, ...props }: ImageProps) => <img src={src} alt={alt} onClick={onClick} {...props} />
-}));
+// // jest.mock('next/image', () => ({
+// // 	__esModule: true,
+// // 	default: ({ src, alt, onClick, ...props }: ImageProps) => <img src={src} alt={alt} onClick={onClick} {...props} />
+// }));
 
 // Mock useModal hook
 jest.mock('@/hooks/useModal', () => ({
@@ -51,8 +50,8 @@ describe('BasicButton', () => {
 		expect(screen.getByRole('button')).toBeDisabled();
 	});
 
-	test('mainColor prop 색상변경 잘 적용되는지 확인', () => {
-		render(<BasicButton mainColor="primary-700">색상 변경 버튼</BasicButton>);
+	test(' prop 색상변경 잘 적용되는지 확인', () => {
+		render(<BasicButton>색상 변경 버튼</BasicButton>);
 		const button = screen.getByRole('button');
 		expect(button).toHaveClass('bg-primary-700', 'text-white');
 	});
@@ -67,12 +66,8 @@ describe('BasicButton', () => {
 		expect(button).toHaveClass('border-primary-600', 'text-primary-600', 'bg-root');
 	});
 
-	test('아웃라인일때 mainColor 스타일 잘 적용되는지 확인', () => {
-		render(
-			<BasicButton mainColor="primary-800" outlined>
-				색상 변경 버튼
-			</BasicButton>
-		);
+	test('아웃라인일때  스타일 잘 적용되는지 확인', () => {
+		render(<BasicButton outlined>색상 변경 버튼</BasicButton>);
 		const button = screen.getByRole('button');
 		expect(button).toHaveClass('border-primary-800', 'text-primary-800', 'bg-root');
 	});

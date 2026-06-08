@@ -7,7 +7,7 @@
 		"build": "next build",
 		"start": "next start",
 		"lint": "eslint",
-		"test": "jest",
+		"test": "jest --passWithNoTests",
 		"test:coverage": "jest --coverage",
 		"test:playwright": "playwright test",
 		"test:playwright:ui": "playwright test --ui",

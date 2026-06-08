@@ -1,7 +1,8 @@
+import { useEffect, useState } from 'react';
+
 import { useTokenStore } from '@/stores/token';
 import { useUserStore } from '@/stores/user';
 import { isTokenExpired } from '@/utils/token';
-import { useEffect, useState } from 'react';
 
 /**
  * useAuth

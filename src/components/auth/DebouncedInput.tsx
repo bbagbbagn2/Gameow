@@ -1,7 +1,8 @@
-import { debounce } from 'lodash-es';
-import Image from 'next/image';
 import { useEffect, useMemo, useState } from 'react';
 import { UseFormRegisterReturn } from 'react-hook-form';
+import Image from 'next/image';
+
+import { debounce } from 'lodash-es';
 
 import { cn } from '@/utils/cn';
 
@@ -69,12 +70,12 @@ export default function DebouncedInput({
 		<div className="flex w-full flex-col gap-2">
 			<label className="text-discord-muted text-xs font-black tracking-wide uppercase" htmlFor={label}>
 				{label}
-				{invalidText && <span className="text-destructive ml-1 lowercase font-medium italic">- {invalidText}</span>}
+				{invalidText && <span className="text-destructive ml-1 font-medium lowercase italic">- {invalidText}</span>}
 			</label>
 			<div
 				className={cn(
-					'bg-discord-bg relative flex w-full items-center justify-between rounded px-3 py-2.5 transition-all border border-transparent',
-					isFocused ? 'ring-2 ring-primary-500/20 border-primary-500' : '',
+					'bg-discord-bg relative flex w-full items-center justify-between rounded border border-transparent px-3 py-2.5 transition-all',
+					isFocused ? 'ring-primary-500/20 border-primary-500 ring-2' : '',
 					invalidText && !isFocused ? 'border-destructive' : '',
 					className
 				)}>
@@ -82,7 +83,7 @@ export default function DebouncedInput({
 					id={label}
 					type={isPassword ? (isShowPw ? 'text' : 'password') : 'text'}
 					placeholder={placeholder}
-					className="text-discord-text w-full bg-transparent text-sm font-medium outline-none placeholder:text-discord-muted/40"
+					className="text-discord-text placeholder:text-discord-muted/40 w-full bg-transparent text-sm font-medium outline-none"
 					{...register}
 					onFocus={handleFocus}
 					onBlur={handleBlur}
@@ -107,4 +108,3 @@ export default function DebouncedInput({
 		</div>
 	);
 }
-

@@ -1,6 +1,8 @@
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+
 import { SIGNIN_ERRORS } from '@/constants/error';
 import { DEFAULT_SIGNIN_FORM_VALUES as DEFAULT_VALUES } from '@/constants/test';
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+
 import { SigninForm } from '.';
 
 describe('SigninForm 통합 테스트', () => {

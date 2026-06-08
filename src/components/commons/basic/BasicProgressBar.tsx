@@ -34,7 +34,7 @@ export default function BasicProgressBar({ data }: ProgressBarProps) {
 
 	return (
 		<div className="relative h-[4px] w-full">
-			<span className="absolute top-0 left-0 h-[4px] w-full rounded-[6px] bg-primary-50"></span>
+			<span className="bg-primary-50 absolute top-0 left-0 h-[4px] w-full rounded-[6px]"></span>
 			<span
 				className={`absolute top-0 left-0 h-[4px] rounded-[6px] ${isFull ? 'bg-primary-400' : 'bg-primary-600'}`}
 				style={{ width: `${progressPercentage}%` }}></span>

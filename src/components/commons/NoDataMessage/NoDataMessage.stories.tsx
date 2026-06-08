@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
+
 import NoDataMessage from './NoDataMessage';
 
 // 1. Meta 정의: 컴포넌트의 메타데이터와 기본 설정을 정의합니다.

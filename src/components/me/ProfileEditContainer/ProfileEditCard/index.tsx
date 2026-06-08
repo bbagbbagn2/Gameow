@@ -3,13 +3,13 @@
 import { useEffect, useMemo } from 'react';
 import Image from 'next/image';
 
-import { profileAssets } from './assets/profileAssets';
-import { useScreenSize } from './hooks/useScreenSize';
-import ProfileEditModal from '../ProfileEditModal/ProfileEditModal';
-
 import { getUserInfo, updateUserInfo } from '@/apis/auths/user';
 import { useModal } from '@/hooks/useModal';
 import { useUserStore } from '@/stores/user';
+
+import ProfileEditModal from '../ProfileEditModal/ProfileEditModal';
+import { profileAssets } from './assets/profileAssets';
+import { useScreenSize } from './hooks/useScreenSize';
 
 /**
  * `ProfileEditCard` 컴포넌트

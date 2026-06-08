@@ -1,13 +1,10 @@
 'use client';
 
-import { usePathname, useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
-
-import SessionTimer from './SessionTimer';
+import { usePathname, useRouter } from 'next/navigation';
 
 import { DropdownMenu } from '@/components/commons/GNB/DropdownMenu';
-
 import { PROFILE_PATHS } from '@/constants/assetPath';
 import { DROPDOWN_MENU_OPTIONS, NAVBAR_MENU_LINKS } from '@/constants/options';
 import { useAuth } from '@/hooks/useAuth';
@@ -15,6 +12,8 @@ import { useScreenSize } from '@/hooks/useScreenSize';
 import { useSignout } from '@/hooks/useSignout';
 import { useUserStore } from '@/stores/user';
 import { cn } from '@/utils/cn';
+
+import SessionTimer from './SessionTimer';
 
 /**
  * GNB(Global Navigation Bar)

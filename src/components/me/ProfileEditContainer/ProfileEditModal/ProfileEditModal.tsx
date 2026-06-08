@@ -1,12 +1,15 @@
 'use client';
 
 import { useForm } from 'react-hook-form';
+
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useModalClose } from '@/hooks/useModal';
-import { ProfileEditSchemaType, profileEditSchema } from '@/utils/schema';
+
 import BasicButton from '@/components/commons/basic/BasicButton';
-import BasicModal from '@/components/commons/basic/BasicModal';
 import BasicInput from '@/components/commons/basic/BasicInput';
+import BasicModal from '@/components/commons/basic/BasicModal';
+import { useModalClose } from '@/hooks/useModal';
+import { profileEditSchema, ProfileEditSchemaType } from '@/utils/schema';
+
 import ProfileImageUploader from './ProfileImageUploader';
 
 interface ProfileEditModalProps {

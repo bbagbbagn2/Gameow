@@ -2,10 +2,10 @@ import React from 'react';
 
 export default function ScoreSkeleton() {
 	return (
-		<div className="flex flex-col gap-10 tb:flex-row tb:items-center tb:justify-between animate-pulse">
+		<div className="tb:flex-row tb:items-center tb:justify-between flex animate-pulse flex-col gap-10">
 			{/* 평균 점수 영역 스켈레톤 */}
-			<div className="flex flex-col items-center gap-4 tb:items-start tb:pl-4">
-				<div className="flex flex-col items-center tb:items-start">
+			<div className="tb:items-start tb:pl-4 flex flex-col items-center gap-4">
+				<div className="tb:items-start flex flex-col items-center">
 					<div className="bg-discord-bg h-3 w-24 rounded opacity-20" />
 					<div className="mt-2 flex items-baseline gap-2">
 						<div className="bg-discord-bg h-12 w-20 rounded-lg opacity-40" />
@@ -22,7 +22,7 @@ export default function ScoreSkeleton() {
 			</div>
 
 			{/* 점수 분포 영역 스켈레톤 */}
-			<div className="flex flex-1 flex-col gap-3 pc:max-w-md w-full">
+			<div className="pc:max-w-md flex w-full flex-1 flex-col gap-3">
 				{Array.from({ length: 5 }).map((_, i) => (
 					<div key={i} className="flex items-center gap-4">
 						<div className="bg-discord-bg h-3 w-8 rounded opacity-20" />

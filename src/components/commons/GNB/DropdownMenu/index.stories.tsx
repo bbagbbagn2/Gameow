@@ -1,5 +1,7 @@
-import type { OptionType } from '@/components/commons/basic/BasicDropbox';
 import type { Meta, StoryObj } from '@storybook/nextjs';
+
+import type { OptionType } from '@/components/commons/basic/BasicDropbox';
+
 import { DropdownMenu } from '.';
 
 const meta: Meta<typeof DropdownMenu> = {

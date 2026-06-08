@@ -1,24 +1,24 @@
 'use client';
 
-import * as motion from 'motion/react-client';
+import { useEffect, useRef } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
-import { Step, useFunnelStore } from '@/stores/useFunnelStore';
-import { CreateGatheringSchema, GatheringSchemaType } from '@/utils/schema';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { AnimatePresence } from 'framer-motion';
+import * as motion from 'motion/react-client';
+
+import BasicModal from '@/components/commons/basic/BasicModal';
+import BasicPopup from '@/components/commons/basic/BasicPopup';
 import { POPUP_MESSAGE } from '@/constants/messages';
 import { useModal, useModalClose } from '@/hooks/useModal';
+import { Step, useFunnelStore } from '@/stores/useFunnelStore';
+import { CreateGatheringSchema, GatheringSchemaType } from '@/utils/schema';
 
 import Step1Funnel from './funnel/Step1Funnel';
 import Step2Funnel from './funnel/Step2Funnel';
 import Step3Funnel from './funnel/Step3Funnel';
 import Step4Funnel from './funnel/Step4Funnel';
 import SliderAnimationDiv from './sliderAnimation/SliderAnimationDiv';
-
-import BasicModal from '@/components/commons/basic/BasicModal';
-import BasicPopup from '@/components/commons/basic/BasicPopup';
-import { AnimatePresence } from 'framer-motion';
-import { useEffect, useRef } from 'react';
 
 function StepIndicator({ step }: { step: Step }) {
 	const prevStepRef = useRef(step);

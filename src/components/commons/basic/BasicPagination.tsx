@@ -1,8 +1,9 @@
 'use client';
 
+import Image from 'next/image';
+
 import { usePagination } from '@/hooks/usePagination';
 
-import Image from 'next/image';
 import PaginationButton from '../../pagination/PaginationButton';
 
 interface BasicPaginationProps {

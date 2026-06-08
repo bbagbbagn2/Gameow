@@ -1,6 +1,6 @@
 //figma input component
 
-import React, { useState, useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { UseFormRegisterReturn } from 'react-hook-form';
 
 interface TextAreaProps {
@@ -79,14 +79,16 @@ export default function BasicTextArea({
           h-[120px] w-full resize-none rounded-xl border bg-discord-bg
           px-4 py-3 font-medium text-discord-text outline-none box-border
           placeholder:text-discord-muted/50 transition-all
-          ${getBorderClass()} 
-          ${className} 
+          ${getBorderClass()}
+          ${className}
         `}
 				{...register}
 				onFocus={handleFocus}
 				onBlur={handleBlur}
 			/>
-			{touched && !isValid && invalidText && <div className="text-[11px] font-bold text-highlight uppercase tracking-wider pl-1">{invalidText}</div>}
+			{touched && !isValid && invalidText && (
+				<div className="text-highlight pl-1 text-[11px] font-bold tracking-wider uppercase">{invalidText}</div>
+			)}
 		</div>
 	);
 }

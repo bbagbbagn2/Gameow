@@ -1,8 +1,9 @@
 'use client';
 
+import { useModalClose } from '@/hooks/useModal';
+
 import BasicButton from './basic/BasicButton';
 import BasicModal from './basic/BasicModal';
-import { useModalClose } from '@/hooks/useModal';
 
 export default function ExampleModal() {
 	const closeModal = useModalClose();

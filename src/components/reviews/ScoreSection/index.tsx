@@ -1,5 +1,7 @@
-import { scoreData } from '@/types/response/reviews';
 import { useMemo } from 'react';
+
+import { scoreData } from '@/types/response/reviews';
+
 import ScoreSkeleton from './ScoreSkeleton';
 
 /**

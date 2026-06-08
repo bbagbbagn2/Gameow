@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+
 import { getJoinedGathering } from '@/apis/gatherings/joined';
 import { useErrorHandler } from '@/hooks/useErrorHandler';
 import type { JoinedGathering } from '@/types/response/gatherings';

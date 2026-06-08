@@ -1,6 +1,8 @@
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+
 import { SIGNUP_ERRORS } from '@/constants/error';
 import { DEFAULT_SIGNUP_FORM_VALUES as DEFAULT_VALUES } from '@/constants/test';
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+
 import { SignupForm } from '.';
 
 // TODO: fiberEvent를 userEvent로 리팩터링

@@ -1,9 +1,12 @@
+import { usePathname, useRouter } from 'next/navigation';
+
+import { render, screen } from '@testing-library/react';
+import userEvent, { UserEvent } from '@testing-library/user-event';
+
 import { postSignout } from '@/apis/auths/signout';
 import { useTokenStore } from '@/stores/token';
 import { useUserStore } from '@/stores/user';
-import { render, screen } from '@testing-library/react';
-import userEvent, { UserEvent } from '@testing-library/user-event';
-import { usePathname, useRouter } from 'next/navigation';
+
 import GNB from '.';
 
 jest.mock('next/navigation', () => ({

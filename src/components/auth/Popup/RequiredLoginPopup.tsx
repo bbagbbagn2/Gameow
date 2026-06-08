@@ -3,7 +3,6 @@
 import { useRouter } from 'next/navigation';
 
 import BasicPopup from '@/components/commons/basic/BasicPopup';
-
 import { useModalClose } from '@/hooks/useModal';
 
 interface RequiredLoginPopupProps {

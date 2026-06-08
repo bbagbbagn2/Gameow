@@ -1,8 +1,9 @@
 import Image from 'next/image';
-import { formatKoreanDate } from '@/utils/date';
-import { ReviewResponse } from '@/types/response/reviews';
-import { GENRE_BY_LOCATION, Location } from '@/constants/options';
+
 import { PROFILE_PATHS } from '@/constants/assetPath';
+import { GENRE_BY_LOCATION, Location } from '@/constants/options';
+import { ReviewResponse } from '@/types/response/reviews';
+import { formatKoreanDate } from '@/utils/date';
 
 /**
  * 리뷰 카드 컴포넌트

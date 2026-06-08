@@ -1,5 +1,6 @@
-import { cn } from '@/utils/cn';
 import { cva } from 'class-variance-authority';
+
+import { cn } from '@/utils/cn';
 
 interface PaginationButtonProps {
 	/** 버튼의 자식 요소 */

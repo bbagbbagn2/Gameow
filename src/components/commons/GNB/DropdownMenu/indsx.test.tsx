@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import userEvent, { type UserEvent } from '@testing-library/user-event';
+
 import { DropdownMenu } from '.';
 
 describe('DropdownMenu 유닛 테스트', () => {

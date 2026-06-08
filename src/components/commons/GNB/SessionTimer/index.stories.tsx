@@ -1,5 +1,7 @@
-import { useTokenStore } from '@/stores/token';
 import type { Meta, StoryObj } from '@storybook/nextjs';
+
+import { useTokenStore } from '@/stores/token';
+
 import SessionTimer from '.';
 
 const setExp = (exp: number | null) => {

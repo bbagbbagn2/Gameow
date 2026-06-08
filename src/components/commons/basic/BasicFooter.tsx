@@ -1,19 +1,19 @@
 'use client';
 
 import { usePathname, useRouter } from 'next/navigation';
+
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { isPast } from 'date-fns';
 
+import { getGatheringParticipant, leaveGathering, postGatheringJoin, putGatheringCancel } from '@/apis/gatherings/[id]';
+import RequiredLoginPopup from '@/components/auth/Popup/RequiredLoginPopup';
 import BasicButton from '@/components/commons/basic/BasicButton';
 import BasicPopup from '@/components/commons/basic/BasicPopup';
-import RequiredLoginPopup from '@/components/auth/Popup/RequiredLoginPopup';
-
-import { useGathering } from '@/providers/GatheringProvider';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { useUserStore } from '@/stores/user';
-import { useModal } from '@/hooks/useModal';
-import { getGatheringParticipant, postGatheringJoin, leaveGathering, putGatheringCancel } from '@/apis/gatherings/[id]';
-import { GatheringParticipant } from '@/types/response/gatherings';
 import { FOOTER_MESSAGE } from '@/constants/messages';
+import { useModal } from '@/hooks/useModal';
+import { useGathering } from '@/providers/GatheringProvider';
+import { useUserStore } from '@/stores/user';
+import { GatheringParticipant } from '@/types/response/gatherings';
 
 function GatheringNormalUserBtn() {
 	const { openModal } = useModal();

@@ -1,8 +1,9 @@
+import BasicButton from '@/components/commons/basic/BasicButton';
 import { useModal } from '@/hooks/useModal';
 import type { JoinedGathering } from '@/types/response/gatherings';
+
 import CardLayout from '../common/CardLayout/CardLayout';
 import ReviewWriteModal from '../modals/ReviewWriteModal';
-import BasicButton from '@/components/commons/basic/BasicButton';
 
 interface GatheringProps {
 	/** 리뷰 작성이 가능한 모임 객체 */

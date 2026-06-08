@@ -1,19 +1,19 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 
 import { useQuery } from '@tanstack/react-query';
+import * as motion from 'motion/react-client';
+
+import { getReviews } from '@/apis/reviews/reviews';
+import BasicPagination from '@/components/commons/basic/BasicPagination';
+import { PROFILE_PATHS } from '@/constants/assetPath';
 import { REVIEW_SECTION_TITLE } from '@/constants/messages';
 import { ReviewResponse } from '@/types/response/reviews';
-import { getReviews } from '@/apis/reviews/reviews';
-import { PROFILE_PATHS } from '@/constants/assetPath';
 
-import * as motion from 'motion/react-client';
-import BasicPagination from '@/components/commons/basic/BasicPagination';
-
-import Image from 'next/image';
-import GatheringReviewSectionSkeleton from './skeleton/GatheringReviewSectionSkeleton';
 import NoDataMessage from '../commons/NoDataMessage/NoDataMessage';
+import GatheringReviewSectionSkeleton from './skeleton/GatheringReviewSectionSkeleton';
 
 export default function GatheringReviewSection({ gatheringId }: { gatheringId: number }) {
 	const [currentPage, setCurrentPage] = useState(1);

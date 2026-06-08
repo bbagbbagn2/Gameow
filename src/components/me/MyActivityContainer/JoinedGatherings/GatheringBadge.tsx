@@ -1,5 +1,5 @@
-import type { JoinedGathering } from '@/types/response/gatherings';
 import ChipState from '@/components/commons/ChipState';
+import type { JoinedGathering } from '@/types/response/gatherings';
 
 interface GatheringBadgeProps {
 	/** 표시할 모임 객체 */

@@ -1,7 +1,8 @@
 'use client';
 
-import { type ReactNode, createContext, useRef, useContext, useEffect, useState } from 'react';
-import { type ModalStore, createModalStore } from '@/stores/modal';
+import { createContext, type ReactNode, useContext, useEffect, useRef, useState } from 'react';
+
+import { createModalStore, type ModalStore } from '@/stores/modal';
 
 /**
  * Zustand 모달 스토어 인스턴스 타입

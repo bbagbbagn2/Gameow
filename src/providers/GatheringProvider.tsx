@@ -1,6 +1,7 @@
 'use client';
 
 import { createContext, useContext } from 'react';
+
 import type { Gathering } from '@/types/response/gatherings';
 
 interface GatheringContextProps {

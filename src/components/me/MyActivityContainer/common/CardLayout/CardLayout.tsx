@@ -1,7 +1,8 @@
-import Image from 'next/image';
 import { ReactNode } from 'react';
+import Image from 'next/image';
+
+import type { Gathering, JoinedGathering } from '@/types/response/gatherings';
 import { formatKoreanDate } from '@/utils/date';
-import type { JoinedGathering, Gathering } from '@/types/response/gatherings';
 
 interface GatheringProps {
 	/** 표시할 모임 객체 */
@@ -55,7 +56,7 @@ export default function CardLayout({ gathering, badgeContent, children }: Gather
 
 				{/* 이미지 위 장르 태그 */}
 				<div className="absolute bottom-3 left-3">
-					<span className="bg-primary-500 text-discord-bg rounded px-2 py-0.5 text-[10px] font-black uppercase tracking-wider">
+					<span className="bg-primary-500 text-discord-bg rounded px-2 py-0.5 text-[10px] font-black tracking-wider uppercase">
 						{genre}
 					</span>
 				</div>
@@ -66,12 +67,12 @@ export default function CardLayout({ gathering, badgeContent, children }: Gather
 				<div className="flex flex-col gap-3">
 					<div className="flex flex-col gap-1">
 						<h3
-							className="text-lg font-bold text-white transition-colors group-hover:text-primary-400"
+							className="group-hover:text-primary-400 text-lg font-bold text-white transition-colors"
 							id={`gathering-title-${gathering.id}`}>
 							{gathering.name}
 						</h3>
 						<div className="flex items-center gap-2 text-xs">
-							<span className="text-primary-500 font-bold uppercase tracking-tighter">
+							<span className="text-primary-500 font-bold tracking-tighter uppercase">
 								{formatKoreanDate(gathering.dateTime)}
 							</span>
 							<span className="text-discord-muted">•</span>
@@ -87,17 +88,13 @@ export default function CardLayout({ gathering, badgeContent, children }: Gather
 							</span>
 						</div>
 						{gathering.participantCount >= gathering.capacity && (
-							<span className="text-[10px] font-black text-destructive italic uppercase">Full House</span>
+							<span className="text-destructive text-[10px] font-black uppercase italic">Full House</span>
 						)}
 					</div>
 				</div>
 
-				<div className="mt-6 flex items-center gap-2">
-					{children}
-				</div>
+				<div className="mt-6 flex items-center gap-2">{children}</div>
 			</div>
 		</article>
 	);
 }
-
-

@@ -1,5 +1,6 @@
-import { cn } from '@/utils/cn';
 import { cva } from 'class-variance-authority';
+
+import { cn } from '@/utils/cn';
 
 export const basicButtonVariants = cva(
 	'relative flex items-center justify-center font-bold transition-all duration-200 rounded-md disabled:opacity-50 disabled:cursor-not-allowed uppercase tracking-wide',
@@ -65,5 +66,3 @@ export default function BasicButton({
 		</button>
 	);
 }
-
-

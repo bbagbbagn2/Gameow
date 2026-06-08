@@ -1,7 +1,8 @@
 'use client';
 
+import { useCallback, useRef, useState } from 'react';
 import Image from 'next/image';
-import { useState, useRef, useCallback } from 'react';
+
 import { PROFILE_PATHS } from '@/constants/assetPath';
 
 interface ProfileImageUploaderProps {
@@ -50,7 +51,7 @@ export default function ProfileImageUploader({ currentImage, onChange }: Profile
 		<>
 			<button
 				type="button"
-				className="bg-discord-bg group relative h-24 w-24 cursor-pointer rounded-full border border-white/10 p-1 transition-all hover:border-primary-500/50"
+				className="bg-discord-bg group hover:border-primary-500/50 relative h-24 w-24 cursor-pointer rounded-full border border-white/10 p-1 transition-all"
 				onClick={handleButtonClick}>
 				<div className="relative h-full w-full overflow-hidden rounded-full">
 					<Image src={preview || DEFAULT_PROFILE_SRC} alt="프로필 사진" fill className="object-cover" />
@@ -67,4 +68,3 @@ export default function ProfileImageUploader({ currentImage, onChange }: Profile
 		</>
 	);
 }
-

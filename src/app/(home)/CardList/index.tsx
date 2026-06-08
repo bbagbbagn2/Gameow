@@ -1,8 +1,9 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
+
 import Card from '@/app/(home)/Card';
 import type { Gathering } from '@/types/response/gatherings';
-import { useRouter } from 'next/navigation';
 
 interface CardListProps {
 	/** 모임 카드에 표시할 모임 목록 */
@@ -22,11 +23,10 @@ export default function CardList({ gatherings }: CardListProps) {
 	};
 
 	return (
-		<div className="grid grid-cols-1 gap-6 tb:grid-cols-2 pc:grid-cols-3">
+		<div className="tb:grid-cols-2 pc:grid-cols-3 grid grid-cols-1 gap-6">
 			{gatherings.map(gathering => (
 				<Card key={gathering.id} gathering={gathering} onClick={() => handleClick(gathering.id)} />
 			))}
 		</div>
 	);
 }
-

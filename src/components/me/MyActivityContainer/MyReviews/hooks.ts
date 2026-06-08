@@ -1,9 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
+
 import { getJoinedGathering } from '@/apis/gatherings/joined';
 import { getReviews } from '@/apis/reviews/reviews';
 import { useErrorHandler } from '@/hooks/useErrorHandler';
 import type { JoinedGathering } from '@/types/response/gatherings';
-import type { ReviewResponse, GetReviewsResponse } from '@/types/response/reviews';
+import type { GetReviewsResponse, ReviewResponse } from '@/types/response/reviews';
 
 /**
  * useWritableReviews

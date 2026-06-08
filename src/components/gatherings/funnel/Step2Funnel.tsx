@@ -1,16 +1,15 @@
 'use client';
 
-import { useRef, useEffect, useState } from 'react';
-import { useFormContext, Controller } from 'react-hook-form';
-
-import { useFunnelStore } from '@/stores/useFunnelStore';
-
+import { useEffect, useRef, useState } from 'react';
+import { Controller, useFormContext } from 'react-hook-form';
 import Image from 'next/image';
-import SliderAnimationDiv from '../sliderAnimation/SliderAnimationDiv';
 
 import BasicButton from '@/components/commons/basic/BasicButton';
-import BasicInput from '@/components/commons/basic/BasicInput';
 import BasicCheckBox from '@/components/commons/basic/BasicCheckBox';
+import BasicInput from '@/components/commons/basic/BasicInput';
+import { useFunnelStore } from '@/stores/useFunnelStore';
+
+import SliderAnimationDiv from '../sliderAnimation/SliderAnimationDiv';
 
 export default function Step2Funnel() {
 	const {

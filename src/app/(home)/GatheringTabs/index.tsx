@@ -4,7 +4,6 @@ import { useState } from 'react';
 
 import Chip from '@/components/commons/Chip';
 import Tab from '@/components/commons/Tab';
-
 import { SUB_TYPE_OPTIONS, TYPE_OPTIONS } from '@/constants/options';
 
 interface GatheringTabsProps {
@@ -47,7 +46,7 @@ export default function GatheringTabs({ setSelectedType, button }: GatheringTabs
 				<Tab options={TYPE_OPTIONS} selectedTab={type} onTabChange={handleTypeChange} />
 				{button}
 			</div>
-			
+
 			<div className="flex flex-wrap gap-2">
 				{type === DEFAULT_TYPE ? (
 					SUB_TYPE_OPTIONS.map(({ value, text, icon }) => (
@@ -66,6 +65,3 @@ export default function GatheringTabs({ setSelectedType, button }: GatheringTabs
 		</div>
 	);
 }
-
-
-

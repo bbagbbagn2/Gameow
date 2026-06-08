@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
-import CardLayout from '../common/CardLayout/CardLayout';
-import NoDataMessage from '../../../commons/NoDataMessage/NoDataMessage';
-import { getGatherings } from '@/apis/gatherings';
-import { Gathering } from '@/types/response/gatherings';
-import { useUserStore } from '@/stores/user';
 import { useRouter } from 'next/navigation';
+
+import { getGatherings } from '@/apis/gatherings';
+import { useUserStore } from '@/stores/user';
+import { Gathering } from '@/types/response/gatherings';
+
+import NoDataMessage from '../../../commons/NoDataMessage/NoDataMessage';
+import CardLayout from '../common/CardLayout/CardLayout';
 
 export default function CreatedGatherings() {
 	const { user } = useUserStore();

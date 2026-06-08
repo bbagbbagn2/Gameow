@@ -1,8 +1,11 @@
 import { ReactNode } from 'react';
+
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
-import type { JoinedGathering, Gathering } from '@/types/response/gatherings';
-import CardLayout from './CardLayout';
+
+import type { Gathering, JoinedGathering } from '@/types/response/gatherings';
+
 import GatheringBadge from '../../JoinedGatherings/GatheringBadge';
+import CardLayout from './CardLayout';
 
 // ----------------------------------------------------------------------
 // Mock 데이터 정의

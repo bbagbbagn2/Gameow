@@ -1,5 +1,7 @@
-import { format } from 'date-fns';
 import { useState } from 'react';
+
+import { format } from 'date-fns';
+
 import SearchInCalendarButton from '../calendar/SearchInCalendarButton';
 import BasicSelectButton from '../commons/basic/BasicSelectButton';
 import { Calendar } from '../ui/calendar';
@@ -21,7 +23,7 @@ export default function DateFilter({ onChange }: { onChange: (date?: Date) => vo
 				<BasicSelectButton placeholder="날짜 선택" isOpen={isOpen} />
 			</PopoverTrigger>
 			<PopoverContent
-				className="bg-discord-surface border-white/10 flex min-w-[320px] flex-col items-center justify-center rounded-2xl border p-4 shadow-2xl backdrop-blur-md"
+				className="bg-discord-surface flex min-w-[320px] flex-col items-center justify-center rounded-2xl border border-white/10 p-4 shadow-2xl backdrop-blur-md"
 				align="start"
 				sideOffset={8}
 				isModal={false}>

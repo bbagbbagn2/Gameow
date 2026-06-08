@@ -1,10 +1,9 @@
 'use client';
 
-import { SignupForm, type SignupFormValues } from '@/components/auth/SignupForm';
+import { postSignup } from '@/apis/auths/signup';
 import SignupFailurePopup from '@/components/auth/Popup/SignupFailurePopup';
 import SignupSuccessPopup from '@/components/auth/Popup/SignupSuccessPopup';
-
-import { postSignup } from '@/apis/auths/signup';
+import { SignupForm, type SignupFormValues } from '@/components/auth/SignupForm';
 import { useModal } from '@/hooks/useModal';
 import { ApiError } from '@/utils/fetch';
 
@@ -48,4 +47,3 @@ export default function SignupPage() {
 		</div>
 	);
 }
-

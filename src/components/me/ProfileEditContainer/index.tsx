@@ -1,13 +1,15 @@
 'use client';
 
-import Image from 'next/image';
 import { useCallback, useEffect } from 'react';
+import Image from 'next/image';
+
 import { getUserInfo, updateUserInfo } from '@/apis/auths/user';
 import { PROFILE_PATHS } from '@/constants/assetPath';
-import { useUserStore } from '@/stores/user';
-import { useSignout } from '@/hooks/useSignout';
-import { useModal } from '@/hooks/useModal';
 import { useErrorHandler } from '@/hooks/useErrorHandler';
+import { useModal } from '@/hooks/useModal';
+import { useSignout } from '@/hooks/useSignout';
+import { useUserStore } from '@/stores/user';
+
 import ProfileEditModal from './ProfileEditModal/ProfileEditModal';
 
 /**

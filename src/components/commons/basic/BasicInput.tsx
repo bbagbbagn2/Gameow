@@ -1,6 +1,6 @@
-import Image from 'next/image';
 import { useCallback, useState } from 'react';
 import { UseFormRegisterReturn } from 'react-hook-form';
+import Image from 'next/image';
 
 export interface InputProps {
 	/** 입력창의 placeholder 텍스트 */
@@ -118,16 +118,16 @@ export default function BasicInput({
 
 	return (
 		<div className="flex flex-col gap-2">
-			<label className="text-discord-muted text-[11px] font-black uppercase tracking-wider pl-1" htmlFor={id}>
+			<label className="text-discord-muted pl-1 text-[11px] font-black tracking-wider uppercase" htmlFor={id}>
 				{label}
 			</label>
 			<div
-				className={`inputBox bg-discord-bg box-border flex items-center justify-between rounded-xl border px-4 py-3 text-discord-text placeholder:text-discord-muted/50 transition-all focus:outline-none ${getBorderClass()} ${className}`}>
+				className={`inputBox bg-discord-bg text-discord-text placeholder:text-discord-muted/50 box-border flex items-center justify-between rounded-xl border px-4 py-3 transition-all focus:outline-none ${getBorderClass()} ${className}`}>
 				<input
 					id={id}
 					type={isPassword ? (isShowPw ? 'text' : 'password') : 'text'}
 					placeholder={placeholder}
-					className="w-full bg-transparent outline-none text-base font-medium"
+					className="w-full bg-transparent text-base font-medium outline-none"
 					{...register}
 					onFocus={handleFocus}
 					onBlur={handleBlur}
@@ -141,7 +141,7 @@ export default function BasicInput({
 						height={20}
 						alt="password visible toggle button"
 						onClick={() => setIsShowPw(prev => !prev)}
-						className="cursor-pointer opacity-40 hover:opacity-100 transition-opacity"
+						className="cursor-pointer opacity-40 transition-opacity hover:opacity-100"
 					/>
 				)}
 				{children}
@@ -149,7 +149,12 @@ export default function BasicInput({
 
 			{(() => {
 				const errorMessage = getErrorMessage();
-				return touched && errorMessage && <div className="text-[11px] font-bold text-highlight uppercase tracking-wider pl-1">{errorMessage}</div>;
+				return (
+					touched &&
+					errorMessage && (
+						<div className="text-highlight pl-1 text-[11px] font-bold tracking-wider uppercase">{errorMessage}</div>
+					)
+				);
 			})()}
 		</div>
 	);

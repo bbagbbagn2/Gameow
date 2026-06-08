@@ -1,8 +1,11 @@
 'use client';
 
 import { useRef, useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { Controller, useForm } from 'react-hook-form';
+import { useRouter } from 'next/navigation';
+
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { postGathering } from '@/apis/gatherings';
 import { POPUP_MESSAGE } from '@/constants/messages';
@@ -10,8 +13,6 @@ import { useModal, useModalClose } from '@/hooks/useModal';
 import { CreateGathering } from '@/types/response/createGathering';
 import type { GatheringType } from '@/types/response/gatherings';
 import { CreateGatheringSchema, GatheringSchemaType } from '@/utils/schema';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import BasicButton from '../commons/basic/BasicButton';
 import BasicCheckBox from '../commons/basic/BasicCheckBox';

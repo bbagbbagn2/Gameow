@@ -10,15 +10,15 @@ export default function GatheringSkeleton() {
 						<div className="flex flex-1 flex-col justify-between py-1">
 							<div className="flex flex-col gap-3">
 								<div className="flex flex-col gap-2">
-									<div className="h-6 w-48 rounded bg-discord-surface" />
+									<div className="bg-discord-surface h-6 w-48 rounded" />
 									<div className="flex items-center gap-2">
-										<div className="h-4 w-20 rounded bg-discord-surface" />
-										<div className="h-4 w-32 rounded bg-discord-surface" />
+										<div className="bg-discord-surface h-4 w-20 rounded" />
+										<div className="bg-discord-surface h-4 w-32 rounded" />
 									</div>
 								</div>
-								<div className="h-7 w-24 rounded-full bg-discord-surface" />
+								<div className="bg-discord-surface h-7 w-24 rounded-full" />
 							</div>
-							<div className="mt-6 h-10 w-28 rounded-md bg-discord-surface" />
+							<div className="bg-discord-surface mt-6 h-10 w-28 rounded-md" />
 						</div>
 					</div>
 				</div>
@@ -26,4 +26,3 @@ export default function GatheringSkeleton() {
 		</div>
 	);
 }
-

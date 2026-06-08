@@ -1,6 +1,8 @@
+import type { Meta, StoryObj } from '@storybook/nextjs';
+
 import ModalContainer from '@/components/commons/ModalContainer';
 import { ModalStoreProvider } from '@/providers/ModalProvider';
-import type { Meta, StoryObj } from '@storybook/nextjs';
+
 import GatheringFilterBar from '.';
 
 const meta: Meta<typeof GatheringFilterBar> = {

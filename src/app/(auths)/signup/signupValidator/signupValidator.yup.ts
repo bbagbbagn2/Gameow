@@ -1,5 +1,7 @@
-import { SIGNUP_ERRORS } from '@/constants/error';
 import * as yup from 'yup';
+
+import { SIGNUP_ERRORS } from '@/constants/error';
+
 import type { SignupValidator } from './signupValidator';
 
 /**

@@ -1,7 +1,9 @@
+import type { Meta, StoryObj } from '@storybook/nextjs';
+
 import AuthLayout from '@/app/(auths)/layout';
 import ModalContainer from '@/components/commons/ModalContainer';
 import { ModalStoreProvider } from '@/providers/ModalProvider';
-import type { Meta, StoryObj } from '@storybook/nextjs';
+
 import SignupPage from './page';
 
 const meta: Meta<typeof SignupPage> = {

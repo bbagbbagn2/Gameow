@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+
 import { cn } from '@/utils/cn';
 
 interface BasicModalProps {
@@ -40,16 +41,16 @@ export default function BasicModal({ children, onClose, className, width }: Basi
 
 	return (
 		<div
-			className="z-modal fixed inset-0 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4 animate-in fade-in duration-200"
+			className="z-modal animate-in fade-in fixed inset-0 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm duration-200"
 			onClick={closeModalOnBackgroundClick}>
 			<div
-				className="bg-discord-surface relative flex flex-col overflow-hidden rounded-xl border border-white/5 shadow-2xl animate-in zoom-in-95 duration-200"
+				className="bg-discord-surface animate-in zoom-in-95 relative flex flex-col overflow-hidden rounded-xl border border-white/5 shadow-2xl duration-200"
 				style={{ width: width || 'auto' }}
 				onClick={e => e.stopPropagation()}>
 				{/* Discord-style Close Button */}
 				<button
 					onClick={onClose}
-					className="absolute top-4 right-4 z-base flex h-8 w-8 items-center justify-center rounded-md text-discord-muted transition-all hover:bg-white/5 hover:text-white">
+					className="z-base text-discord-muted absolute top-4 right-4 flex h-8 w-8 items-center justify-center rounded-md transition-all hover:bg-white/5 hover:text-white">
 					<Image src="/icons/close.svg" alt="close" width={20} height={20} className="opacity-60 invert" />
 				</button>
 

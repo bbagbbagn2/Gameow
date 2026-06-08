@@ -1,5 +1,10 @@
 'use client';
 
+import { useEffect, useState } from 'react';
+import Image from 'next/image';
+
+import * as motion from 'motion/react-client';
+
 import HeartButton from '@/app/(home)/HeartButton';
 import ChipInfo from '@/components/commons/ChipInfo';
 import ClassProgressBar from '@/components/commons/ClassProgressBar';
@@ -7,9 +12,6 @@ import Tag from '@/components/commons/Tag';
 import { GENRE_BY_LOCATION, type Location } from '@/constants/options';
 import type { Gathering } from '@/types/response/gatherings';
 import { formatDateAndTime, getDeadlineLabel } from '@/utils/date';
-import * as motion from 'motion/react-client';
-import Image from 'next/image';
-import { useEffect, useState } from 'react';
 
 interface CardProps {
 	/** 모임 정보 객체 */

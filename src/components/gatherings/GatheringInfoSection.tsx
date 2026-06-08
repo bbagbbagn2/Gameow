@@ -1,23 +1,22 @@
 'use client';
 
-import * as motion from 'motion/react-client';
+import { useEffect, useState } from 'react';
+import Image from 'next/image';
+
+import { useQuery } from '@tanstack/react-query';
 import { differenceInDays, isPast, isSameDay, startOfDay } from 'date-fns';
+import * as motion from 'motion/react-client';
 
 import { getGatheringId, getGatheringParticipant } from '@/apis/gatherings/[id]';
-import { Gathering, GatheringParticipant } from '@/types/response/gatherings';
-import { formatDateAndTime, formatUTCToKST } from '@/utils/date';
-import { useQuery } from '@tanstack/react-query';
-
 import HeartButton from '@/app/(home)/HeartButton';
+import BasicProgressBar from '@/components/commons/basic/BasicProgressBar';
 import ChipInfo from '@/components/commons/ChipInfo';
 import Tag from '@/components/commons/Tag';
-import BasicProgressBar from '@/components/commons/basic/BasicProgressBar';
-
-import Image from 'next/image';
-import GatheringInfoSectionSkeleton from './skeleton/GatheringInfoSectionSkeleton';
 import { PROFILE_PATHS } from '@/constants/assetPath';
+import { Gathering, GatheringParticipant } from '@/types/response/gatherings';
+import { formatDateAndTime, formatUTCToKST } from '@/utils/date';
 
-import { useEffect, useState } from 'react';
+import GatheringInfoSectionSkeleton from './skeleton/GatheringInfoSectionSkeleton';
 
 /** 모임 상세페이지 - 이미지 + 마감정보 */
 function GatheringMainImage({ data, isHydrated }: { data: Gathering; isHydrated: boolean }) {

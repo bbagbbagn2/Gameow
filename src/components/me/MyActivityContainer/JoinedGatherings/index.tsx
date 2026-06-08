@@ -1,11 +1,14 @@
 import { useState } from 'react';
+
 import { useQueryClient } from '@tanstack/react-query';
-import { useJoinedGatherings } from './hooks';
-import type { JoinedGathering } from '@/types/response/gatherings';
-import GatheringCard from './GatheringCard';
-import NoDataMessage from '../../../commons/NoDataMessage/NoDataMessage';
-import GatheringSkeleton from '@/components/me/skeleton/GatheringSkeleton';
+
 import Chip from '@/components/commons/Chip';
+import GatheringSkeleton from '@/components/me/skeleton/GatheringSkeleton';
+import type { JoinedGathering } from '@/types/response/gatherings';
+
+import NoDataMessage from '../../../commons/NoDataMessage/NoDataMessage';
+import GatheringCard from './GatheringCard';
+import { useJoinedGatherings } from './hooks';
 /**
  * JoinedGatherings 컴포넌트
  *

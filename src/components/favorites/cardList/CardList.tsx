@@ -1,15 +1,15 @@
 'use client';
 
-import { differenceInDays, isPast, isSameDay, startOfDay } from 'date-fns';
 import Image from 'next/image';
 
-import Tag from '@/components/commons/Tag';
+import { differenceInDays, isPast, isSameDay, startOfDay } from 'date-fns';
 
 import HeartButton from '@/app/(home)/HeartButton';
+import Tag from '@/components/commons/Tag';
 import { CLOSED_GATHERING_MESSAGE } from '@/constants/messages';
 import { useWishlistStore } from '@/stores/wishlist';
-import { formatKoreanDate } from '@/utils/date';
 import type { Gathering } from '@/types/response/gatherings';
+import { formatKoreanDate } from '@/utils/date';
 
 interface CardListProps {
 	data: Gathering;

@@ -1,9 +1,11 @@
 'use client';
 
-import { getGatherings } from '@/apis/gatherings';
-import { keepPreviousData, useInfiniteQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
+
+import { keepPreviousData, useInfiniteQuery } from '@tanstack/react-query';
+
+import { getGatherings } from '@/apis/gatherings';
 
 const LIMIT = 10;
 

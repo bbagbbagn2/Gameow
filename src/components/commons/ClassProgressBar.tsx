@@ -1,6 +1,7 @@
 import Image from 'next/image';
-import BasicProgressBar from './basic/BasicProgressBar';
 import { useRouter } from 'next/navigation';
+
+import BasicProgressBar from './basic/BasicProgressBar';
 
 interface ClassProgressBarProps {
 	data: {
@@ -26,7 +27,7 @@ export default function ClassProgressBar({ data, isConfirmed, linkTo }: ClassPro
 						{data.currentNumber}/{data.totalNumber}
 					</span>
 					{isConfirmed && !isFull && (
-						<div className="ml-[8px] flex items-center gap-[4px] text-primary-500">
+						<div className="text-primary-500 ml-[8px] flex items-center gap-[4px]">
 							<Image src="/icons/check_round.svg" alt="check" width={24} height={24} />
 							<span className="h-[18px] text-sm font-medium">개설확정</span>
 						</div>
@@ -36,10 +37,10 @@ export default function ClassProgressBar({ data, isConfirmed, linkTo }: ClassPro
 			</div>
 			<div className="text-base font-semibold">
 				{isFull ? (
-					<div className="text-base font-semibold text-primary-400">Closed</div>
+					<div className="text-primary-400 text-base font-semibold">Closed</div>
 				) : (
 					<div
-						className="flex cursor-pointer items-center gap-[8px] text-primary-600"
+						className="text-primary-600 flex cursor-pointer items-center gap-[8px]"
 						onClick={() => linkTo && router.push(linkTo)}>
 						join now
 						<div className="text-primary-600">

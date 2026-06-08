@@ -1,20 +1,20 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import { useFormContext } from 'react-hook-form';
+import { useRouter } from 'next/navigation';
 
-import { useFunnelStore } from '@/stores/useFunnelStore';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { CreateGathering } from '@/types/response/createGathering';
-import { GatheringType } from '@/types/response/gatherings';
-import { useModal, useModalClose } from '@/hooks/useModal';
+
 import { postGathering } from '@/apis/gatherings';
-
-import SliderAnimationDiv from '../sliderAnimation/SliderAnimationDiv';
-
 import BasicButton from '@/components/commons/basic/BasicButton';
 import BasicInput from '@/components/commons/basic/BasicInput';
 import BasicPopup from '@/components/commons/basic/BasicPopup';
+import { useModal, useModalClose } from '@/hooks/useModal';
+import { useFunnelStore } from '@/stores/useFunnelStore';
+import { CreateGathering } from '@/types/response/createGathering';
+import { GatheringType } from '@/types/response/gatherings';
+
+import SliderAnimationDiv from '../sliderAnimation/SliderAnimationDiv';
 
 export default function Step4Funnel() {
 	const {

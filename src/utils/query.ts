@@ -1,5 +1,6 @@
-import { SORT_CONFIG } from '@/constants/options';
 import { format } from 'date-fns';
+
+import { SORT_CONFIG } from '@/constants/options';
 
 /**
  * 모임 데이터를 조회하기 위한 쿼리 문자열을 생성하는 유틸 함수

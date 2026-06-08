@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 /**
  * 현재 화면 크기를 기준으로 'mobile', 'tablet', 'desktop' 중 하나를 반환하는 커스텀 훅

@@ -47,34 +47,28 @@ export default function BasicPopup({
 			<div className="flex flex-col">
 				{/* Discord-style Header */}
 				<div className="p-6 pb-2">
-					<h3 className="text-xl font-black text-white tracking-tight">{title}</h3>
+					<h3 className="text-xl font-black tracking-tight text-white">{title}</h3>
 				</div>
 
 				{/* Discord-style Body */}
 				<div className="p-6 pt-2">
 					{subTitle ? (
-						<p className="text-discord-text text-base font-medium leading-relaxed">
-							{subTitle}
-						</p>
+						<p className="text-discord-text text-base leading-relaxed font-medium">{subTitle}</p>
 					) : (
-						<p className="text-discord-muted text-sm font-medium">
-							계속하려면 로그인이 필요합니다.
-						</p>
+						<p className="text-discord-muted text-sm font-medium">계속하려면 로그인이 필요합니다.</p>
 					)}
 				</div>
 
 				{/* Discord-style Footer */}
-				<div className="bg-discord-bg mt-4 flex items-center justify-end gap-3 p-4 px-6 border-t border-white/5">
-					<button 
+				<div className="bg-discord-bg mt-4 flex items-center justify-end gap-3 border-t border-white/5 p-4 px-6">
+					<button
 						type="button"
 						onClick={handleCancel}
-						className="text-white text-sm font-bold px-4 py-2 hover:underline transition-all outline-none">
+						className="px-4 py-2 text-sm font-bold text-white transition-all outline-none hover:underline">
 						{cancelText || '취소'}
 					</button>
 					<div className="w-32">
-						<BasicButton 
-							className="w-full font-black text-sm uppercase tracking-tighter" 
-							onClick={handleConfirm}>
+						<BasicButton className="w-full text-sm font-black tracking-tighter uppercase" onClick={handleConfirm}>
 							{confirmText}
 						</BasicButton>
 					</div>

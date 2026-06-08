@@ -204,10 +204,10 @@ input:-webkit-autofill:focus {
 
 @layer utilities {
 	.discord-card {
-		@apply bg-discord-surface rounded-lg overflow-hidden;
+		@apply bg-discord-surface overflow-hidden rounded-lg;
 	}
 	.discord-item {
-		@apply bg-discord-card hover:bg-discord-hover transition-colors rounded-md;
+		@apply bg-discord-card hover:bg-discord-hover rounded-md transition-colors;
 	}
 	.text-muted {
 		@apply text-discord-muted;
@@ -223,4 +223,3 @@ input:-webkit-autofill:focus {
 		scrollbar-width: none;
 	}
 }
-

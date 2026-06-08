@@ -1,7 +1,7 @@
 'use client';
 
+import { useRef, useState } from 'react';
 import Image from 'next/image';
-import { useState, useRef } from 'react';
 
 interface ProfileImageUploaderProps {
 	/** 현재 프로필 이미지 URL (기존 이미지 미리보기용) */

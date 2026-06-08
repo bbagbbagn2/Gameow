@@ -1,4 +1,5 @@
 import Image from 'next/image';
+
 import { PROFILE_PATHS } from '@/constants/assetPath';
 
 interface NoDataMessageProps {
@@ -18,4 +19,3 @@ export default function NoDataMessage({ text }: NoDataMessageProps) {
 		</div>
 	);
 }
-

@@ -1,22 +1,30 @@
 export const queryKeys = {
 	gatherings: {
 		all: ['gatherings'] as const,
-		list: (queryString: string) => ['gatherings', queryString] as const,
-		detail: (id: number) => ['gathering', id] as const,
-		participants: (id: number) => ['participants', id] as const,
-		reviews: (id: number) => ['gatheringReviews', id] as const
+		lists: () => ['gatherings', 'list'] as const,
+		list: (queryString: string) => ['gatherings', 'list', queryString] as const,
+		details: () => ['gatherings', 'detail'] as const,
+		detail: (id: number) => ['gatherings', 'detail', id] as const,
+		participants: (id: number) => ['gatherings', 'participants', id] as const,
+		reviews: (id: number) => ['gatherings', 'reviews', id] as const
 	},
 	favorites: {
-		all: ['favoriteGatherings'] as const,
-		list: (ids: readonly number[]) => ['favoriteGatherings', ids] as const
+		all: ['favorites'] as const,
+		lists: () => ['favorites', 'list'] as const,
+		list: (ids: readonly number[]) => ['favorites', 'list', ids] as const
 	},
 	reviews: {
-		scores: (type: string) => ['scores', type] as const,
-		list: (type: string, filterValues: unknown, page: number) => ['reviews', type, filterValues, page] as const
+		all: ['reviews'] as const,
+		lists: () => ['reviews', 'list'] as const,
+		list: (type: string, filterValues: unknown, page: number) => ['reviews', 'list', type, filterValues, page] as const,
+		scores: () => ['reviews', 'scores'] as const,
+		score: (type: string) => ['reviews', 'scores', type] as const
 	},
 	me: {
-		joinedGatherings: ['joinedGatherings'] as const,
-		writableReviews: (userId?: number) => ['writableReviews', userId] as const,
-		writtenReviews: (userId?: number) => ['writtenReviews', userId] as const
+		all: ['me'] as const,
+		joinedGatherings: () => ['me', 'joinedGatherings'] as const,
+		reviews: () => ['me', 'reviews'] as const,
+		writableReviews: (userId?: number) => ['me', 'reviews', 'writable', userId] as const,
+		writtenReviews: (userId?: number) => ['me', 'reviews', 'written', userId] as const
 	}
 };

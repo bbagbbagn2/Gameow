@@ -59,7 +59,7 @@ export default function GatheringModal() {
 	const { mutate } = useMutation({
 		mutationFn: postGathering,
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: queryKeys.gatherings.all, exact: false });
+			queryClient.invalidateQueries({ queryKey: queryKeys.gatherings.lists() });
 			openModal(<BasicPopup title="모임이 생성되었습니다!" />, 'create-gathering-popup');
 			closePopup();
 			router.push('/');

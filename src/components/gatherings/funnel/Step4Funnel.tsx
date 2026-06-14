@@ -31,7 +31,7 @@ export default function Step4Funnel() {
 	const { mutate, isPending } = useMutation({
 		mutationFn: postGathering,
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: queryKeys.gatherings.all });
+			queryClient.invalidateQueries({ queryKey: queryKeys.gatherings.lists() });
 			openModal(<BasicPopup title="모임이 생성되었습니다." />, 'create-gathering-popup');
 			closeModal(); // 모달 닫기
 			reset(); // 퍼넬 스토어 1로 초기화

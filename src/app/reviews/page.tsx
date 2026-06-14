@@ -73,7 +73,7 @@ export default function Reviews() {
 	}, []);
 
 	const { data: scores, isLoading: isLoadingScores } = useQuery({
-		queryKey: queryKeys.reviews.scores(selectedCategory),
+		queryKey: queryKeys.reviews.score(selectedCategory),
 		queryFn: () => getScores({ type: selectedCategory })
 	});
 

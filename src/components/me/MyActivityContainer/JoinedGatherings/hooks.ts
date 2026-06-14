@@ -14,7 +14,7 @@ export function useJoinedGatherings({ enabled = true } = {}) {
 	const { handleError } = useErrorHandler();
 
 	return useQuery<JoinedGathering[]>({
-		queryKey: queryKeys.me.joinedGatherings,
+		queryKey: queryKeys.me.joinedGatherings(),
 		queryFn: async () => {
 			try {
 				return await getJoinedGathering({ sortBy: 'dateTime', sortOrder: 'asc' });

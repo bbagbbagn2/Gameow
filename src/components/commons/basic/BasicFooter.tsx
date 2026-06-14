@@ -36,7 +36,7 @@ function GatheringNormalUserBtn() {
 			await Promise.all([
 				queryClient.invalidateQueries({ queryKey: queryKeys.gatherings.detail(gathering.id) }),
 				queryClient.invalidateQueries({ queryKey: queryKeys.gatherings.participants(gathering.id) }),
-				queryClient.invalidateQueries({ queryKey: queryKeys.favorites.all })
+				queryClient.invalidateQueries({ queryKey: queryKeys.favorites.lists() })
 			]);
 			openModal(<BasicPopup title="모임에 참가되었습니다" />, 'join-gathering-popup');
 		},
@@ -53,7 +53,7 @@ function GatheringNormalUserBtn() {
 			await Promise.all([
 				queryClient.invalidateQueries({ queryKey: queryKeys.gatherings.detail(gathering.id) }),
 				queryClient.invalidateQueries({ queryKey: queryKeys.gatherings.participants(gathering.id) }),
-				queryClient.invalidateQueries({ queryKey: queryKeys.favorites.all })
+				queryClient.invalidateQueries({ queryKey: queryKeys.favorites.lists() })
 			]);
 			openModal(<BasicPopup title="모임 참가가 취소되었습니다." />, 'leave-gathering-popup');
 		},
@@ -112,7 +112,7 @@ function GatheringOwnerUserBtn() {
 	const { mutate } = useMutation({
 		mutationFn: putGatheringCancel,
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: queryKeys.gatherings.all });
+			queryClient.invalidateQueries({ queryKey: queryKeys.gatherings.lists() });
 			router.push('/');
 		},
 		onError: () => {

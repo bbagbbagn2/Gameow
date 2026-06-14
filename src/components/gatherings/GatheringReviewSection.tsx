@@ -11,6 +11,7 @@ import BasicPagination from '@/components/commons/basic/BasicPagination';
 import { PROFILE_PATHS } from '@/constants/assetPath';
 import { REVIEW_SECTION_TITLE } from '@/constants/messages';
 import { ReviewResponse } from '@/types/response/reviews';
+import { queryKeys } from '@/utils/query-keys';
 
 import NoDataMessage from '../commons/NoDataMessage/NoDataMessage';
 import GatheringReviewSectionSkeleton from './skeleton/GatheringReviewSectionSkeleton';
@@ -20,7 +21,7 @@ export default function GatheringReviewSection({ gatheringId }: { gatheringId: n
 	const pageSize = 4;
 
 	const { data, isLoading } = useQuery({
-		queryKey: ['gatheringReviews', gatheringId],
+		queryKey: queryKeys.gatherings.reviews(gatheringId),
 		queryFn: () => getReviews({ gatheringId }),
 		select: res => res.data
 	});

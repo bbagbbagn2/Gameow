@@ -16,6 +16,7 @@ import { REVIEWS_MESSAGE } from '@/constants/messages';
 import { SUB_TYPE_OPTIONS, TYPE_OPTIONS } from '@/constants/options';
 import { GatheringType } from '@/types/response/gatherings';
 import { scoreData } from '@/types/response/reviews';
+import { queryKeys } from '@/utils/query-keys';
 
 /**
  * 빈 값들을 제거한 필터 객체를 반환하는 헬퍼 함수
@@ -72,14 +73,14 @@ export default function Reviews() {
 	}, []);
 
 	const { data: scores, isLoading: isLoadingScores } = useQuery({
-		queryKey: ['scores', selectedCategory],
+		queryKey: queryKeys.reviews.scores(selectedCategory),
 		queryFn: () => getScores({ type: selectedCategory })
 	});
 
 	const scoreData: scoreData | null = scores && scores.length > 0 ? scores[0] : null;
 
 	const { data: reviewsData, isLoading: isLoadingReviews } = useQuery({
-		queryKey: ['reviews', selectedCategory, filterValues, currentPage],
+		queryKey: queryKeys.reviews.list(selectedCategory, filterValues, currentPage),
 		queryFn: () =>
 			getReviews({
 				type: selectedCategory,

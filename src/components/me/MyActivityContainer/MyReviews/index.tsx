@@ -8,6 +8,7 @@ import Chip from '@/components/commons/Chip';
 import ReviewSkeleton from '@/components/reviews/ReviewSkeleton';
 import { useUserStore } from '@/stores/user';
 import type { JoinedGathering } from '@/types/response/gatherings';
+import { queryKeys } from '@/utils/query-keys';
 
 import NoDataMessage from '../../../commons/NoDataMessage/NoDataMessage';
 import { useWritableReviews, useWrittenReviews } from './hooks';
@@ -44,11 +45,11 @@ export default function MyReviews() {
 
 		try {
 			queryClient.setQueryData<JoinedGathering[]>(
-				['writableReviews', user.userId],
+				queryKeys.me.writableReviews(user.userId),
 				old => old?.filter(g => g.id !== gatheringId) ?? []
 			);
 
-			queryClient.invalidateQueries({ queryKey: ['writtenReviews', user.userId] });
+			queryClient.invalidateQueries({ queryKey: queryKeys.me.writtenReviews(user.userId) });
 
 			setActiveTab('written');
 		} catch (err) {

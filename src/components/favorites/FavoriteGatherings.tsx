@@ -13,6 +13,7 @@ import { LIKED_GATHERING_MESSAGE } from '@/constants/messages';
 import { TYPE_OPTIONS } from '@/constants/options';
 import { useWishlistStore } from '@/stores/wishlist';
 import type { GatheringType } from '@/types/response/gatherings';
+import { queryKeys } from '@/utils/query-keys';
 
 import BasicPagination from '../commons/basic/BasicPagination';
 import Chip from '../commons/Chip';
@@ -30,7 +31,7 @@ export default function FavoriteGatherings() {
 	const router = useRouter();
 
 	const { data: favoriteGatherings = [], isLoading } = useQuery({
-		queryKey: ['favoriteGatherings', Array.from(wishlist)],
+		queryKey: queryKeys.favorites.list(Array.from(wishlist)),
 		queryFn: async () => {
 			if (!hasHydrated || wishlist.size === 0) return [];
 			const ids = Array.from(wishlist).join(',');

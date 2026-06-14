@@ -6,6 +6,7 @@ import { useInView } from 'react-intersection-observer';
 import { keepPreviousData, useInfiniteQuery } from '@tanstack/react-query';
 
 import { getGatherings } from '@/apis/gatherings';
+import { queryKeys } from '@/utils/query-keys';
 
 const LIMIT = 10;
 
@@ -16,7 +17,7 @@ const LIMIT = 10;
  */
 export function useInfiniteGatheringsQuery(queryString: string) {
 	const { data, isLoading, fetchNextPage } = useInfiniteQuery({
-		queryKey: ['gatherings', queryString],
+		queryKey: queryKeys.gatherings.list(queryString),
 		queryFn: ({ pageParam = 0 }) => getGatherings(`${queryString}&limit=${LIMIT}&offset=${pageParam}`),
 		initialPageParam: 0,
 		getNextPageParam: (lastPage, pages) => (lastPage.length < LIMIT ? undefined : pages.length * LIMIT),

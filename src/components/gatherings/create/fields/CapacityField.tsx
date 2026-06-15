@@ -1,16 +1,16 @@
 'use client';
 
-import { useFormContext } from 'react-hook-form';
+import { FieldErrors, UseFormRegister } from 'react-hook-form';
 
 import BasicInput from '@/components/commons/basic/BasicInput';
 import { CreateGathering } from '@/types/response/createGathering';
 
-export default function Step4Funnel() {
-	const {
-		register,
-		formState: { errors }
-	} = useFormContext<CreateGathering>();
+interface CapacityFieldProps {
+	errors: FieldErrors<CreateGathering>;
+	register: UseFormRegister<CreateGathering>;
+}
 
+export default function CapacityField({ errors, register }: CapacityFieldProps) {
 	return (
 		<div className="mt-3 flex h-full flex-col gap-2">
 			<BasicInput

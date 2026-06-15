@@ -12,6 +12,7 @@ import { POPUP_MESSAGE } from '@/constants/messages';
 import { useModal, useModalClose } from '@/hooks/useModal';
 import { CreateGathering } from '@/types/response/createGathering';
 import type { GatheringType } from '@/types/response/gatherings';
+import { queryKeys } from '@/utils/query-keys';
 import { CreateGatheringSchema, GatheringSchemaType } from '@/utils/schema';
 
 import BasicButton from '../commons/basic/BasicButton';
@@ -58,7 +59,7 @@ export default function GatheringModal() {
 	const { mutate } = useMutation({
 		mutationFn: postGathering,
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ['gatherings'], exact: false });
+			queryClient.invalidateQueries({ queryKey: queryKeys.gatherings.lists() });
 			openModal(<BasicPopup title="모임이 생성되었습니다!" />, 'create-gathering-popup');
 			closePopup();
 			router.push('/');

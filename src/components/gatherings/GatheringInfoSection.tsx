@@ -15,6 +15,7 @@ import Tag from '@/components/commons/Tag';
 import { PROFILE_PATHS } from '@/constants/assetPath';
 import { Gathering, GatheringParticipant } from '@/types/response/gatherings';
 import { formatDateAndTime, formatUTCToKST } from '@/utils/date';
+import { queryKeys } from '@/utils/query-keys';
 
 import GatheringInfoSectionSkeleton from './skeleton/GatheringInfoSectionSkeleton';
 
@@ -96,7 +97,7 @@ function GatheringMainInfo({ data }: { data: Gathering }) {
 /** 모임 상세페이지 - 하위정보 (정원, 참가인원 프로필 사진, 개설확정 등) */
 function GatheringSubInfo({ data }: { data: Gathering }) {
 	const { data: participants = [] } = useQuery<GatheringParticipant[]>({
-		queryKey: ['participants', data.id],
+		queryKey: queryKeys.gatherings.participants(data.id),
 		queryFn: () => getGatheringParticipant(data.id)
 	});
 
@@ -159,7 +160,7 @@ export default function GatheringInfoSection({ gatheringId }: { gatheringId: num
 	}, []);
 
 	const { data, isLoading } = useQuery<Gathering>({
-		queryKey: ['gathering', gatheringId],
+		queryKey: queryKeys.gatherings.detail(gatheringId),
 		queryFn: () =>
 			getGatheringId(gatheringId).then(res => ({
 				...res,

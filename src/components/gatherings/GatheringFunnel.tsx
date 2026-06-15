@@ -44,7 +44,7 @@ export default function GatheringFunnel() {
 	};
 
 	return (
-		<BasicModal onClose={handleCloseWithPopup} width="600px" className="">
+		<BasicModal onClose={handleCloseWithPopup} width="min(640px, calc(100vw - 32px))" className="">
 			<FormProvider {...methods}>
 				<CreateGatheringForm />
 			</FormProvider>
@@ -59,7 +59,9 @@ function CreateGatheringForm() {
 	const { submitGathering, isPending } = useCreateGatheringSubmit();
 
 	return (
-		<form onSubmit={handleSubmit(data => submitGathering(data as CreateGathering))}>
+		<form
+			onSubmit={handleSubmit(data => submitGathering(data as CreateGathering))}
+			className="flex max-h-[calc(100vh-48px)] flex-col overflow-hidden">
 			<CreateGatheringHeader step={step} />
 			<CreateGatheringStepRenderer step={step} />
 			<CreateGatheringFooter step={step} isPending={isPending} onNext={handleNext} onPrev={handlePrev} />

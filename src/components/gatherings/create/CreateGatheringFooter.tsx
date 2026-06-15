@@ -12,7 +12,7 @@ interface CreateGatheringFooterProps {
 
 export default function CreateGatheringFooter({ step, isPending, onNext, onPrev }: CreateGatheringFooterProps) {
 	return (
-		<div className="max-mb:flex-col max-mb:mt-2 flex flex-row gap-2">
+		<footer className="bg-discord-card/30 max-mb:flex-col flex flex-row gap-2 border-t border-white/5 px-6 py-5">
 			{step > 1 && (
 				<BasicButton type="button" onClick={onPrev} outlined className="w-full">
 					이전
@@ -28,6 +28,6 @@ export default function CreateGatheringFooter({ step, isPending, onNext, onPrev 
 					{isPending ? '등록 중...' : '크루 생성하기'}
 				</BasicButton>
 			)}
-		</div>
+		</footer>
 	);
 }

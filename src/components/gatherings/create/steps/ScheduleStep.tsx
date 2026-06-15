@@ -12,7 +12,7 @@ export default function ScheduleStep() {
 	} = useFormContext<GatheringSchemaType>();
 
 	return (
-		<div className="mt-3 flex flex-col gap-3">
+		<div className="flex flex-col gap-5">
 			<GatheringDateField control={control} errors={errors} label="모임 날짜" name="dateTime" />
 			<GatheringDateField control={control} errors={errors} label="마감 날짜" name="registrationEnd" />
 		</div>

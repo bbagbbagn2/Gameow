@@ -13,7 +13,7 @@ export default function BasicInfoStep() {
 	} = useFormContext<GatheringSchemaType>();
 
 	return (
-		<div className="mt-3 flex flex-col gap-3">
+		<div className="flex flex-col gap-5">
 			<CrewNameField errors={errors} register={register} />
 			<GenreSelectField errors={errors} register={register} />
 		</div>

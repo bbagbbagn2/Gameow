@@ -15,11 +15,9 @@ export default function CategoryImageStep() {
 	} = useFormContext<GatheringSchemaType>();
 
 	return (
-		<div className="mt-3 flex flex-col gap-3">
-			<div className="flex flex-col gap-2">
-				<CategorySelectField control={control} errors={errors} />
-				<ImageUploaderField errors={errors} setValue={setValue} watch={watch} />
-			</div>
+		<div className="flex flex-col gap-5">
+			<CategorySelectField control={control} errors={errors} />
+			<ImageUploaderField errors={errors} setValue={setValue} watch={watch} />
 		</div>
 	);
 }

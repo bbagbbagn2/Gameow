@@ -9,7 +9,7 @@ import { Step } from '@/stores/useFunnelStore';
 
 export default function CreateGatheringStepRenderer({ step }: { step: Step }) {
 	return (
-		<SliderAnimationDiv className="max-mb:h-auto mx-auto flex h-[450px] w-full flex-col justify-between rounded-3xl">
+		<SliderAnimationDiv className="max-mb:min-h-[360px] flex min-h-[430px] w-full flex-1 flex-col overflow-y-auto px-6 py-5">
 			{step === 1 && <BasicInfoStep />}
 			{step === 2 && <CategoryImageStep />}
 			{step === 3 && <ScheduleStep />}

@@ -17,8 +17,8 @@ export default function CategorySelectField({ control, errors }: CategorySelectF
 			control={control}
 			render={({ field }) => (
 				<div className="flex w-full flex-col gap-3">
-					<label className="font-semibold text-white">카테고리</label>
-					<div className="max-mb:flex-wrap flex w-full justify-between gap-3">
+					<label className="text-discord-muted pl-1 text-[11px] font-black tracking-wider uppercase">카테고리</label>
+					<div className="max-mb:grid-cols-1 grid w-full grid-cols-3 gap-3">
 						<BasicCheckBox
 							title="함께 플레이"
 							content="스팀"
@@ -40,7 +40,7 @@ export default function CategorySelectField({ control, errors }: CategorySelectF
 						/>
 					</div>
 					{typeof errors.type?.message === 'string' && (
-						<p className="leading-sm text-highlight text-start text-sm font-semibold">{errors.type.message}</p>
+						<p className="leading-sm text-highlight pl-1 text-start text-sm font-semibold">{errors.type.message}</p>
 					)}
 				</div>
 			)}

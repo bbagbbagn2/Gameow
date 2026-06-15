@@ -16,7 +16,7 @@ export default function GatheringDateField({ control, errors, label, name }: Gat
 	const errorMessage = errors[name]?.message;
 
 	return (
-		<div className="flex flex-col gap-2">
+		<div className="bg-discord-bg/40 flex flex-col gap-2 rounded-xl border border-white/5 p-4">
 			<Controller
 				name={name}
 				control={control}
@@ -24,7 +24,7 @@ export default function GatheringDateField({ control, errors, label, name }: Gat
 				render={({ field }) => {
 					return (
 						<div className="flex flex-col gap-3">
-							<label className="leading-base flex text-base font-semibold text-white">{label}</label>
+							<label className="text-discord-muted pl-1 text-[11px] font-black tracking-wider uppercase">{label}</label>
 							<GatheringCalendar
 								pageType="create"
 								value={field.value ? new Date(field.value) : undefined}

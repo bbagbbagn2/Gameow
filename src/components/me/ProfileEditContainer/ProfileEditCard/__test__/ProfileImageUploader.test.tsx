@@ -1,6 +1,15 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import ProfileImageUploader from '../ProfileImageUploader';
 
+import { ModalStoreProvider } from '@/providers/ModalProvider';
+
+const renderProfileImageUploader = (props: React.ComponentProps<typeof ProfileImageUploader>) =>
+	render(
+		<ModalStoreProvider>
+			<ProfileImageUploader {...props} />
+		</ModalStoreProvider>
+	);
+
 /**
  * ProfileImageUploader 컴포넌트 테스트
  *
@@ -9,13 +18,13 @@ import ProfileImageUploader from '../ProfileImageUploader';
  */
 describe('ProfileImageUploader', () => {
 	test('기본 이미지를 렌더링하는지 확인', () => {
-		render(<ProfileImageUploader onChange={() => {}} />);
+		renderProfileImageUploader({ onChange: () => {} });
 		expect(screen.getByAltText('프로필 사진')).toBeInTheDocument();
 	});
 
 	test('파일을 업로드하면 onChange가 호출되는지 확인', async () => {
 		const handleChange = jest.fn();
-		render(<ProfileImageUploader onChange={handleChange} />);
+		renderProfileImageUploader({ onChange: handleChange });
 
 		const file = new File(['임시 프로필 사진'], 'text.png', { type: 'image/png' });
 		const input = screen.getByRole('button').nextSibling as HTMLInputElement;

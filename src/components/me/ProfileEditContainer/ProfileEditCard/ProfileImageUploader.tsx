@@ -1,7 +1,9 @@
 'use client';
 
 import Image from 'next/image';
-import { useState, useRef } from 'react';
+
+import { useProfileImageUploader } from './hooks/useProfileImageUploader';
+import { DEFAULT_PROFILE_IMAGE_SRC, PROFILE_IMAGE_ACCEPT } from './utils/profileImage';
 
 interface ProfileImageUploaderProps {
 	/** 현재 프로필 이미지 URL (기존 이미지 미리보기용) */
@@ -15,7 +17,7 @@ interface ProfileImageUploaderProps {
  *
  * - 클릭 시 파일 선택 창이 열리며, 선택한 이미지를 즉시 미리보기로 표시합니다.
  * - 업로드된 파일(`File`)과 base64 미리보기 URL(`string`)을 함께 `onChange`로 반환합니다.
- * - 기본 이미지(`/images/profile_edit.svg`)를 제공하며, 기존 프로필 이미지를 표시할 수 있습니다.
+ * - 기본 이미지(`/images/profile.svg`)를 제공하며, 기존 프로필 이미지를 표시할 수 있습니다.
  *
  * @component
  * @example
@@ -27,30 +29,16 @@ interface ProfileImageUploaderProps {
  * ```
  */
 export default function ProfileImageUploader({ currentImage, onChange }: ProfileImageUploaderProps) {
-	const [preview, setPreview] = useState(currentImage);
-
-	const fileInputRef = useRef<HTMLInputElement>(null);
-
-	const handleProfileImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const selectedFile = e.target.files?.[0];
-		if (!selectedFile) return;
-
-		const reader = new FileReader();
-		reader.onload = () => {
-			if (reader.result) {
-				const result = reader.result as string;
-				setPreview(result);
-				onChange(selectedFile, result);
-			}
-		};
-		reader.readAsDataURL(selectedFile);
-	};
+	const { preview, fileInputRef, handleButtonClick, handleProfileImage } = useProfileImageUploader({
+		currentImage,
+		onChange,
+	});
 
 	return (
 		<>
-			<button type="button" className="relative cursor-pointer" onClick={() => fileInputRef.current?.click()}>
+			<button type="button" className="relative cursor-pointer" onClick={handleButtonClick}>
 				<Image
-					src={preview || '/images/profile.svg'}
+					src={preview || DEFAULT_PROFILE_IMAGE_SRC}
 					alt="프로필 사진"
 					width={56}
 					height={56}
@@ -65,7 +53,7 @@ export default function ProfileImageUploader({ currentImage, onChange }: Profile
 			<input
 				ref={fileInputRef}
 				type="file"
-				accept="image/*, image/svg+xml"
+				accept={PROFILE_IMAGE_ACCEPT}
 				className="hidden"
 				onChange={handleProfileImage}
 			/>

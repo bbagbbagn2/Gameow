@@ -1,15 +1,14 @@
 'use client';
 
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 import Image from 'next/image';
 
 import { profileAssets } from './assets/profileAssets';
+import { useProfileEditCard } from './hooks/useProfileEditCard';
 import { useScreenSize } from './hooks/useScreenSize';
 import ProfileEditModal from '../ProfileEditModal/ProfileEditModal';
 
-import { getUserInfo, updateUserInfo } from '@/apis/auths/user';
 import { useModal } from '@/hooks/useModal';
-import { useUserStore } from '@/stores/user';
 
 /**
  * `ProfileEditCard` 컴포넌트
@@ -22,36 +21,12 @@ import { useUserStore } from '@/stores/user';
  * @component
  * @returns {JSX.Element} 프로필 카드 UI 및 Modal을 렌더링합니다.
  */
+
 export default function ProfileEditCard() {
 	const { openModal } = useModal();
 	const screenSize = useScreenSize();
 	const { bg, edit } = useMemo(() => profileAssets[screenSize], [screenSize]);
-
-	const { user, updateUser } = useUserStore();
-
-	//초기 데이터 불러오기
-	useEffect(() => {
-		const fetchUserInfo = async () => {
-			try {
-				const data = await getUserInfo();
-				updateUser({ email: data.email, name: data.name, image: data.image, companyName: data.companyName });
-			} catch (err) {
-				console.error('인증이 필요합니다', err);
-				// TODO: 인증 실패 시 로그인 안내 모달을 띄우도록 구현
-			}
-		};
-		if (!user) fetchUserInfo();
-	}, [user, updateUser]);
-
-	const handleUpdateUserInfo = async (updated: { companyName?: string; image?: File | null }) => {
-		try {
-			const updatedUser = await updateUserInfo(updated);
-			updateUser({ companyName: updatedUser.companyName, image: updatedUser.image });
-		} catch (err) {
-			console.error('회사명 수정 실패', err);
-			// TODO: 실패 시 사용자에게 알림 모달을 띄우도록 구현
-		}
-	};
+	const { user, userInfoList, handleUpdateUserInfo } = useProfileEditCard();
 
 	return (
 		<>
@@ -104,15 +79,12 @@ export default function ProfileEditCard() {
 							<p className="text-base font-semibold">{user?.name}</p>
 						</div>
 
-						<div className="flex gap-1.5 text-sm">
-							<p className="font-medium">company.</p>
-							<p className="font-normal text-gray-700">{user?.companyName}</p>
-						</div>
-
-						<div className="flex gap-1.5 text-sm">
-							<p className="font-medium">E-mail.</p>
-							<p className="font-normal text-gray-700">{user?.email}</p>
-						</div>
+						{userInfoList.map(({ label, value }) => (
+							<div key={label} className="flex gap-1.5 text-sm">
+								<p className="font-medium">{label}</p>
+								<p className="font-normal text-gray-700">{value}</p>
+							</div>
+						))}
 					</div>
 				</div>
 			</div>

@@ -1,0 +1,54 @@
+import { createElement, useCallback, useEffect, useRef, useState } from 'react';
+import type { ChangeEvent } from 'react';
+
+import { getFirstFile, readFileAsDataUrl } from '../utils/profileImage';
+
+import BasicPopup from '@/components/commons/basic/BasicPopup';
+import { useModal } from '@/hooks/useModal';
+
+const PROFILE_IMAGE_PREVIEW_FAILED = {
+	title: '이미지 업로드 실패',
+	subTitle: '프로필 이미지를 불러오지 못했습니다. 다른 이미지를 선택해주세요.',
+	confirmText: '확인'
+};
+
+interface UseProfileImageUploaderParams {
+	currentImage?: string;
+	onChange: (file: File, preview: string) => void;
+}
+
+export function useProfileImageUploader({ currentImage, onChange }: UseProfileImageUploaderParams) {
+	const [preview, setPreview] = useState(currentImage);
+	const fileInputRef = useRef<HTMLInputElement>(null);
+	const { openModal } = useModal();
+
+	useEffect(() => { setPreview(currentImage); }, [currentImage]);
+
+	const handleButtonClick = useCallback(() => { fileInputRef.current?.click(); }, []);
+
+	const applySelectedImage = useCallback((file: File, nextPreview: string) => {
+			setPreview(nextPreview);
+			onChange(file, nextPreview);
+		}, 
+		[onChange]
+	);
+
+	const handleProfileImage = useCallback(
+		async (e: ChangeEvent<HTMLInputElement>) => {
+			const selectedFile = getFirstFile(e.target.files);
+
+			if (!selectedFile) return;
+
+			try {
+				const nextPreview = await readFileAsDataUrl(selectedFile);
+				applySelectedImage(selectedFile, nextPreview);
+			} catch (err) {
+				console.error('프로필 이미지 미리보기 생성 실패', err);
+				openModal(createElement(BasicPopup, PROFILE_IMAGE_PREVIEW_FAILED), 'profile-image-preview-failed-popup');
+			}
+		},
+		[applySelectedImage, openModal]
+	);
+
+	return { preview, fileInputRef, handleButtonClick, handleProfileImage };
+}

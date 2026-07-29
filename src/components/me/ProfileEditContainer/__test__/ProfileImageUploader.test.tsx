@@ -1,5 +1,6 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import ProfileImageUploader from '../ProfileImageUploader';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+
+import ProfileImageUploader from '../components/ProfileImageUploader';
 
 import { ModalStoreProvider } from '@/providers/ModalProvider';
 
@@ -10,12 +11,6 @@ const renderProfileImageUploader = (props: React.ComponentProps<typeof ProfileIm
 		</ModalStoreProvider>
 	);
 
-/**
- * ProfileImageUploader 컴포넌트 테스트
- *
- * - 기본 이미지 렌더링 확인
- * - 파일 업로드 시, onChange 콜백 호출 확인
- */
 describe('ProfileImageUploader', () => {
 	test('기본 이미지를 렌더링하는지 확인', () => {
 		renderProfileImageUploader({ onChange: () => {} });

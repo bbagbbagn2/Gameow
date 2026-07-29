@@ -6,7 +6,7 @@ import { getFirstFile, readFileAsDataUrl } from '../utils/profileImage';
 import BasicPopup from '@/components/commons/basic/BasicPopup';
 import { useModal } from '@/hooks/useModal';
 
-const PROFILE_IMAGE_PREVIEW_FAILED = {
+const PROFILE_IMAGE_PREVIEW_FAILED_POPUP = {
 	title: '이미지 업로드 실패',
 	subTitle: '프로필 이미지를 불러오지 못했습니다. 다른 이미지를 선택해주세요.',
 	confirmText: '확인'
@@ -18,7 +18,7 @@ interface UseProfileImageUploaderParams {
 }
 
 export function useProfileImageUploader({ currentImage, onChange }: UseProfileImageUploaderParams) {
-	const [preview, setPreview] = useState(currentImage);
+	const [preview, setPreview] = useState<string | undefined>(currentImage);
 	const fileInputRef = useRef<HTMLInputElement>(null);
 	const { openModal } = useModal();
 
@@ -26,10 +26,11 @@ export function useProfileImageUploader({ currentImage, onChange }: UseProfileIm
 
 	const handleButtonClick = useCallback(() => { fileInputRef.current?.click(); }, []);
 
-	const applySelectedImage = useCallback((file: File, nextPreview: string) => {
+	const applySelectedImage = useCallback(
+		(file: File, nextPreview: string) => {
 			setPreview(nextPreview);
 			onChange(file, nextPreview);
-		}, 
+		},
 		[onChange]
 	);
 
@@ -44,7 +45,7 @@ export function useProfileImageUploader({ currentImage, onChange }: UseProfileIm
 				applySelectedImage(selectedFile, nextPreview);
 			} catch (err) {
 				console.error('프로필 이미지 미리보기 생성 실패', err);
-				openModal(createElement(BasicPopup, PROFILE_IMAGE_PREVIEW_FAILED), 'profile-image-preview-failed-popup');
+				openModal(createElement(BasicPopup, PROFILE_IMAGE_PREVIEW_FAILED_POPUP), 'profile-image-preview-failed-popup');
 			}
 		},
 		[applySelectedImage, openModal]

@@ -1,7 +1,6 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 
-import ProfileImageUploader from '../components/ProfileImageUploader';
-
+import ProfileImageUploader from '@/components/me/ProfileEditContainer/components/ProfileImageUploader';
 import { ModalStoreProvider } from '@/providers/ModalProvider';
 
 const renderProfileImageUploader = (props: React.ComponentProps<typeof ProfileImageUploader>) =>

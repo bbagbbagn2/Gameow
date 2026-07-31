@@ -3,11 +3,10 @@
 import { Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-import ServerErrorPopup from '@/components/auth/Popup/ServerErrorPopup';
-import { SigninForm, type SigninFormValues } from '@/components/auth/SigninForm';
-
 import { postSignin } from '@/apis/auths/signin';
 import { getUserInfo } from '@/apis/auths/user';
+import ServerErrorPopup from '@/components/auth/Popup/ServerErrorPopup';
+import { SigninForm, type SigninFormValues } from '@/components/auth/SigninForm';
 import { useModal } from '@/hooks/useModal';
 import { useTokenStore } from '@/stores/token';
 import { useUserStore } from '@/stores/user';

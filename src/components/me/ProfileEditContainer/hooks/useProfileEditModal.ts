@@ -1,12 +1,11 @@
-import { zodResolver } from '@hookform/resolvers/zod';
 import { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { getDirtyProfileUpdates, hasDirtyProfileFields } from '../utils/profileEditForm';
+import { zodResolver } from '@hookform/resolvers/zod';
 
+import { getDirtyProfileUpdates, hasDirtyProfileFields } from '@/components/me/ProfileEditContainer/utils/profileEditForm';
 import { useModalClose } from '@/hooks/useModal';
-import { profileEditSchema } from '@/utils/schema';
-import type { ProfileEditSchemaType } from '@/utils/schema';
+import { profileEditSchema, type ProfileEditSchemaType } from '@/utils/schema';
 
 interface UseProfileEditModalParams {
 	currentNickname?: string;

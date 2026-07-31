@@ -1,10 +1,11 @@
 'use client';
 
+import { ComponentType } from 'react';
+import { usePathname } from 'next/navigation';
+
 import RequiredLoginPopup from '@/components/auth/Popup/RequiredLoginPopup';
 import { useAuth } from '@/hooks/useAuth';
 import { useModal } from '@/hooks/useModal';
-import { usePathname } from 'next/navigation';
-import { ComponentType } from 'react';
 
 interface WithAuthGuardProps {
 	onClick?: () => void;

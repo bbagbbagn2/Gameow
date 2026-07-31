@@ -1,11 +1,12 @@
+import BasicButton from '@/components/commons/basic/BasicButton';
 import { useModal } from '@/hooks/useModal';
 import type { JoinedGathering } from '@/types/response/gatherings';
-import BasicButton from '@/components/commons/basic/BasicButton';
-import GatheringBadge from './GatheringBadge';
-import CardLayout from '../common/CardLayout/CardLayout';
+
 import CanceledOverlay from '../common/CanceledOverlay/CanceledOverlay';
+import CardLayout from '../common/CardLayout/CardLayout';
 import CancelConfirmModal from '../modals/CancelConfirmModal';
 import ReviewWriteModal from '../modals/ReviewWriteModal';
+import GatheringBadge from './GatheringBadge';
 
 interface GatheringProps {
 	/** 렌더링할 모임 데이터 */

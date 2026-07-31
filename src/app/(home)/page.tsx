@@ -1,21 +1,19 @@
 'use client';
 
 import { useDeferredValue, useMemo, useState } from 'react';
-import * as motion from 'motion/react-client';
 import Image from 'next/image';
+
+import * as motion from 'motion/react-client';
+
+import GatheringFilterBar, { type FilterCriteria } from '@/app/(home)/GatheringFilterBar';
+import { useInfiniteGatheringsQuery } from '@/hooks/useInfiniteGatheringsQuery';
+import { Gathering } from '@/types/response/gatherings';
+import { getGatheringQuery } from '@/utils/query';
 
 import CardList from './CardList';
 import CardSkeleton from './CardSkeleton';
 
-import GatheringFilterBar, { type FilterCriteria } from '@/app/(home)/GatheringFilterBar';
-
-import { getGatheringQuery } from '@/utils/query';
-import { useInfiniteGatheringsQuery } from '@/hooks/useInfiniteGatheringsQuery';
-import { Gathering } from '@/types/response/gatherings';
-
-
 const SKELETON_ITEMS = Array.from({ length: 3 }, (_, i) => i);
-
 
 export default function HomePage() {
 	const [filterCriteria, setFilterCriteria] = useState<FilterCriteria>({
@@ -35,10 +33,10 @@ export default function HomePage() {
 				<h1 className="sr-only">Gameow 크루 찾기 페이지</h1>
 
 				{/* 히어로 섹션 */}
-				<section className="bg-discord-surface relative mb-12 overflow-hidden rounded-2xl border border-white/5 p-8 shadow-2xl tb:p-12">
+				<section className="bg-discord-surface tb:p-12 relative mb-12 overflow-hidden rounded-2xl border border-white/5 p-8 shadow-2xl">
 					<div className="bg-primary-500/10 absolute -top-24 -right-24 h-64 w-64 rounded-full blur-3xl" />
 
-					<div className="relative flex flex-col items-start gap-8 pc:flex-row pc:items-center">
+					<div className="pc:flex-row pc:items-center relative flex flex-col items-start gap-8">
 						<div className="bg-discord-bg flex h-24 w-24 shrink-0 items-center justify-center rounded-3xl border border-white/10 shadow-2xl">
 							<Image
 								priority
@@ -46,19 +44,19 @@ export default function HomePage() {
 								alt={'Logo'}
 								width={56}
 								height={56}
-								className="brightness-0 invert opacity-80"
+								className="opacity-80 brightness-0 invert"
 							/>
 						</div>
 
 						<div className="flex flex-col gap-2">
 							<span className="text-primary-400 text-xs font-black tracking-[0.3em] uppercase">Discovery</span>
-							<h2 className="text-3xl font-black tracking-tighter text-white tb:text-4xl">
+							<h2 className="tb:text-4xl text-3xl font-black tracking-tighter text-white">
 								최고의 크루와 함께{' '}
-								<span className="text-primary-500 underline decoration-primary-500/30 underline-offset-8">
+								<span className="text-primary-500 decoration-primary-500/30 underline underline-offset-8">
 									새로운 전장으로
 								</span>
 							</h2>
-							<p className="text-discord-muted mt-2 max-w-2xl text-base font-medium leading-relaxed">
+							<p className="text-discord-muted mt-2 max-w-2xl text-base leading-relaxed font-medium">
 								혼자 고민하지 마세요. 지금 바로 합류할 크루를 찾아보세요.
 							</p>
 						</div>
@@ -80,7 +78,7 @@ export default function HomePage() {
 							</>
 						)}
 						{isLoading && (
-							<div className="grid grid-cols-1 gap-6 tb:grid-cols-2 pc:grid-cols-3">
+							<div className="tb:grid-cols-2 pc:grid-cols-3 grid grid-cols-1 gap-6">
 								{SKELETON_ITEMS.map(i => (
 									<CardSkeleton key={i} />
 								))}
@@ -106,6 +104,3 @@ export default function HomePage() {
 		</div>
 	);
 }
-
-
-

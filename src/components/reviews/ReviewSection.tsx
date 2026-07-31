@@ -1,9 +1,10 @@
-import { GetReviewsResponse, ReviewResponse } from '@/types/response/reviews';
-import FilterSection, { FilterData } from './FilterSection';
-import ReviewItem from './ReviewItem';
-import BasicPagination from '../commons/basic/BasicPagination';
 import Image from 'next/image';
 
+import { GetReviewsResponse, ReviewResponse } from '@/types/response/reviews';
+
+import BasicPagination from '../commons/basic/BasicPagination';
+import FilterSection, { FilterData } from './FilterSection';
+import ReviewItem from './ReviewItem';
 import ReviewSkeleton from './ReviewSkeleton';
 
 export default function ReviewSection({

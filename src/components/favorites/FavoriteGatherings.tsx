@@ -1,22 +1,24 @@
 'use client';
 
 import { useMemo, useState } from 'react';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
-import { getGatherings } from '@/apis/gatherings';
-import { useWishlistStore } from '@/stores/wishlist';
-import { LIKED_GATHERING_MESSAGE } from '@/constants/messages';
-import type { GatheringType } from '@/types/response/gatherings';
-import { TYPE_OPTIONS } from '@/constants/options';
-
 import * as motion from 'motion/react-client';
-import Image from 'next/image';
-import Tab from '../commons/Tab';
-import Chip from '../commons/Chip';
-import CardList from './cardList/CardList';
-import BasicPagination from '../commons/basic/BasicPagination';
+
+import { getGatherings } from '@/apis/gatherings';
 import CardSkeleton from '@/app/(home)/CardSkeleton';
+import { LIKED_GATHERING_MESSAGE } from '@/constants/messages';
+import { TYPE_OPTIONS } from '@/constants/options';
+import { useWishlistStore } from '@/stores/wishlist';
+import type { GatheringType } from '@/types/response/gatherings';
+import { queryKeys } from '@/utils/query-keys';
+
+import BasicPagination from '../commons/basic/BasicPagination';
+import Chip from '../commons/Chip';
+import Tab from '../commons/Tab';
+import CardList from './cardList/CardList';
 
 const ITEMS_PER_PAGE = 4;
 
@@ -29,7 +31,7 @@ export default function FavoriteGatherings() {
 	const router = useRouter();
 
 	const { data: favoriteGatherings = [], isLoading } = useQuery({
-		queryKey: ['favoriteGatherings', Array.from(wishlist)],
+		queryKey: queryKeys.favorites.list(Array.from(wishlist)),
 		queryFn: async () => {
 			if (!hasHydrated || wishlist.size === 0) return [];
 			const ids = Array.from(wishlist).join(',');

@@ -1,5 +1,6 @@
-import { useSliderTransitionStore } from '@/stores/sliderTransition';
 import { useEffect, useRef } from 'react';
+
+import { useSliderTransitionStore } from '@/stores/sliderTransition';
 
 /**
  * 퍼널 단계 변경에 따른 슬라이더 방향 설정 훅

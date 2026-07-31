@@ -1,21 +1,22 @@
 'use client';
 
-import { useEffect, useState, useCallback } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useCallback, useEffect, useState } from 'react';
 import Image from 'next/image';
 
-import { FilterData } from '@/components/reviews/FilterSection';
-import ReviewSection from '@/components/reviews/ReviewSection';
-import Tab from '@/components/commons/Tab';
-import Chip from '@/components/commons/Chip';
-import ScoreSection from '@/components/reviews/ScoreSection';
+import { useQuery } from '@tanstack/react-query';
 
 import { getReviews } from '@/apis/reviews/reviews';
-import { scoreData } from '@/types/response/reviews';
 import { getScores } from '@/apis/reviews/scores';
+import Chip from '@/components/commons/Chip';
+import Tab from '@/components/commons/Tab';
+import { FilterData } from '@/components/reviews/FilterSection';
+import ReviewSection from '@/components/reviews/ReviewSection';
+import ScoreSection from '@/components/reviews/ScoreSection';
 import { REVIEWS_MESSAGE } from '@/constants/messages';
 import { SUB_TYPE_OPTIONS, TYPE_OPTIONS } from '@/constants/options';
 import { GatheringType } from '@/types/response/gatherings';
+import { scoreData } from '@/types/response/reviews';
+import { queryKeys } from '@/utils/query-keys';
 
 /**
  * 빈 값들을 제거한 필터 객체를 반환하는 헬퍼 함수
@@ -72,14 +73,14 @@ export default function Reviews() {
 	}, []);
 
 	const { data: scores, isLoading: isLoadingScores } = useQuery({
-		queryKey: ['scores', selectedCategory],
+		queryKey: queryKeys.reviews.score(selectedCategory),
 		queryFn: () => getScores({ type: selectedCategory })
 	});
 
 	const scoreData: scoreData | null = scores && scores.length > 0 ? scores[0] : null;
 
 	const { data: reviewsData, isLoading: isLoadingReviews } = useQuery({
-		queryKey: ['reviews', selectedCategory, filterValues, currentPage],
+		queryKey: queryKeys.reviews.list(selectedCategory, filterValues, currentPage),
 		queryFn: () =>
 			getReviews({
 				type: selectedCategory,

@@ -2,10 +2,11 @@
 
 import { useEffect, useRef } from 'react';
 import { DayButton, DayPicker, getDefaultClassNames } from 'react-day-picker';
+
 import { ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
 
-import { cn } from '@/utils/cn';
 import { Button, buttonVariants } from '@/components/ui/button';
+import { cn } from '@/utils/cn';
 
 function Calendar({
 	className,
@@ -25,7 +26,7 @@ function Calendar({
 		<DayPicker
 			showOutsideDays={showOutsideDays}
 			className={cn(
-				'bg-discord-surface group/calendar p-4 rounded-xl shadow-2xl border border-white/5 [--cell-size:--spacing(9)]',
+				'bg-discord-surface group/calendar rounded-xl border border-white/5 p-4 shadow-2xl [--cell-size:--spacing(9)]',
 				String.raw`rtl:**:[.rdp-button\_next>svg]:rotate-180`,
 				String.raw`rtl:**:[.rdp-button\_previous>svg]:rotate-180`,
 				className
@@ -51,14 +52,8 @@ function Calendar({
 					defaultClassNames.button_next
 				),
 
-				month_caption: cn(
-					'flex items-center justify-center h-8 w-full',
-					defaultClassNames.month_caption
-				),
-				caption_label: cn(
-					'select-none font-black text-white tracking-tight text-sm',
-					defaultClassNames.caption_label
-				),
+				month_caption: cn('flex items-center justify-center h-8 w-full', defaultClassNames.month_caption),
+				caption_label: cn('select-none font-black text-white tracking-tight text-sm', defaultClassNames.caption_label),
 				table: 'w-full border-collapse',
 				weekdays: cn('flex mb-2', defaultClassNames.weekdays),
 				weekday: cn(

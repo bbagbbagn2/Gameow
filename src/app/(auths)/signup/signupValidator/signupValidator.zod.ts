@@ -1,5 +1,7 @@
-import { SIGNUP_ERRORS } from '@/constants/error';
 import * as z from 'zod';
+
+import { SIGNUP_ERRORS } from '@/constants/error';
+
 import { SignupValidator } from './signupValidator';
 
 /**

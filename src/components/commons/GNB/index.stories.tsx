@@ -1,5 +1,7 @@
-import { useTokenStore } from '@/stores/token';
 import type { Meta, StoryObj } from '@storybook/nextjs';
+
+import { useTokenStore } from '@/stores/token';
+
 import GNB from './index';
 
 // TODO: 스토리북 오류로 스토리북 에러 해결 후 재확인

@@ -1,14 +1,14 @@
 'use client';
 
 import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
 import Link from 'next/link';
 
-import DebouncedInput from '@/components/auth/DebouncedInput';
-import BasicButton from '@/components/commons/basic/BasicButton';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
 
 import { zodSchema } from '@/app/(auths)/signup/signupValidator/signupValidator.zod';
+import DebouncedInput from '@/components/auth/DebouncedInput';
+import BasicButton from '@/components/commons/basic/BasicButton';
 import { SIGNUP_LABEL, SIGNUP_PLACEHOLDERS } from '@/constants/form';
 
 /**

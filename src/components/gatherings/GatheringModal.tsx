@@ -1,17 +1,19 @@
 'use client';
 
 import { useRef, useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { Controller, useForm } from 'react-hook-form';
+import { useRouter } from 'next/navigation';
+
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { postGathering } from '@/apis/gatherings';
 import { POPUP_MESSAGE } from '@/constants/messages';
 import { useModal, useModalClose } from '@/hooks/useModal';
 import { CreateGathering } from '@/types/response/createGathering';
 import type { GatheringType } from '@/types/response/gatherings';
+import { queryKeys } from '@/utils/query-keys';
 import { CreateGatheringSchema, GatheringSchemaType } from '@/utils/schema';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import BasicButton from '../commons/basic/BasicButton';
 import BasicCheckBox from '../commons/basic/BasicCheckBox';
@@ -57,7 +59,7 @@ export default function GatheringModal() {
 	const { mutate } = useMutation({
 		mutationFn: postGathering,
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ['gatherings'], exact: false });
+			queryClient.invalidateQueries({ queryKey: queryKeys.gatherings.lists() });
 			openModal(<BasicPopup title="모임이 생성되었습니다!" />, 'create-gathering-popup');
 			closePopup();
 			router.push('/');

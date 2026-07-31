@@ -1,8 +1,9 @@
 'use client';
 
+import Image from 'next/image';
+
 import { useWishlistStore } from '@/stores/wishlist';
 import { cn } from '@/utils/cn';
-import Image from 'next/image';
 
 interface HeartButtonProps {
 	/** 모임 ID */

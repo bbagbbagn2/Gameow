@@ -1,6 +1,8 @@
-import { formatTime } from '@/utils/date';
-import { differenceInSeconds } from 'date-fns';
 import { useEffect, useMemo, useRef, useState } from 'react';
+
+import { differenceInSeconds } from 'date-fns';
+
+import { formatTime } from '@/utils/date';
 
 /**
  * 주어진 만료 시간(`exp`, UNIX timestamp 기준)까지 남은 시간을 초 단위로 계산하고,

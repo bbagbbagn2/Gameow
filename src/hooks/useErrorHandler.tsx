@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
-import { useModal } from '@/hooks/useModal';
+
 import BasicPopup from '@/components/commons/basic/BasicPopup';
+import { useModal } from '@/hooks/useModal';
 
 const DEFAULT_ERROR_MESSAGE = '요청을 처리하는 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.';
 

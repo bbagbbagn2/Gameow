@@ -1,4 +1,5 @@
 import Image from 'next/image';
+
 import { CANCELED_GATHERING_MESSAGE } from '@/constants/messages';
 
 interface CanceledOverlayProps {

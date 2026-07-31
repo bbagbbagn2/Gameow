@@ -1,11 +1,15 @@
 import { useState } from 'react';
+
 import { useQueryClient } from '@tanstack/react-query';
-import { useJoinedGatherings } from './hooks';
-import type { JoinedGathering } from '@/types/response/gatherings';
-import GatheringCard from './GatheringCard';
-import NoDataMessage from '../../../commons/NoDataMessage/NoDataMessage';
-import GatheringSkeleton from '@/components/me/skeleton/GatheringSkeleton';
+
 import Chip from '@/components/commons/Chip';
+import GatheringSkeleton from '@/components/me/skeleton/GatheringSkeleton';
+import type { JoinedGathering } from '@/types/response/gatherings';
+import { queryKeys } from '@/utils/query-keys';
+
+import NoDataMessage from '../../../commons/NoDataMessage/NoDataMessage';
+import GatheringCard from './GatheringCard';
+import { useJoinedGatherings } from './hooks';
 /**
  * JoinedGatherings 컴포넌트
  *
@@ -35,7 +39,7 @@ export default function JoinedGatherings() {
 
 	/**
 	 * React Query: joinedGatherings 캐시
-	 * - queryKey: ['joinedGatherings'] 로 캐싱/무효화에 사용됩니다.
+	 * - queryKeys.me.joinedGatherings() 로 캐싱/무효화에 사용됩니다.
 	 * - queryFn: API에서 참여한 모임을 불러오고 취소된 모임을 뒤로 보냅니다.
 	 */
 	const { data: gatherings = [], isLoading } = useJoinedGatherings();
@@ -58,7 +62,7 @@ export default function JoinedGatherings() {
 	 * @returns {void}
 	 */
 	const handleReviewSuccess = (gatheringId: number) => {
-		queryClient.setQueryData<JoinedGathering[]>(['joinedGatherings'], prev =>
+		queryClient.setQueryData<JoinedGathering[]>(queryKeys.me.joinedGatherings(), prev =>
 			prev ? prev.map(g => (g.id === gatheringId ? { ...g, isReviewed: true } : g)) : []
 		);
 	};
@@ -72,7 +76,7 @@ export default function JoinedGatherings() {
 	 * @returns {void}
 	 */
 	const handleCancelSuccess = (id: number) => {
-		queryClient.setQueryData<JoinedGathering[]>(['joinedGatherings'], prev =>
+		queryClient.setQueryData<JoinedGathering[]>(queryKeys.me.joinedGatherings(), prev =>
 			prev ? prev.filter(g => g.id !== id) : []
 		);
 	};

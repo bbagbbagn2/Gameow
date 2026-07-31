@@ -1,12 +1,14 @@
-import type { Meta, StoryObj } from '@storybook/nextjs';
 import { useEffect, useState } from 'react';
-import { scoreData } from '@/types/response/reviews';
 
-import ScoreSection from '.';
+import type { Meta, StoryObj } from '@storybook/nextjs';
+
+import Chip from '@/components/commons/Chip';
 import Tab from '@/components/commons/Tab';
 import { SUB_TYPE_OPTIONS, TYPE_OPTIONS } from '@/constants/options';
 import { GatheringType } from '@/types/response/gatherings';
-import Chip from '@/components/commons/Chip';
+import { scoreData } from '@/types/response/reviews';
+
+import ScoreSection from '.';
 
 const meta: Meta<typeof ScoreSection> = {
 	title: 'Reviews/ScoreSection',

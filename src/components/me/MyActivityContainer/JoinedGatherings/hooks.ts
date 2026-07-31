@@ -1,7 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
+
 import { getJoinedGathering } from '@/apis/gatherings/joined';
 import { useErrorHandler } from '@/hooks/useErrorHandler';
 import type { JoinedGathering } from '@/types/response/gatherings';
+import { queryKeys } from '@/utils/query-keys';
 
 /**
  * useJoinedGatherings
@@ -12,7 +14,7 @@ export function useJoinedGatherings({ enabled = true } = {}) {
 	const { handleError } = useErrorHandler();
 
 	return useQuery<JoinedGathering[]>({
-		queryKey: ['joinedGatherings'],
+		queryKey: queryKeys.me.joinedGatherings(),
 		queryFn: async () => {
 			try {
 				return await getJoinedGathering({ sortBy: 'dateTime', sortOrder: 'asc' });

@@ -1,9 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
+
 import { getJoinedGathering } from '@/apis/gatherings/joined';
 import { getReviews } from '@/apis/reviews/reviews';
 import { useErrorHandler } from '@/hooks/useErrorHandler';
 import type { JoinedGathering } from '@/types/response/gatherings';
-import type { ReviewResponse, GetReviewsResponse } from '@/types/response/reviews';
+import type { GetReviewsResponse, ReviewResponse } from '@/types/response/reviews';
+import { queryKeys } from '@/utils/query-keys';
 
 /**
  * useWritableReviews
@@ -13,7 +15,7 @@ export function useWritableReviews(userId?: number) {
 	const { handleError } = useErrorHandler();
 
 	return useQuery<JoinedGathering[]>({
-		queryKey: ['writableReviews', userId],
+		queryKey: queryKeys.me.writableReviews(userId),
 		queryFn: async () => {
 			try {
 				return await getJoinedGathering({ completed: true, reviewed: false });
@@ -37,7 +39,7 @@ export function useWrittenReviews(userId?: number) {
 	const { handleError } = useErrorHandler();
 
 	return useQuery<ReviewResponse[]>({
-		queryKey: ['writtenReviews', userId],
+		queryKey: queryKeys.me.writtenReviews(userId),
 		queryFn: async () => {
 			try {
 				const res = await getReviews({ userId: userId! });

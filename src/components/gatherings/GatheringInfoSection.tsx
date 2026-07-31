@@ -1,23 +1,23 @@
 'use client';
 
-import * as motion from 'motion/react-client';
+import { useEffect, useState } from 'react';
+import Image from 'next/image';
+
+import { useQuery } from '@tanstack/react-query';
 import { differenceInDays, isPast, isSameDay, startOfDay } from 'date-fns';
+import * as motion from 'motion/react-client';
 
 import { getGatheringId, getGatheringParticipant } from '@/apis/gatherings/[id]';
-import { Gathering, GatheringParticipant } from '@/types/response/gatherings';
-import { formatDateAndTime, formatUTCToKST } from '@/utils/date';
-import { useQuery } from '@tanstack/react-query';
-
 import HeartButton from '@/app/(home)/HeartButton';
+import BasicProgressBar from '@/components/commons/basic/BasicProgressBar';
 import ChipInfo from '@/components/commons/ChipInfo';
 import Tag from '@/components/commons/Tag';
-import BasicProgressBar from '@/components/commons/basic/BasicProgressBar';
-
-import Image from 'next/image';
-import GatheringInfoSectionSkeleton from './skeleton/GatheringInfoSectionSkeleton';
 import { PROFILE_PATHS } from '@/constants/assetPath';
+import { Gathering, GatheringParticipant } from '@/types/response/gatherings';
+import { formatDateAndTime, formatUTCToKST } from '@/utils/date';
+import { queryKeys } from '@/utils/query-keys';
 
-import { useEffect, useState } from 'react';
+import GatheringInfoSectionSkeleton from './skeleton/GatheringInfoSectionSkeleton';
 
 /** 모임 상세페이지 - 이미지 + 마감정보 */
 function GatheringMainImage({ data, isHydrated }: { data: Gathering; isHydrated: boolean }) {
@@ -97,7 +97,7 @@ function GatheringMainInfo({ data }: { data: Gathering }) {
 /** 모임 상세페이지 - 하위정보 (정원, 참가인원 프로필 사진, 개설확정 등) */
 function GatheringSubInfo({ data }: { data: Gathering }) {
 	const { data: participants = [] } = useQuery<GatheringParticipant[]>({
-		queryKey: ['participants', data.id],
+		queryKey: queryKeys.gatherings.participants(data.id),
 		queryFn: () => getGatheringParticipant(data.id)
 	});
 
@@ -160,7 +160,7 @@ export default function GatheringInfoSection({ gatheringId }: { gatheringId: num
 	}, []);
 
 	const { data, isLoading } = useQuery<Gathering>({
-		queryKey: ['gathering', gatheringId],
+		queryKey: queryKeys.gatherings.detail(gatheringId),
 		queryFn: () =>
 			getGatheringId(gatheringId).then(res => ({
 				...res,

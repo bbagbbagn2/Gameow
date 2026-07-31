@@ -2,13 +2,12 @@
 
 import { useFormContext } from 'react-hook-form';
 
-import { useFunnelStore } from '@/stores/useFunnelStore';
-
-import SliderAnimationDiv from '../sliderAnimation/SliderAnimationDiv';
-
 import BasicButton from '@/components/commons/basic/BasicButton';
 import BasicInput from '@/components/commons/basic/BasicInput';
 import SelectBox from '@/components/commons/SelectBox';
+import { useFunnelStore } from '@/stores/useFunnelStore';
+
+import SliderAnimationDiv from '../sliderAnimation/SliderAnimationDiv';
 
 export default function Step1Funnel() {
 	const {

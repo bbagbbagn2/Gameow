@@ -1,6 +1,5 @@
-import BasicModal from '@/components/commons/basic/BasicModal';
-
 import { leaveGathering } from '@/apis/gatherings/[id]';
+import BasicModal from '@/components/commons/basic/BasicModal';
 import { useErrorHandler } from '@/hooks/useErrorHandler';
 import { useModalClose } from '@/hooks/useModal';
 

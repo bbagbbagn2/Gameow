@@ -1,7 +1,8 @@
 'use client';
 
-import { useModalStore, ModalCloseContext } from '@/providers/ModalProvider';
 import { useEffect } from 'react';
+
+import { ModalCloseContext, useModalStore } from '@/providers/ModalProvider';
 
 /**
  * 모달 관리를 위한 컨테이너 컴포넌트

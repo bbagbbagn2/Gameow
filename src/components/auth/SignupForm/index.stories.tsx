@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
+
 import { SignupForm } from '.';
 
 const meta: Meta<typeof SignupForm> = {

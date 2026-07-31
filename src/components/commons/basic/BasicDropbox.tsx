@@ -1,4 +1,5 @@
 import { useCallback } from 'react';
+
 import { cn } from '@/utils/cn';
 /**
  * 드롭다운되는 선택 항목들의 타입
@@ -67,7 +68,7 @@ export default function BasicDropbox({
 		<div
 			ref={ref}
 			className={cn(
-				'z-floating bg-discord-surface border-white/10 absolute right-0 mt-2 max-h-60 overflow-y-auto rounded-lg border p-1 shadow-2xl',
+				'z-floating bg-discord-surface absolute right-0 mt-2 max-h-60 overflow-y-auto rounded-lg border border-white/10 p-1 shadow-2xl',
 				isLarge ? 'w-full' : 'w-48',
 				className
 			)}

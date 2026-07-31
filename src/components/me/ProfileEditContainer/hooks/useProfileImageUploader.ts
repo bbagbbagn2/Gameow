@@ -1,9 +1,7 @@
-import { createElement, useCallback, useEffect, useRef, useState } from 'react';
-import type { ChangeEvent } from 'react';
-
-import { getFirstFile, readFileAsDataUrl } from '../utils/profileImage';
+import { type ChangeEvent,createElement, useCallback, useEffect, useRef, useState } from 'react';
 
 import BasicPopup from '@/components/commons/basic/BasicPopup';
+import { getFirstFile, readFileAsDataUrl } from '@/components/me/ProfileEditContainer/utils/profileImage';
 import { useModal } from '@/hooks/useModal';
 
 const PROFILE_IMAGE_PREVIEW_FAILED_POPUP = {

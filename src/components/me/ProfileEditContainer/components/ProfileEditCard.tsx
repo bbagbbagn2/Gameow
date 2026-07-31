@@ -2,8 +2,7 @@
 
 import Image from 'next/image';
 
-import { useProfileEditCard } from '../hooks/useProfileEditCard';
-
+import { useProfileEditCard } from '@/components/me/ProfileEditContainer/hooks/useProfileEditCard';
 import { PROFILE_PATHS } from '@/constants/assetPath';
 
 export default function ProfileEditCard() {

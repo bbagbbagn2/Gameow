@@ -1,12 +1,10 @@
 'use client';
 
-import ProfileImageUploader from './ProfileImageUploader';
-
-import { useProfileEditModal } from '../hooks/useProfileEditModal';
-
 import BasicButton from '@/components/commons/basic/BasicButton';
 import BasicInput from '@/components/commons/basic/BasicInput';
 import BasicModal from '@/components/commons/basic/BasicModal';
+import ProfileImageUploader from '@/components/me/ProfileEditContainer/components/ProfileImageUploader';
+import { useProfileEditModal } from '@/components/me/ProfileEditContainer/hooks/useProfileEditModal';
 import type { ProfileEditSchemaType } from '@/utils/schema';
 
 interface ProfileEditModalProps {

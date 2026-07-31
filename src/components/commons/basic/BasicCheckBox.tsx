@@ -1,6 +1,6 @@
-import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { UseFormRegisterReturn } from 'react-hook-form';
+import Image from 'next/image';
 
 /**
  * BasicCheckBox 컴포넌트의 Props 인터페이스

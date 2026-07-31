@@ -1,15 +1,19 @@
 'use client';
 
 import { useState } from 'react';
+
 import { useQueryClient } from '@tanstack/react-query';
-import { useWritableReviews, useWrittenReviews } from './hooks';
-import { useUserStore } from '@/stores/user';
-import type { JoinedGathering } from '@/types/response/gatherings';
-import WritableReviewCard from './WritableReviewCard';
-import WrittenReviewCard from './WrittenReviewCard';
-import NoDataMessage from '../../../commons/NoDataMessage/NoDataMessage';
+
 import Chip from '@/components/commons/Chip';
 import ReviewSkeleton from '@/components/reviews/ReviewSkeleton';
+import { useUserStore } from '@/stores/user';
+import type { JoinedGathering } from '@/types/response/gatherings';
+import { queryKeys } from '@/utils/query-keys';
+
+import NoDataMessage from '../../../commons/NoDataMessage/NoDataMessage';
+import { useWritableReviews, useWrittenReviews } from './hooks';
+import WritableReviewCard from './WritableReviewCard';
+import WrittenReviewCard from './WrittenReviewCard';
 
 /**
  * MyReviews 컴포넌트
@@ -41,11 +45,11 @@ export default function MyReviews() {
 
 		try {
 			queryClient.setQueryData<JoinedGathering[]>(
-				['writableReviews', user.userId],
+				queryKeys.me.writableReviews(user.userId),
 				old => old?.filter(g => g.id !== gatheringId) ?? []
 			);
 
-			queryClient.invalidateQueries({ queryKey: ['writtenReviews', user.userId] });
+			queryClient.invalidateQueries({ queryKey: queryKeys.me.writtenReviews(user.userId) });
 
 			setActiveTab('written');
 		} catch (err) {
@@ -61,13 +65,13 @@ export default function MyReviews() {
 			</div>
 
 			{isLoading ? (
-				<div className="grid grid-cols-1 gap-6 tb:grid-cols-2 pc:grid-cols-3">
+				<div className="tb:grid-cols-2 pc:grid-cols-3 grid grid-cols-1 gap-6">
 					{Array.from({ length: 3 }).map((_, i) => (
 						<ReviewSkeleton key={i} />
 					))}
 				</div>
 			) : activeTab === 'writable' ? (
-				<div className="grid grid-cols-1 gap-6 tb:grid-cols-2 pc:grid-cols-3">
+				<div className="tb:grid-cols-2 pc:grid-cols-3 grid grid-cols-1 gap-6">
 					{writableReviewsData.length > 0 ? (
 						writableReviewsData.map(gathering => (
 							<WritableReviewCard
@@ -83,7 +87,7 @@ export default function MyReviews() {
 					)}
 				</div>
 			) : writtenReviewsData.length > 0 ? (
-				<div className="grid grid-cols-1 gap-6 tb:grid-cols-2 pc:grid-cols-3">
+				<div className="tb:grid-cols-2 pc:grid-cols-3 grid grid-cols-1 gap-6">
 					{writtenReviewsData.map(review => (
 						<WrittenReviewCard key={review.id} review={review} />
 					))}
@@ -94,4 +98,3 @@ export default function MyReviews() {
 		</div>
 	);
 }
-

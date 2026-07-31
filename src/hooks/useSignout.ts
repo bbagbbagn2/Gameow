@@ -1,6 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+
 import { postSignout } from '@/apis/auths/signout';
 import { useTokenStore } from '@/stores/token';
 import { useUserStore } from '@/stores/user';
@@ -23,7 +24,7 @@ export function useSignout() {
 			// 로컬 상태 초기화
 			signoutToken();
 			signoutUser();
-			
+
 			// 홈으로 이동
 			router.replace('/');
 		}

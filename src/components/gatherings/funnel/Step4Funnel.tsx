@@ -1,20 +1,21 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import { useFormContext } from 'react-hook-form';
+import { useRouter } from 'next/navigation';
 
-import { useFunnelStore } from '@/stores/useFunnelStore';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { CreateGathering } from '@/types/response/createGathering';
-import { GatheringType } from '@/types/response/gatherings';
-import { useModal, useModalClose } from '@/hooks/useModal';
+
 import { postGathering } from '@/apis/gatherings';
-
-import SliderAnimationDiv from '../sliderAnimation/SliderAnimationDiv';
-
 import BasicButton from '@/components/commons/basic/BasicButton';
 import BasicInput from '@/components/commons/basic/BasicInput';
 import BasicPopup from '@/components/commons/basic/BasicPopup';
+import { useModal, useModalClose } from '@/hooks/useModal';
+import { useFunnelStore } from '@/stores/useFunnelStore';
+import { CreateGathering } from '@/types/response/createGathering';
+import { GatheringType } from '@/types/response/gatherings';
+import { queryKeys } from '@/utils/query-keys';
+
+import SliderAnimationDiv from '../sliderAnimation/SliderAnimationDiv';
 
 export default function Step4Funnel() {
 	const {
@@ -30,7 +31,7 @@ export default function Step4Funnel() {
 	const { mutate, isPending } = useMutation({
 		mutationFn: postGathering,
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ['gatherings'] });
+			queryClient.invalidateQueries({ queryKey: queryKeys.gatherings.lists() });
 			openModal(<BasicPopup title="모임이 생성되었습니다." />, 'create-gathering-popup');
 			closeModal(); // 모달 닫기
 			reset(); // 퍼넬 스토어 1로 초기화

@@ -1,7 +1,9 @@
-import GNB from '@/components/commons/GNB';
-import AppProviders from '@/providers/AppProviders';
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
+
+import GNB from '@/components/commons/GNB';
+import AppProviders from '@/providers/AppProviders';
+
 import './globals.css';
 
 const pretendard = localFont({

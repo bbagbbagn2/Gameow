@@ -1,12 +1,12 @@
 'use client';
 
 import { forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { UseFormRegisterReturn, useFormContext } from 'react-hook-form';
+import { useFormContext, UseFormRegisterReturn } from 'react-hook-form';
+
+import { cn } from '@/utils/cn';
 
 import BasicDropbox, { OptionType } from './basic/BasicDropbox';
 import BasicSelectButton from './basic/BasicSelectButton';
-
-import { cn } from '@/utils/cn';
 
 interface SelectBoxProps {
 	/** 선택 항목들의 배열 */

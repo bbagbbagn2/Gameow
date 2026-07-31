@@ -1,51 +1,19 @@
 'use client';
 
-import { useCallback, useRef, useState } from 'react';
 import Image from 'next/image';
 
+import { useProfileImageUploader } from '@/components/me/ProfileEditContainer/hooks/useProfileImageUploader';
+import { PROFILE_IMAGE_ACCEPT } from '@/components/me/ProfileEditContainer/utils/profileImage';
 import { PROFILE_PATHS } from '@/constants/assetPath';
 
 interface ProfileImageUploaderProps {
-	/** 현재 프로필 이미지 URL (기존 이미지 미리보기용) */
 	currentImage?: string;
-	/** 이미지 변경 시 호출되는 콜백 — 선택된 파일과 미리보기 URL을 전달 */
 	onChange: (file: File, preview: string) => void;
 }
 
-/**
- * 프로필 이미지를 업로드하고 미리보기를 제공하는 컴포넌트입니다.
- *
- * @component
- * @returns {JSX.Element} 프로필 이미지 업로드 UI를 렌더링합니다.
- */
 export default function ProfileImageUploader({ currentImage, onChange }: ProfileImageUploaderProps) {
-	const [preview, setPreview] = useState<string | undefined>(currentImage);
 	const { DEFAULT_PROFILE_SRC, EDIT_ICON_SRC } = PROFILE_PATHS;
-	const fileInputRef = useRef<HTMLInputElement>(null);
-
-	const handleProfileImage = useCallback(
-		(e: React.ChangeEvent<HTMLInputElement>) => {
-			const selectedFile = e.target.files?.[0];
-
-			if (!selectedFile) return;
-
-			const reader = new FileReader();
-
-			reader.onload = () => {
-				if (typeof reader.result === 'string') {
-					const result = reader.result;
-					setPreview(result);
-					onChange(selectedFile, result);
-				}
-			};
-			reader.readAsDataURL(selectedFile);
-		},
-		[onChange]
-	);
-
-	const handleButtonClick = useCallback(() => {
-		fileInputRef.current?.click();
-	}, []);
+	const { preview, fileInputRef, handleButtonClick, handleProfileImage } = useProfileImageUploader({ currentImage, onChange });
 
 	return (
 		<>
@@ -64,7 +32,7 @@ export default function ProfileImageUploader({ currentImage, onChange }: Profile
 				</div>
 			</button>
 
-			<input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={handleProfileImage} />
+			<input ref={fileInputRef} type="file" accept={PROFILE_IMAGE_ACCEPT} className="hidden" onChange={handleProfileImage} />
 		</>
 	);
 }
